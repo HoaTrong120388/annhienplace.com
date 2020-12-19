@@ -1,0 +1,6 @@
+input, input:focus{outline: none;box-shadow: none !important;}
+.dropify-wrapper .dropify-preview .dropify-render img{display: inline-block;}
+.dropify-wrapper{border: none;}
+#toast-container > div {
+    opacity:1;
+}
