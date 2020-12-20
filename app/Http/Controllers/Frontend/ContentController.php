@@ -36,14 +36,14 @@ class ContentController extends BaseController
     public function detailPost(Request $request)
     {
         $slug = isset($request->slug)?$request->slug:'';
-        $slug = FCommon::XoaDinhDang($slug);
+        $slug = FCommon::clearStr($slug);
 
+        
         if(empty($slug)) return \abort(404);
 
         $isTemplate = 0;
         $redirect_lang = '';
-        $arrResult = Page::_detail_by_slug($slug, $this->lang);
-        $redirect_lang = route('frontend.home');
+        $arrResult = Page::where('status', 1)->where('slug', $slug)->firstOrfail();
 
         $breadcrumb = '';
         if(!$arrResult){
@@ -56,7 +56,7 @@ class ContentController extends BaseController
                     setcookie('language', $arrResult->language, time() + (86400 * 30), "/");
                     return redirect()->route('frontend.post.detail', $slug);
                 }
-                
+
                 Post::_update_data($arrResult->id, array('view' => $arrResult->view+1));
 
                 // if
@@ -83,33 +83,10 @@ class ContentController extends BaseController
                 $arrResult['more_info'] = (object)$more_info;
             }
         }else{
-            if($arrResult->language != $this->lang){
-                setcookie('language', $arrResult->language, time() + (86400 * 30), "/");
-                return redirect()->route('frontend.post.detail', $slug);
-            }
-            Page::_edit($arrResult->id, array('view' => $arrResult->view+1));
+            $arrResult->view = $arrResult->view+1;
+            $arrResult->save();
             $group = $arrResult->group;
-            $id_lang_other = Translation::_get_id($this->lang_next, $this->lang, $arrResult->id, 1);
-            $arrResult_other = Page::find($id_lang_other);
 
-            $breadcrumb = array(
-                array(
-                    'title' => trans('common.breadcrumb_home'),
-                    'link'  => route('frontend.home')
-                ),
-                array(
-                    'title' => urldecode($arrResult->title)
-                )
-            );
-            if($group == 2){
-                if($arrResult_other){
-                    $redirect_lang =  route("frontend.studyabroad.$this->lang_next.detail", $arrResult_other->slug);
-                }
-            }else{
-                if($arrResult_other){
-                    $redirect_lang =  route("frontend.post.detail", $arrResult_other->slug);
-                }
-            }
             $arrResult = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
 
         }
@@ -121,7 +98,6 @@ class ContentController extends BaseController
 
             'arrResult'             => $arrResult,
             'breadcrumb'            => $breadcrumb,
-            'redirect_lang'         => $redirect_lang
         );
 
         if(!empty($arrResult['seo']->image)) $data['imagePage_Seo'] = $arrResult['seo']->image;
@@ -134,41 +110,79 @@ class ContentController extends BaseController
     public function detailCatalog(Request $request)
     {
         $slug = isset($request->slug)?$request->slug:'';
-        $slug = FCommon::ClearStr($slug);
+        $slug = FCommon::clearStr($slug);
 
         if(empty($slug)) return \abort(404);
 
         $redirect_lang = '';
-        $arrResult = Catalog::where('slug', $slug)->where('language', $this->lang)->where('status', 1)->firstOrFail();
+        if($slug == 'tin-tuc'){
+            return view('frontend/content/list/news');
+        }elseif($slug == 'shops'){
+            return view('frontend/content/list/shops');
+        }
+        $arrResult = Catalog::where('slug', $slug)->firstOrfail();
+        // dd($arrResult);
+
         if(!$arrResult) return \abort(404);
 
-        $lstPost = Post::where(function ($q) use ($arrResult) {
-                        $q->where('catalog_id', $arrResult->id)->orWhere('catalogsub_id', $arrResult->id);
-                    })->where('language', $this->lang)->where('status', 1)->orderBy('public_date', 'desc')->get();
-        // dd($lstPost);
+        if($arrResult->language != $this->lang){
+            setcookie('language', $arrResult->language, time() + (86400 * 30), "/");
+            return redirect()->route('frontend.catalog.detail', $slug);
+        }
 
+        if($arrResult->language != $this->lang){
+            setcookie('language', $arrResult->language, time() + (86400 * 30), "/");
+            return redirect()->route('frontend.post.detail', $slug);
+        }
+
+        $breadcrumb = '';
+        $info_seo = json_decode($arrResult->seo);
+
+        $breadcrumb = array(
+            array(
+                'title' => trans('common.breadcrumb_home'),
+                'link'  => route('frontend.home')
+            ),
+            array(
+                'title' => $arrResult->title,
+            )
+        );
+
+        $id_lang_other = Translation::_get_id($this->lang_next, $this->lang, $arrResult->id, 2);
+        $arrResult_other = Catalog::find($id_lang_other);
+        if($arrResult_other){
+            $redirect_lang =  route("frontend.catalog.detail", $arrResult_other->slug);
+        }else{
+            $redirect_lang = route('frontend.home');
+        }
+
+
+        $lstPost = Post::_post_in_catalog($arrResult->id, $limit = 20);
         $collection = collect($lstPost);
         $lstNews = $collection->map(function ($item, $key) {
-            $item->summary = FCommon::ClearStr($item->summary);
+            $item->summary = FCommon::clearStr($item->summary);
             return $item;
         });
         $lstNews->all();
+        // FCommon::debug($lstPost, true);
         $arrResult = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
         if(!isset($arrResult['more_info']->template)){
             $more_info = array('template' => 1);
             $arrResult['more_info'] = (object)$more_info;
         }
-        // dd($arrResult);
 
         $data = array(
-            'titlePage_Seo'             => $arrResult['seo']->title,
-            'descriptionPage_Seo'       => $arrResult['seo']->description,
-            'imagePage_Seo'             => $arrResult['seo']->image,
+            'titlePage_Seo'             => $info_seo->title,
+            'descriptionPage_Seo'       => $info_seo->description,
+            'imagePage_Seo'             => $info_seo->image,
 
             'arrResult'                 => $arrResult,
+            'redirect_lang'             => $redirect_lang,
+            'breadcrumb'                => $breadcrumb,
             'lstNews'                   => $lstNews,
             'route_news'                => 'frontend.post.detail'
         );
+        // if($arrResult['group'] == 3) $data['route_news'] = "frontend.studyabroad.$this->lang.detail";
         return view('frontend/content/list/list')->with($data);
     }
     public function aboutUs(Request $request)
@@ -214,7 +228,7 @@ class ContentController extends BaseController
         );
 
         $keyword = isset($request->keyword)     ?$request->keyword:'';
-        $keyword = FCommon::XoaDinhDang($keyword);
+        $keyword = FCommon::clearStr($keyword);
 
         $where = array(
             'title'     => str_replace(' ', '%', $keyword),
@@ -256,45 +270,50 @@ class ContentController extends BaseController
         $slugCatalog = FCommon::ClearStr($slugCatalog);
         $slugDetail = FCommon::ClearStr($slugDetail);
 
-        $arrResult = Post::where('slug', $slugDetail)->where('language', $this->lang)->where('status', 1)->firstOrFail();
-
+        $arrResult = Post::where('slug', $slugDetail)->firstOrFail();
         if($arrResult){
-            $arrResult->more_info = $arrResult->option->more_info;
+            $arrResult->seo = json_decode($arrResult->seo);
+            $arrResult->more_info = json_decode($arrResult->option->more_info);
+            $arrResult->template = json_decode($arrResult->option->more_info)->template;
             $arrResult->public_date = Carbon::parse($arrResult->public_date)->format('d-m-Y');
         }
-        $arrResult = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
-
+        // dd($arrResult);
         $data = array(
-            'titlePage_Seo'         => $arrResult['seo']->title,
-            'descriptionPage_Seo'   => $arrResult['seo']->description,
-            'keywordPage_Seo'       => $arrResult['seo']->keyword,
+            'titlePage_Seo'         => $arrResult->seo->title,
+            'descriptionPage_Seo'   => $arrResult->seo->description,
+            'keywordPage_Seo'       => $arrResult->seo->keyword,
 
+            'path_public_landingpage'           => 'public/frontend/landingpage/coming-soon',
             'arrResult'                         => $arrResult
 
         );
-        return view('frontend/content/detail/service')->with($data);
+        return view('frontend/content/detail/post1')->with($data);
     }
-    public function detailPage(Request $request)
+    public function service(Request $request)
     {
-        $slugDetail = isset($request->slugDetail)     ?$request->slugDetail:'';
-
-        $slugDetail = FCommon::ClearStr($slugDetail);
-
-        $arrResult = Page::where('slug', $slugDetail)->where('language', $this->lang)->where('status', 1)->firstOrFail();
-
-        if($arrResult){
-            $arrResult->public_date = Carbon::parse($arrResult->public_date)->format('d-m-Y');
-        }
-        $arrResult = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
-
         $data = array(
-            'titlePage_Seo'         => $arrResult['seo']->title,
-            'descriptionPage_Seo'   => $arrResult['seo']->description,
-            'keywordPage_Seo'       => $arrResult['seo']->keyword,
-
-            'arrResult'                         => $arrResult
-
+            'titlePage_Seo'             => '',
+            'descriptionPage_Seo'       => '',
+            'imagePage_Seo'             => '',
         );
-        return view('frontend/content/detail/page')->with($data);
+        return view('frontend/content/list/service')->with($data);
+    }
+    public function news(Request $request)
+    {
+        $data = array(
+            'titlePage_Seo'             => '',
+            'descriptionPage_Seo'       => '',
+            'imagePage_Seo'             => '',
+        );
+        return view('frontend/content/list/news')->with($data);
+    }
+    public function product(Request $request)
+    {
+        $data = array(
+            'titlePage_Seo'             => '',
+            'descriptionPage_Seo'       => '',
+            'imagePage_Seo'             => '',
+        );
+        return view('frontend/content/list/shops')->with($data);
     }
 }

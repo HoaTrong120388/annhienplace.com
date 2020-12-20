@@ -5932,9 +5932,9 @@ footer .footer-showroom .call-us {
 
 @media (min-width: 1200px) {
     footer .footer-showroom {
-        padding-top: 60px;
-        padding-bottom: 60px;
-        margin-bottom: 80px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-bottom: 0px;
     }
 }
 

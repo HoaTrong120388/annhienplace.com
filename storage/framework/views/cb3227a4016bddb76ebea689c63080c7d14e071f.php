@@ -13,7 +13,7 @@
         <!-- ==========  Main navigation ========== -->
         <div class="navigation navigation-main">
             <!-- Setup your logo here-->
-            <a href="index.html" class="logo"><img src="{{ asset('public/frontend/assets/images/logo.jpg') }}" alt="" /></a>
+            <a href="index.html" class="logo"><img src="<?php echo e(asset('public/frontend/assets/images/logo.jpg')); ?>" alt="" /></a>
             <!-- Mobile toggle menu -->
             <a href="#" class="open-menu"><i class="icon icon-menu"></i></a>
             <!-- Convertible menu (mobile/desktop)-->
@@ -23,7 +23,7 @@
                     <span class="close-menu"><i class="icon icon-cross"></i></span>
                 </div>
                 <ul>
-                    <li><a href="{{ route("frontend.home") }}">Trang Chủ</a></li>
+                    <li><a href="<?php echo e(route("frontend.home")); ?>">Trang Chủ</a></li>
                     <li>
                         <a href="san-pham">Sản phẩm <span class="open-dropdown"><i class="fa fa-angle-down"></i></span></a>
                         <div class="navbar-dropdown">

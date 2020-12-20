@@ -1,7 +1,6 @@
-@extends('frontend.layouts.layout')
-@section('headerstyle')
-@endsection
-@section('content')
+<?php $__env->startSection('headerstyle'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!-- ========================  Main header ======================== -->
 <section class="main-header" style="background-image:url(assets/images/gallery-2.jpg)">
     <header>
@@ -178,15 +177,15 @@
         </div> <!--/row-->
     </div><!--/container-->
 </section>
-@endsection
-@section('footerjs')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('footerjs'); ?>
     <script>
         $(document).ready(function() {
             $("#btn-submit-contact").on('click', function(){
                 var obj = $(this);
                 obj.next('.filter-spinner-loading').show();
                 $.ajax({
-                    url: '{{ route('frontend.contact.submit') }}',
+                    url: '<?php echo e(route('frontend.contact.submit')); ?>',
                     type: 'POST',
                     dataType: 'json',
                     data: $("#commentform").serialize(),
@@ -194,7 +193,7 @@
                 .done(function(response) {
                     if(response.status == 1){
                         $.confirm({
-                            title: '{{ __("common._noti_header_title_success") }}',
+                            title: '<?php echo e(__("common._noti_header_title_success")); ?>',
                             content: response.msg,
                             type: 'green',
                             animation: 'zoom',
@@ -207,7 +206,7 @@
                         });
                     }else{
                         $.confirm({
-                            title: '{{ __("common._noti_header_title_error") }}',
+                            title: '<?php echo e(__("common._noti_header_title_error")); ?>',
                             content: response.list_error,
                             type: 'red',
                             animation: 'zoom',
@@ -226,4 +225,5 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frontend.layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

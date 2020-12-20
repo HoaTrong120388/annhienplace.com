@@ -35,6 +35,6 @@
             </footer>
         </div> <!--/wrapper-->
 
-        @include('frontend.partials.footer.footer-js')
+        <?php echo $__env->make('frontend.partials.footer.footer-js', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     </body>
 </html>

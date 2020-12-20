@@ -41,13 +41,13 @@ class FCommon
     public static function map_file_css(){
         return array(
             'backend_theme'     => 'backend/dist/css/common.css',
-            'frontend_theme'    => 'frontend/assets/styles/style.css',
+            'frontend_theme'    => 'frontend/css/common.css',
         );
     }
     public static function map_file_js(){
         return array(
             'backend_theme' => 'backend/dist/js/common.js',
-            'frontend_theme' => 'frontend/assets/js/theme.js',
+            'frontend_theme' => 'frontend/js/common.js',
         );
     }
     public static function minifycss($str_file = '', $flag = 1){

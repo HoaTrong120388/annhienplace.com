@@ -27,14 +27,12 @@ class HomeController extends BaseController
     }
     public function home()
     {
-        // return redirect()->route('frontend.landingpage.comingsoon');
-
+        // dd(1);
 
         $data = array(
             'titlePage_Seo'         => trans('common.main_seo_title'),
             'descriptionPage_Seo'   => trans('common.main_seo_description'),
             'keywordPage_Seo'       => trans('common.main_seo_keyword'),
-
         );
         return view('frontend/home/index')->with($data);
     }

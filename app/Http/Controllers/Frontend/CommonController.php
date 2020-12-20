@@ -29,29 +29,12 @@ class CommonController extends BaseController
     }
     public function Contact(Request $request)
     {
-        $arrResult = array(
-            'title' => trans("common.nav_contact"),
-        );
-        $redirect_lang = ($this->lang == 'en')?'lien-he':'contact';
-
-        $breadcrumb = array(
-            array(
-                'title' => 'Home',
-                'link'  => route('frontend.home')
-            ),
-            array(
-                'title' => trans('common.nav_contact'),
-            )
-        );
 
         $data = array(
             'titlePage_Seo'             => trans('common._seo_contact_page_title'),
             'descriptionPage_Seo'       => trans('common._seo_contact_page_description'),
             'imagePage_Seo'             => trans('common._seo_contact_page_title'),
 
-            'arrResult'                 => $arrResult,
-            'redirect_lang'             => $redirect_lang,
-            'breadcrumb'                => $breadcrumb,
         );
         return view('frontend/common/contact')->with($data);
     }
@@ -77,10 +60,10 @@ class CommonController extends BaseController
             $phone      = isset($request->phone)        ?$request->phone:'';
             $message    = isset($request->message)      ?$request->message:'';
 
-            $fullname   = FCommon::ClearStr($fullname);
-            $email      = FCommon::ClearStr($email);
-            $phone      = FCommon::ClearStr($phone);
-            $message    = FCommon::ClearStr($message);
+            $fullname   = FCommon::XoaDinhDang($fullname);
+            $email      = FCommon::XoaDinhDang($email);
+            $phone      = FCommon::XoaDinhDang($phone);
+            $message    = FCommon::XoaDinhDang($message);
 
             $date_now = $this->time_now;
 
@@ -119,12 +102,11 @@ class CommonController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            $error = implode('<br>', $validator->errors()->all());
-
+            $error_val = $validator->errors();
             $data = array(
                 'status' => 0,
-                'msg' => 'Có lỗi thử lại sau 11',
-                'list_error' => $error,
+                'msg' => 'Có lỗi thử lại sau',
+                'list_error' => $error_val->all(),
             );
         }else{
             $fullname   = isset($request->fullname)     ?$request->fullname:'';
@@ -134,9 +116,9 @@ class CommonController extends BaseController
             $country    = isset($request->country)      ?$request->country:0;
             $year       = isset($request->year)      ?$request->year:0;
 
-            $fullname   = FCommon::ClearStr($fullname);
-            $email      = FCommon::ClearStr($email);
-            $phone      = FCommon::ClearStr($phone);
+            $fullname   = FCommon::XoaDinhDang($fullname);
+            $email      = FCommon::XoaDinhDang($email);
+            $phone      = FCommon::XoaDinhDang($phone);
             settype($country, 'int');
             settype($year, 'int');
 
@@ -180,11 +162,11 @@ class CommonController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            $error = implode('<br>', $validator->errors()->all());
+            $error_val = $validator->errors();
             $data = array(
                 'status' => 0,
                 'msg' => 'Có lỗi thử lại sau',
-                'list_error' => $error,
+                'list_error' => $error_val->all(),
             );
         }else{
             $fullname   = isset($request->fullname)     ?$request->fullname:'';
@@ -192,22 +174,24 @@ class CommonController extends BaseController
             $phone      = isset($request->phone)        ?$request->phone:'';
             $message    = isset($request->content)      ?$request->content:'';
 
-            $fullname   = FCommon::ClearStr($fullname);
-            $email      = FCommon::ClearStr($email);
-            $phone      = FCommon::ClearStr($phone);
-            $message    = FCommon::ClearStr($message);
+            $fullname   = FCommon::XoaDinhDang($fullname);
+            $email      = FCommon::XoaDinhDang($email);
+            $phone      = FCommon::XoaDinhDang($phone);
+            $message    = FCommon::XoaDinhDang($message);
 
             $date_now = $this->time_now;
 
-            $contact = new Contact;
-
-            $contact->fullname = $fullname;
-            $contact->email = $email;
-            $contact->phone = $phone;
-            $contact->message = $message;
-            $contact->group = 3;
-
-            if($contact->save()){
+            $data_insert = array(
+                'created_date'  => $date_now,
+                'modifine_date' => $date_now,
+                'fullname'      => $fullname,
+                'email'         => $email,
+                'phone'         => $phone,
+                'message'       => $message,
+                'group'         => 3,
+            );
+            $id = Contact::_add($data_insert);
+            if($id > 0){
                 $data = array(
                     'status'    => 1,
                     'msg'       => trans("common._noti_body_submit_success"),

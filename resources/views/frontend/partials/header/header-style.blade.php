@@ -1,6 +1,9 @@
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/bootstrap.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/animate.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/font-awesome.min.css') }}" />
+
+<link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/furniture-icons.css') }}" />
+<link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/linear-icons.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/linear-icons.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/magnific-popup.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/owl.carousel.min.css') }}" />

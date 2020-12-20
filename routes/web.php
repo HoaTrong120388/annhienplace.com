@@ -37,11 +37,8 @@ Route::group(['middleware' => ['locale']], function () {
 
 
     /********* Contact *************/
-    Route::get('/lien-he', 'Frontend\CommonController@contact')->name('frontend.vi.contact');
-    Route::get('/contact', 'Frontend\CommonController@contact')->name('frontend.en.contact');
+    Route::get('/lien-he.html', 'Frontend\CommonController@contact')->name('frontend.contact');
     Route::post('/contactsubmit', 'Frontend\CommonController@contactsubmit')->name('frontend.contact.submit');
-    Route::post('/registersubmit', 'Frontend\CommonController@registersubmit')->name('frontend.register.submit');
-    Route::post('/landingpageregistersubmit', 'Frontend\CommonController@landingpageregistersubmit')->name('frontend.landingpgae.register.submit');
     /********* Contact *************/
 
     /********* About Us *************/
@@ -52,9 +49,14 @@ Route::group(['middleware' => ['locale']], function () {
     Route::get('/search', 'Frontend\ContentController@search')->name('frontend.search');
     /*** Url Search ***/
 
-    Route::get('/page/{slugDetail}.html', 'Frontend\ContentController@detailPage')->name('frontend.page.detail');
-    Route::get('/{slugCatalog}/{slugDetail}.html', 'Frontend\ContentController@detailLanding')->name('frontend.post.detailfull');
+    Route::get('/dich-vu', 'Frontend\ContentController@service')->name('frontend.contact');
+    Route::get('/tin-tuc', 'Frontend\ContentController@news')->name('frontend.contact');
+    Route::get('/san-pham', 'Frontend\ContentController@product')->name('frontend.contact');
+    Route::get('/san-pham-chi-tiet', 'Frontend\ContentController@productdetail')->name('frontend.contact');
 
+    /********* About Us *************/
+    Route::get('/{slugCatalog}/{slugDetail}.html', 'Frontend\ContentController@detailLanding')->name('frontend.post.detailfull');
+    /********* About Us *************/
     Route::get('/{slug}.html', 'Frontend\ContentController@detailPost')->name('frontend.post.detail');
     Route::get('/{slug}', 'Frontend\ContentController@detailCatalog')->name('frontend.catalog.detail');
 });

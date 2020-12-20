@@ -1,10 +1,9 @@
-@extends('frontend.layouts.layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
         <!-- ========================  Header content ======================== -->
         <section class="header-content">
             <div class="owl-slider">
                 <!-- === slide item === -->
-                <div class="item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-4.jpg') }})">
+                <div class="item" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-4.jpg')); ?>)">
                     <div class="box">
                         <div class="container">
                             <h2 class="title animated h1" data-animation="fadeInDown">Modern furniture theme</h2>
@@ -19,7 +18,7 @@
                     </div>
                 </div>
                 <!-- === slide item === -->
-                <div class="item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-2.jpg') }})">
+                <div class="item" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-2.jpg')); ?>)">
                     <div class="box">
                         <div class="container">
                             <h2 class="title animated h1" data-animation="fadeInDown">Mobile ready!</h2>
@@ -32,7 +31,7 @@
                     </div>
                 </div>
                 <!-- === slide item === -->
-                <div class="item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-3.jpg') }})">
+                <div class="item" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-3.jpg')); ?>)">
                     <div class="box">
                         <div class="container">
                             <h2 class="title animated h1" data-animation="fadeInDown">
@@ -228,7 +227,7 @@
                             <div class="figure-grid">
                                 <div class="image">
                                     <a href="#productid1" class="mfp-open">
-                                        <img src="{{ asset('public/frontend/assets/images/product-1.png') }}" alt="" width="360" />
+                                        <img src="<?php echo e(asset('public/frontend/assets/images/product-1.png')); ?>" alt="" width="360" />
                                     </a>
                                 </div>
                                 <div class="text">
@@ -257,7 +256,7 @@
                             <div class="figure-grid">
                                 <div class="image">
                                     <a href="#productid1" class="mfp-open">
-                                        <img src="{{ asset('public/frontend/assets/images/product-2.png') }}" alt="" width="360" />
+                                        <img src="<?php echo e(asset('public/frontend/assets/images/product-2.png')); ?>" alt="" width="360" />
                                     </a>
                                 </div>
                                 <div class="text">
@@ -287,7 +286,7 @@
                                 <span class="label label-warning">New</span>
                                 <div class="image">
                                     <a href="#productid1" class="mfp-open">
-                                        <img src="{{ asset('public/frontend/assets/images/product-3.png') }}" alt="" width="360" />
+                                        <img src="<?php echo e(asset('public/frontend/assets/images/product-3.png')); ?>" alt="" width="360" />
                                     </a>
                                 </div>
                                 <div class="text">
@@ -315,7 +314,7 @@
                             <div class="figure-grid">
                                 <div class="image">
                                     <a href="#productid1" class="mfp-open">
-                                        <img src="{{ asset('public/frontend/assets/images/product-4.png') }}" alt="" width="360" />
+                                        <img src="<?php echo e(asset('public/frontend/assets/images/product-4.png')); ?>" alt="" width="360" />
                                     </a>
                                 </div>
                                 <div class="text">
@@ -344,7 +343,7 @@
                                 <span class="label label-info">-50%</span>
                                 <div class="image">
                                     <a href="#productid1" class="mfp-open">
-                                        <img src="{{ asset('public/frontend/assets/images/product-5.png') }}" alt="" width="360" />
+                                        <img src="<?php echo e(asset('public/frontend/assets/images/product-5.png')); ?>" alt="" width="360" />
                                     </a>
                                 </div>
                                 <div class="text">
@@ -373,7 +372,7 @@
                             <div class="figure-grid">
                                 <div class="image">
                                     <a href="#productid1" class="mfp-open">
-                                        <img src="{{ asset('public/frontend/assets/images/product-6.png') }}" alt="" width="360" />
+                                        <img src="<?php echo e(asset('public/frontend/assets/images/product-6.png')); ?>" alt="" width="360" />
                                     </a>
                                 </div>
                                 <div class="text">
@@ -399,10 +398,10 @@
                         </div>
                         <!-- === product gallery === -->
                         <div class="owl-product-gallery">
-                            <img src="{{ asset('public/frontend/assets/images/product-1.png') }}" alt="" width="640" />
-                            <img src="{{ asset('public/frontend/assets/images/product-2.png') }}" alt="" width="640" />
-                            <img src="{{ asset('public/frontend/assets/images/product-3.png') }}" alt="" width="640" />
-                            <img src="{{ asset('public/frontend/assets/images/product-4.png') }}" alt="" width="640" />
+                            <img src="<?php echo e(asset('public/frontend/assets/images/product-1.png')); ?>" alt="" width="640" />
+                            <img src="<?php echo e(asset('public/frontend/assets/images/product-2.png')); ?>" alt="" width="640" />
+                            <img src="<?php echo e(asset('public/frontend/assets/images/product-3.png')); ?>" alt="" width="640" />
+                            <img src="<?php echo e(asset('public/frontend/assets/images/product-4.png')); ?>" alt="" width="640" />
                         </div>
                         <!-- === product-popup-info === -->
                         <div class="popup-content">
@@ -488,7 +487,7 @@
             <!-- === stretcher === -->
             <ul class="stretcher">
                 <!-- === stretcher item === -->
-                <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-1.jpg') }});">
+                <li class="stretcher-item" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-1.jpg')); ?>);">
                     <!--logo-item-->
                     <div class="stretcher-logo">
                         <div class="text">
@@ -505,7 +504,7 @@
                     <a href="#">Anchor link</a>
                 </li>
                 <!-- === stretcher item === -->
-                <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-2.jpg') }});">
+                <li class="stretcher-item" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-2.jpg')); ?>);">
                     <!--logo-item-->
                     <div class="stretcher-logo">
                         <div class="text">
@@ -522,7 +521,7 @@
                     <a href="#">Anchor link</a>
                 </li>
                 <!-- === stretcher item === -->
-                <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-3.jpg') }});">
+                <li class="stretcher-item" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-3.jpg')); ?>);">
                     <!--logo-item-->
                     <div class="stretcher-logo">
                         <div class="text">
@@ -539,7 +538,7 @@
                     <a href="#">Anchor link</a>
                 </li>
                 <!-- === stretcher item === -->
-                <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-4.jpg') }});">
+                <li class="stretcher-item" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-4.jpg')); ?>);">
                     <!--logo-item-->
                     <div class="stretcher-logo">
                         <div class="text">
@@ -584,7 +583,7 @@
                         <article>
                             <a href="article.html">
                                 <div class="image">
-                                    <img src="{{ asset('public/frontend/assets/images/project-1.jpg') }}" alt="" />
+                                    <img src="<?php echo e(asset('public/frontend/assets/images/project-1.jpg')); ?>" alt="" />
                                 </div>
                                 <div class="entry entry-block">
                                     <div class="date">28 Mart 2017</div>
@@ -610,7 +609,7 @@
                         <article>
                             <a href="article.html">
                                 <div class="image">
-                                    <img src="{{ asset('public/frontend/assets/images/project-2.jpg') }}" alt="" />
+                                    <img src="<?php echo e(asset('public/frontend/assets/images/project-2.jpg')); ?>" alt="" />
                                 </div>
                                 <div class="entry entry-block">
                                     <div class="date">25 Mart 2017</div>
@@ -636,7 +635,7 @@
                         <article>
                             <a href="article.html">
                                 <div class="image">
-                                    <img src="{{ asset('public/frontend/assets/images/project-3.jpg') }}" alt="" />
+                                    <img src="<?php echo e(asset('public/frontend/assets/images/project-3.jpg')); ?>" alt="" />
                                 </div>
                                 <div class="entry entry-block">
                                     <div class="date">28 Mart 2017</div>
@@ -665,7 +664,7 @@
             </div> <!--/container-->
         </section>
         <!-- ========================  Banner ======================== -->
-        <section class="banner" style="background-image:url({{ asset('public/frontend/assets/images/gallery-4.jpg') }})">
+        <section class="banner" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/gallery-4.jpg')); ?>)">
             <div class="container">
                 <div class="row">
                     <div class="col-md-offset-2 col-md-8 text-center">
@@ -698,8 +697,8 @@
                     <div class="col-sm-4">
                         <article>
                             <a href="article.html">
-                                <div class="image" style="background-image:url({{ asset('public/frontend/assets/images/blog-1.jpg') }})">
-                                    <img src="{{ asset('public/frontend/assets/images/blog-1.jpg') }}" alt="" />
+                                <div class="image" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/blog-1.jpg')); ?>)">
+                                    <img src="<?php echo e(asset('public/frontend/assets/images/blog-1.jpg')); ?>" alt="" />
                                 </div>
                                 <div class="entry entry-table">
                                     <div class="date-wrapper">
@@ -723,8 +722,8 @@
                     <div class="col-sm-4">
                         <article>
                             <a href="article.html">
-                                <div class="image" style="background-image:url({{ asset('public/frontend/assets/images/blog-2.jpg') }})">
-                                    <img src="{{ asset('public/frontend/assets/images/blog-1.jpg') }}" alt="" />
+                                <div class="image" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/blog-2.jpg')); ?>)">
+                                    <img src="<?php echo e(asset('public/frontend/assets/images/blog-1.jpg')); ?>" alt="" />
                                 </div>
                                 <div class="entry entry-table">
                                     <div class="date-wrapper">
@@ -748,8 +747,8 @@
                     <div class="col-sm-4">
                         <article>
                             <a href="article.html">
-                                <div class="image" style="background-image:url({{ asset('public/frontend/assets/images/blog-8.jpg') }})">
-                                    <img src="{{ asset('public/frontend/assets/images/blog-8.jpg') }}" alt="" />
+                                <div class="image" style="background-image:url(<?php echo e(asset('public/frontend/assets/images/blog-8.jpg')); ?>)">
+                                    <img src="<?php echo e(asset('public/frontend/assets/images/blog-8.jpg')); ?>" alt="" />
                                 </div>
                                 <div class="entry entry-table">
                                     <div class="date-wrapper">
@@ -776,8 +775,9 @@
                 </div>
             </div> <!--/container-->
         </section>
-@endsection
-@section('headerstyle')
-@endsection
-@section('footerjs')
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('headerstyle'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('footerjs'); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frontend.layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

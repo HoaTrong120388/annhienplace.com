@@ -1,5 +1,5 @@
 <link href="{{ $setting_result['company_fav_icon'] ?? '' }}" rel="shortcut icon" type="image/x-icon" />
-<title>{{ $titlePage_Seo }}</title>
+<title>{{ $titlePage_Seo or $setting_result['company_name'] }}</title>
 <meta name="description" content="{{ $keywordPage_Seo }}" />
 <meta name="keywords" content="{{ $descriptionPage_Seo }}">
 <meta name="author" content="{{ $setting_result['company_name'] ?? '' }}">
