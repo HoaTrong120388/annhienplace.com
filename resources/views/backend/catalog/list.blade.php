@@ -75,31 +75,6 @@
 @section('footerjs')
 <script>
     $(document).ready(function() {
-        $(".update_order").on('blur', function(){
-            var num = $(this).val();
-            var table = $(this).data('table');
-            var id = $(this).data('id');
-            console.log(table)
-            console.log(id)
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: "{{ URL::route('admin.updateorder') }}",
-                data: 'table='+table+'&id='+id+'&order='+num,
-                dataType: "Json",
-                success: function (response) {
-                    if(response.status == 1){
-                        show_noti('Cập nhật thành công', 'success');
-                    }else{
-                        show_noti('Vui lòng thử lại sau', 'danger');
-                    }
-                }
-            });
-        });
         fnc_editTable('{{ route("admin.updatedata") }}', 4);
     });
 

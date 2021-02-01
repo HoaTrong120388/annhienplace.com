@@ -1,5 +1,6 @@
 @extends('backend.layout')
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <h2 class="intro-y text-lg font-medium mt-10">
     {{$titlePage}}
 </h2>
@@ -23,9 +24,10 @@
     </div>
     <!-- BEGIN: Data List -->
     <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-        <table class="table table-report -mt-2">
+        <table class="table table-report mt-2" id="data_table">
             <thead>
                 <tr>
+                    <th></th>
                     <th class="whitespace-no-wrap" width="150">Created</th>
                     <th class="whitespace-no-wrap" width="150">Public</th>
                     <th class="whitespace-no-wrap">Title</th>
@@ -37,10 +39,11 @@
                 @if (!empty($arrResult) && count((array)$arrResult) > 0)
                     @foreach ($arrResult as $item)
                     <tr class="intro-x">
+                        <td>{{ $item->id }};mk_page</td>
                         <td>{{ Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                         <td>{{ Carbon::parse($item->public_date)->format('d-m-Y') }}</td>
-                        <td title="{{ $item->title }}">{{ Str::limit($item->title, 100, '...') }}</td>
-                        <td>@if ($item->status == 1)<span class="text-theme-1">Hiện</span>@else<span class="text-theme-6">Ẩn</span>@endif</td>
+                        <td>{{ Str::limit($item->title, 100, '...') }}</td>
+                        <td>@if ($item->status == 1)Active @else inActive @endif</td>
                         <td class="text-center">
                             <div class="flex justify-center items-center">
                                 <a class="flex items-center mr-3" href="{{ URL::route("admin.$strControler.todo", ['id' => $item->id] ) }}"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
@@ -84,16 +87,7 @@
 @section('footerjs')
 <script>
     $(document).ready(function() {
-        $("#btn-export-form").on('click', function(){
-            var data = $("#frm_filter_data").serialize();
-            $("#btn-submit-export").click();
-        });
+        fnc_editTable('{{ route("admin.updatedata") }}', 4);
     });
-    $( "#btn-show-modal-filter" ).on('click', function(e){
-        e.preventDefault();
-        $('#programmatically-dropdown').dropdown('hide');
-        console.log('sdf');
-    });
-
 </script>
 @endsection

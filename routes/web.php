@@ -29,36 +29,30 @@ Route::any('/check-ip', function(Request $request) {
 });
 
 Route::group(['middleware' => ['locale']], function () {
-    Route::get('/', 'Frontend\HomeController@home')->name('frontend.home');
-    Route::get('/khuyen-mai', 'Frontend\LandingpageController@comingsoon')->name('frontend.landingpage.comingsoon');
-
-    Route::get('/change-language', 'Frontend\CommonController@setLocale')->name('frontend.change.language');
-    Route::get('/send-mail', 'TestController@sendmail')->name('tool.sendmail');
-
-
-    /********* Contact *************/
-    Route::get('/lien-he.html', 'Frontend\CommonController@contact')->name('frontend.contact');
-    Route::post('/contactsubmit', 'Frontend\CommonController@contactsubmit')->name('frontend.contact.submit');
-    /********* Contact *************/
-
-    /********* About Us *************/
-    // Route::get('/tri-seo/vai-tro-cat-day-seo-trong-dieu-tri-seo-ro-hieu-qua.html', 'Frontend\ContentController@detailLanding')->name('frontend.landing.post');
-    /********* About Us *************/
-
-    /*** Url Search ***/
-    Route::get('/search', 'Frontend\ContentController@search')->name('frontend.search');
-    /*** Url Search ***/
-
-    Route::get('/dich-vu', 'Frontend\ContentController@service')->name('frontend.contact');
-    Route::get('/tin-tuc', 'Frontend\ContentController@news')->name('frontend.contact');
-    Route::get('/san-pham', 'Frontend\ContentController@product')->name('frontend.contact');
-    Route::get('/san-pham-chi-tiet', 'Frontend\ContentController@productdetail')->name('frontend.contact');
-
-    /********* About Us *************/
-    Route::get('/{slugCatalog}/{slugDetail}.html', 'Frontend\ContentController@detailLanding')->name('frontend.post.detailfull');
-    /********* About Us *************/
-    Route::get('/{slug}.html', 'Frontend\ContentController@detailPost')->name('frontend.post.detail');
-    Route::get('/{slug}', 'Frontend\ContentController@detailCatalog')->name('frontend.catalog.detail');
+    Route::group(['namespace' => 'Frontend'], function() {
+        Route::get('/', 'HomeController@home')->name('frontend.home');
+        Route::get('/khuyen-mai', 'LandingpageController@comingsoon')->name('frontend.landingpage.comingsoon');
+    
+        Route::get('/change-language', 'CommonController@setLocale')->name('frontend.change.language');
+        Route::get('/send-mail', 'TestController@sendmail')->name('tool.sendmail');
+    
+        /********* Contact *************/
+        Route::get('/lien-he.html', 'CommonController@contact')->name('frontend.contact');
+        Route::post('/contactsubmit', 'CommonController@contactsubmit')->name('frontend.contact.submit');
+        /********* Contact *************/
+    
+        /*** Url Search ***/
+        Route::get('/search', 'ContentController@search')->name('frontend.search');
+        /*** Url Search ***/
+    
+        Route::get('/dich-vu', 'ContentController@service')->name('frontend.service.detail');
+        Route::get('/tin-tuc', 'ContentController@news')->name('frontend.blog.catalog');
+        Route::get('/san-pham', 'ContentController@product')->name('frontend.product.catalog');
+        Route::get('/san-pham-chi-tiet', 'ContentController@productdetail')->name('frontend.product.detail');
+    
+        Route::get('/{slug}.html', 'ContentController@detailPost')->name('frontend.post.detail');
+        Route::get('/{slug}', 'ContentController@detailCatalog')->name('frontend.catalog.detail');
+    });
 });
 
 Route::get('storage/{name}', function ($name) {

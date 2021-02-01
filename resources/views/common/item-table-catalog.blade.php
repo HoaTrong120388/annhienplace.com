@@ -1,8 +1,10 @@
 @foreach($subcategories as $item)
     <tr class="intro-x">
+        <td>{{ $item->id }};mk_catalog</td>
         <td>{{ $item->id }}</td>
         <td title="{{ $item->title }}">@for ($i = 0; $i < $level; $i++)| ------ @endfor {{ Str::limit($item->title, 100, '...') }}</td>
-        <td>@if ($item->status == 1)<span class="text-theme-1">Hiện</span>@else<span class="text-theme-6">Ẩn</span>@endif</td>
+        <td><input data-table="mk_catalog" data-id="{{ $item->id }}" class="update_order" type="text" value="{{ $item->order ?? '' }}"></td>
+        <td>@if ($item->status == 1)Active @else inActive @endif</td>
         <td class="text-center">
             <div class="flex justify-center items-center">
                 <a class="flex items-center mr-3" href="{{ URL::route("admin.$strControler.todo", ['id' => $item->id] ) }}"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>

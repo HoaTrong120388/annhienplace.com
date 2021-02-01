@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 use FCommon;
-use App\Model\User, App\Model\Post, App\Model\Page, App\Model\Libary, App\Model\Setting;
+use App\Model\User, App\Model\Post, App\Model\Page, App\Model\Libary, App\Model\Setting, App\Model\Catalog;
 
 class HomeController extends BaseController
 {
@@ -27,12 +27,16 @@ class HomeController extends BaseController
     }
     public function home()
     {
-        // dd(1);
+        // return redirect()->route('frontend.landingpage.comingsoon');
+        $home_slider = Libary::select('id', 'title', 'slug', 'thumbnail', 'thumbnail_mobile', 'link', 'summary')->where('status', 1)->where('parent', 1)->orderby('order', 'asc')->orderby('id', 'desc')->limit(5)->get();
+        // dd($home_slider);
 
         $data = array(
             'titlePage_Seo'         => trans('common.main_seo_title'),
             'descriptionPage_Seo'   => trans('common.main_seo_description'),
             'keywordPage_Seo'       => trans('common.main_seo_keyword'),
+            
+            'home_slider'           => $home_slider
         );
         return view('frontend/home/index')->with($data);
     }

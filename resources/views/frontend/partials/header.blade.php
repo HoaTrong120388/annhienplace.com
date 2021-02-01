@@ -24,4 +24,4 @@
 <body>
     <div class="page-loader"></div>
     <div class="wrapper">
-        @include('frontend.partials.header.header-nav')
+        @include('frontend.partials.header.mega-nav')

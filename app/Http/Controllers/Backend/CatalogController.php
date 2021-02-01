@@ -27,11 +27,12 @@ class CatalogController extends BaseController
     {
         $this->time_now = Carbon::now();
         $this->controller_name = 'catalog';
+        $this->controller_group = 1;
     }
 
     public function index(Request $request)
     {
-        $lst_catalog = Catalog::where('parent', 0)->where('group', 1)->orderBy('order', 'asc')->get();
+        $lst_catalog = Catalog::where('group', $this->controller_group)->where('parent', 0)->get();
 
         $data = array(
             'page_title'        => 'Catalog',
@@ -47,7 +48,7 @@ class CatalogController extends BaseController
     }
     public function todo(Request $request)
     {
-        $lst_catalog = Catalog::where('parent', 0)->get();
+        $lst_catalog = Catalog::where('group', $this->controller_group)->where('parent', 0)->get();
         $data = array(
             'page_title'        => 'Catalog',
             'titlePage'         => 'Thêm/Sửa Danh Mục',
@@ -167,6 +168,7 @@ class CatalogController extends BaseController
             settype($id, 'int');
             if($id > 0){
                 $objToDo = Catalog::findOrfail($id);
+                if($parent == $id) $parent = 0;
             }else{
                 $objToDo = new Catalog;
             }
@@ -180,6 +182,7 @@ class CatalogController extends BaseController
             $objToDo->status = $status;
             $objToDo->parent = $parent;
             $objToDo->order = $order;
+            $objToDo->group = $this->controller_group;
 
             if($objToDo->save()){
                 LogActivity::addToLog('Thêm catalog mới - '.$objToDo->id, $objToDo, 2);

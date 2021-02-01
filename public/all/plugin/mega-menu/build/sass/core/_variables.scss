@@ -1,0 +1,211 @@
+// Variables
+//
+// Copy settings from this file into the provided `_custom.scss` to override
+
+// Typography
+$font-family-base: 											'Roboto Condensed', sans-serif !default;
+
+// Sizes
+$root-font-size: 												10 !default;
+
+$body-font-size: 												14 !default;
+
+$body-font-size-xs:											9px !default;
+$body-font-size-sm:											10px !default;
+$body-font-size-md:											12px !default;
+
+$body-line-height: 											26 !default;
+
+// Weights
+$font-weight-base: 											300 !default;
+$font-weight-bold: 											700 !default;
+
+// Colors
+$color-font-base: 											#212121 !default;
+
+$color-default: 												#F2F2F2 !default;
+$color-default-inverse: 								#212121 !default;
+
+$color-light: 													#FFFFFF !default;
+$color-light-inverse: 									#212121 !default;
+
+$color-light-1: 												$color-light !default;
+$color-light-2: 												darken($color-light, 2%) !default;
+$color-light-3: 												darken($color-light, 3%) !default;
+$color-light-4: 												darken($color-light, 5%) !default;
+$color-light-5: 												darken($color-light, 8%) !default;
+$color-light-6: 												darken($color-light, 10%) !default;
+$color-light-7: 												darken($color-light, 12%) !default;
+$color-light-8: 												darken($color-light, 14%) !default;
+$color-light-9: 												darken($color-light, 16%) !default;
+$color-light-10: 												darken($color-light, 18%) !default;
+
+// Gray
+$color-gray: 														#8E8E8E !default;
+$color-gray-inverse: 										#FFFFFF !default;
+
+$color-gray-1: 													$color-gray !default;
+$color-gray-2: 													lighten($color-gray, 2%) !default;
+$color-gray-3: 													lighten($color-gray, 3%) !default;
+$color-gray-4: 													lighten($color-gray, 5%) !default;
+$color-gray-5: 													lighten($color-gray, 8%) !default;
+$color-gray-6: 													lighten($color-gray, 10%) !default;
+$color-gray-7: 													lighten($color-gray, 12%) !default;
+$color-gray-8: 													lighten($color-gray, 14%) !default;
+$color-gray-9: 													lighten($color-gray, 16%) !default;
+$color-gray-10: 												lighten($color-gray, 18%) !default;
+
+// Dark
+$color-dark: 														#212121 !default;
+$color-dark-inverse: 										$color-light !default;
+
+$color-dark-1: 													$color-dark !default;
+$color-dark-2: 													lighten($color-dark, 3%) !default;
+$color-dark-3: 													lighten($color-dark, 6%) !default;
+$color-dark-4: 													lighten($color-dark, 9%) !default;
+$color-dark-5: 													lighten($color-dark, 12%) !default;
+$color-dark-6: 													lighten($color-dark, 15%) !default;
+$color-dark-7: 													lighten($color-dark, 18%) !default;
+$color-dark-8: 													lighten($color-dark, 21%) !default;
+$color-dark-9: 													lighten($color-dark, 24%) !default;
+$color-dark-10: 												lighten($color-dark, 27%) !default;
+
+$color-darken-1: 												darken($color-dark, 2%) !default;
+
+// Primary
+//$color-primary: 												$color-light-7 !default;
+$color-primary: #97c524 !default;
+$color-primary-inverse: 								$color-light !default;
+
+// Secondary
+$color-secondary:												#CF0EF0 !default;
+$color-secondary-inverse:								$color-light !default;
+
+// Tertiary
+$color-tertiary:												#2BBBAD !default;
+$color-tertiary-inverse:								$color-light !default;
+
+// Quaternary
+$color-quaternary:											$color-dark-4 !default;
+$color-quaternary-inverse:							$color-light !default;
+
+// Success
+$color-success:													#00CC55 !default;
+$color-success-inverse:									$color-light !default;
+
+// Warning
+$color-warning:													#FFBB33 !default;
+$color-warning-inverse:									$color-light !default;
+
+// Danger
+$color-danger:													#FF4444 !default;
+$color-danger-inverse:									$color-light !default;
+
+// Info
+$color-info:														#00BBFF !default;
+$color-info-inverse:										$color-light !default;
+
+// Red
+$color-red:															$color-danger !default;
+$color-red-inverse:											$color-light !default;
+
+// Muted
+$color-muted:														$color-gray-4 !default;
+
+// Colors list
+$colors-list:
+(primary 																$color-primary $color-primary-inverse)
+(secondary 															$color-secondary $color-secondary-inverse)
+(tertiary 															$color-tertiary $color-tertiary-inverse)
+(quaternary 														$color-quaternary $color-quaternary-inverse)!default;
+
+// Color states list
+$states:
+(primary 																$color-primary $color-primary-inverse)
+(success 																$color-success $color-success-inverse)
+(warning 																$color-warning $color-warning-inverse)
+(danger 																$color-danger $color-danger-inverse)
+(info 																	$color-info $color-info-inverse)
+(dark 																	$color-dark $color-dark-inverse)!default;
+
+// Color light
+$light-bg: 															$color-light !default;
+
+// Color dark
+$dark-bg: 															$color-dark !default;
+$dark-default-text: 										$color-light-10 !default;
+
+// Spacements
+$spacement-increment: 									5px !default;
+$spacement-xs: 													$spacement-increment !default;
+$spacement-sm: 													$spacement-xs + $spacement-increment !default;
+$spacement-md: 													$spacement-sm + $spacement-increment !default;
+$spacement-lg: 													$spacement-md + $spacement-increment !default;
+$spacement-xl: 													$spacement-lg + $spacement-increment !default;
+$spacement-xlg: 												$spacement-xl + $spacement-increment !default;
+
+// Borders
+$border-thinner: 												1px !default;
+$border-thin: 													3px !default;
+$border-normal: 												5px !default;
+$border-thick: 													7px !default;
+
+// Border radius
+$border-radius-xs: 											1px !default;
+$border-radius-sm: 											2px !default;
+$border-radius-md: 											3px !default;
+$border-radius-lg: 											5px !default;
+
+$border-radius-round: 									20px !default;
+
+$box-shadow-base:												0 10px 30px 10px rgba(0, 0, 0, 0.05) !default;
+$box-shadow-sidebar:										0 0 30px rgba(0, 0, 0, 0.05) !default;
+$box-shadow-header:											0 0 30px rgba(0, 0, 0, 0.01) !default;
+$box-shadow-sticky-header:							0 0 30px rgba(0, 0, 0, 0.01) !default;
+
+// Settings
+//
+// Container heights
+$container-height-xs:										80px !default;
+$container-height-sm:										100px !default;
+$container-height-md:										125px !default;
+$container-height-lg:										145px !default;
+
+// Header Search
+$header-form-control-width:							150px !default;
+
+// Dropdown (Shop, Log in, Search)
+$dropdown-popup-width:									340px !default;
+
+$dropdown-small-width:									300px !default;
+$dropdown-half-width:										600px !default;
+$dropdown-full-width:										auto !default;
+
+$dropdown-image-width:									180px !default;
+$dropdown-image-height:									127px !default;
+
+// Sidebar
+$sidebar-width:													300px !default;
+$sidebar-lg-width:											400px !default;
+
+$sidebar-overlay-bg-color:							rgba(0, 0, 0, 0.8) !default;
+
+$sidebar-narrow-width:									90px !default;
+
+// Narrow
+$text-logo-vertical:										-106px !default;
+
+// Animations
+$animation-iteration-count-base:				1 !default;
+$animation-iteration-count-back:				infinite !default;
+
+$animation-iteration-count-base-speed:	150ms !default;
+
+// Grid breakpoints
+$grid-breakpoints: (
+  xs: 																	0,
+  sm: 																	576px,
+  md: 																	768px,
+  lg: 																	992px,
+  xl: 																	1200px
+) !default;

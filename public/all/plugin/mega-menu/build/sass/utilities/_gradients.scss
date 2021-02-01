@@ -1,0 +1,39 @@
+// Geadients
+//
+// Copy settings from this file into the provided `_custom.scss` to override
+
+.gradient-x {
+	@include gradient-x($start-color: rgba($color-dark,.0001), $end-color: rgba($color-dark,.3));
+}
+
+.gradient-x-reverse {
+	@include gradient-x($start-color: rgba($color-dark,.3), $end-color: rgba($color-dark,.0001));
+}
+
+.gradient-y {
+	@include gradient-y($start-color: rgba($color-dark,.0001), $end-color: rgba($color-dark,.3));
+}
+
+.gradient-y-reverse {
+	@include gradient-y($start-color: rgba($color-dark,.3), $end-color: rgba($color-dark,.0001));
+}
+
+.gradient-directional {
+	@include gradient-directional($start-color: rgba($color-dark,.0001), $end-color: rgba($color-dark,.3));
+}
+
+.gradient-directional-reverse {
+	@include gradient-directional($start-color: rgba($color-dark,.3), $end-color: rgba($color-dark,.0001));
+}
+
+.gradient-radial {
+	@include gradient-radial($inner-color: rgba($color-dark,.0001), $outer-color: rgba($color-dark,.3));
+}
+
+.gradient-radial-reverse {
+	@include gradient-radial($inner-color: rgba($color-dark,.3), $outer-color: rgba($color-dark,.0001));
+}
+
+.gradient-striped {
+	@include gradient-striped($color: rgba($color-dark,.3));
+}

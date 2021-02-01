@@ -22,9 +22,9 @@
 
         <script>
             var path_public             = "<?php echo e(asset('public')); ?>";
-            var website_domain          = "<?php echo e($setting_result['website_domain'] or ''); ?>";
-            var website_domain_admin    = "<?php echo e($setting_result['website_domain_admin'] or ''); ?>";
-            var website_domain_api      = "<?php echo e($setting_result['website_domain_api'] or ''); ?>";
+            var website_domain          = "<?php echo e($setting_result['website_domain'] ?? ''); ?>";
+            var website_domain_admin    = "<?php echo e($setting_result['website_domain_admin'] ?? ''); ?>";
+            var website_domain_api      = "<?php echo e($setting_result['website_domain_api'] ?? ''); ?>";
         </script>
         <?php echo FCommon::minifycss('backend_theme'); ?>
 

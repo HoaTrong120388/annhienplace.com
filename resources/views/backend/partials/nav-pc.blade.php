@@ -23,15 +23,15 @@
         @if (FCommon::checkPermissions('admin.post.index'))
         <li>
             <a href="javascript:;" class="side-menu @if (isset($nav_main) && $nav_main == 'post') side-menu--active @endif">
-                <div class="side-menu__icon"> <i data-feather="file-text"></i></div>
-                <div class="side-menu__title"> Dịch vụ <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                <div class="side-menu__icon"> <i data-feather="box"></i></div>
+                <div class="side-menu__title"> Sản phẩm <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
             </a>
             <ul class="@if (isset($nav_main) && $nav_main == 'post') side-menu__sub-open @endif">
                 @if (FCommon::checkPermissions('admin.post.index'))
                 <li>
                     <a href="{{ route('admin.post.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'post-index') side-menu--active @endif">
                         <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="side-menu__title"> Bài Viết </div>
+                        <div class="side-menu__title"> Sản Phẩm </div>
                     </a>
                 </li>
                 @endif
@@ -40,6 +40,32 @@
                     <a href="{{ route('admin.catalog.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'catalog-index') side-menu--active @endif">
                         <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="side-menu__title"> Danh Mục </div>
+                    </a>
+                </li>
+                @endif
+            </ul>
+        </li>
+        @endif
+        @if (FCommon::checkPermissions('admin.service.index'))
+        <li>
+            <a href="javascript:;" class="side-menu @if (isset($nav_main) && $nav_main == 'service') side-menu--active @endif">
+                <div class="side-menu__icon"> <i data-feather="globe"></i></div>
+                <div class="side-menu__title"> Dịch vụ <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+            </a>
+            <ul class="@if (isset($nav_main) && $nav_main == 'service') side-menu__sub-open @endif">
+                @if (FCommon::checkPermissions('admin.service.index'))
+                <li>
+                    <a href="{{ route('admin.service.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'service-index') side-menu--active @endif">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Bài viết </div>
+                    </a>
+                </li>
+                @endif
+                @if (FCommon::checkPermissions('admin.catalogservice.index'))
+                <li>
+                    <a href="{{ route('admin.catalogservice.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'catalogservice-index') side-menu--active @endif">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Danh mục </div>
                     </a>
                 </li>
                 @endif
@@ -72,40 +98,35 @@
             </ul>
         </li>
         @endif
-        @if (FCommon::checkPermissions('admin.image.index'))
+        
+        
+        @if (FCommon::checkPermissions('admin.folder.index'))
         <li>
-            <a href="javascript:;" class="side-menu @if (isset($nav_main) && $nav_main == 'libary') side-menu--active @endif">
-                <div class="side-menu__icon"> <i data-feather="folder"></i></div>
-                <div class="side-menu__title"> Thư viện <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+            <a href="javascript:;" class="side-menu @if (isset($nav_main) && $nav_main == 'folder') side-menu--active @endif">
+                <div class="side-menu__icon"> <i data-feather="book"></i></div>
+                <div class="side-menu__title"> Catalog <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
             </a>
-            <ul class="@if (isset($nav_main) && $nav_main == 'image') side-menu__sub-open @endif">
-                @if (FCommon::checkPermissions('admin.image.index'))
+            <ul class="@if (isset($nav_main) && $nav_main == 'folder') side-menu__sub-open @endif">
+                @if (FCommon::checkPermissions('admin.folder.index'))
                 <li>
-                    <a href="{{ route('admin.image.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'image-index') side-menu--active @endif">
+                    <a href="{{ route('admin.folder.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'folder-index') side-menu--active @endif">
                         <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="side-menu__title"> Hình ảnh </div>
+                        <div class="side-menu__title"> Catalog </div>
                     </a>
                 </li>
                 @endif
-                @if (FCommon::checkPermissions('admin.video.index'))
+                @if (FCommon::checkPermissions('admin.catalogfolder.index'))
                 <li>
-                    <a href="{{ route('admin.video.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'video-index') side-menu--active @endif">
+                    <a href="{{ route('admin.catalogfolder.index') }}" class="side-menu @if (isset($nav_sub) && $nav_sub == 'catalogfolder-index') side-menu--active @endif">
                         <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="side-menu__title"> Video </div>
+                        <div class="side-menu__title"> Danh mục </div>
                     </a>
                 </li>
                 @endif
             </ul>
         </li>
         @endif
-        @if (FCommon::checkPermissions('admin.customer.index'))
-        <li>
-            <a href="{{ route('admin.customer.index') }}" class="side-menu @if (isset($nav_main) && $nav_main == 'customer') side-menu--active @endif"">
-                <div class="side-menu__icon"> <i data-feather="user-check"></i> </div>
-                <div class="side-menu__title"> Khách hàng </div>
-            </a>
-        </li>
-        @endif
+
         @if (FCommon::checkPermissions('admin.media.index'))
         <li>
             <a href="{{ route('admin.media.index') }}" class="side-menu @if (isset($nav_main) && $nav_main == 'media') side-menu--active @endif"">

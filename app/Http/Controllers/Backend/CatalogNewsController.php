@@ -22,16 +22,17 @@ use App\Model\Catalog, App\Model\User;
 
 class CatalogNewsController extends BaseController
 {
-    protected $time_now, $controller_name;
+    protected $time_now, $controller_name, $controller_group;
     public function __construct()
     {
         $this->time_now = Carbon::now();
         $this->controller_name = 'catalognews';
+        $this->controller_group = 2;
     }
 
     public function index(Request $request)
     {
-        $lst_catalog = Catalog::where('group', 2)->where('parent', 0)->get();
+        $lst_catalog = Catalog::where('group', $this->controller_group)->where('parent', 0)->get();
 
         $data = array(
             'page_title'        => 'Catalog',
@@ -47,7 +48,7 @@ class CatalogNewsController extends BaseController
     }
     public function todo(Request $request)
     {
-        $lst_catalog = Catalog::where('parent', 0)->get();
+        $lst_catalog = Catalog::where('group', $this->controller_group)->where('parent', 0)->get();
         $data = array(
             'page_title'        => 'Catalog',
             'titlePage'         => 'Thêm/Sửa Danh Mục',
@@ -164,6 +165,7 @@ class CatalogNewsController extends BaseController
             settype($id, 'int');
             if($id > 0){
                 $objToDo = Catalog::findOrfail($id);
+                if($parent == $id) $parent = 0;
             }else{
                 $objToDo = new Catalog;
             }
@@ -176,10 +178,10 @@ class CatalogNewsController extends BaseController
             $objToDo->more_info = json_encode($arrInfo);
             $objToDo->status = $status;
             $objToDo->parent = $parent;
-            $objToDo->group = 2;
+            $objToDo->group = $this->controller_group;
 
             if($objToDo->save()){
-                LogActivity::addToLog('Thêm catalog mới - '.$objToDo->id, $objToDo, 2);
+                LogActivity::addToLog('Thêm '. $this->controller_name .' mới - '.$objToDo->id, $objToDo, 2);
                 flash('Thêm thành công')->success();
                 return back();
             }else{

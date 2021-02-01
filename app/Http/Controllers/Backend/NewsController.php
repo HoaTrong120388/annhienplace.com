@@ -83,7 +83,9 @@ class NewsController extends BaseController
             $arrResult = Post::findOrfail($id);
             if($arrResult){
                 $arrResult->parent = $arrResult->catalog_id;
-                if($arrResult->catalogsub_id > 0)
+                if($arrResult->catalogsubsub_id > 0)
+                    $arrResult->parent = $arrResult->catalogsubsub_id;
+                elseif($arrResult->catalogsub_id > 0)
                     $arrResult->parent = $arrResult->catalogsub_id;
 
                 $arrResult->seo = json_decode($arrResult->seo);
@@ -152,15 +154,25 @@ class NewsController extends BaseController
             if($parent > 0){
                 $cat_info = Catalog::findOrfail($parent);
                 if($cat_info->parentcategory){
-                    $catalog_id = $cat_info->parentcategory->id;
-                    $catalogsub_id = $cat_info->id;
+                    $tem_cat = $cat_info->parentcategory;
+                    if($tem_cat->parentcategory){
+                        $catalog_id = $tem_cat->parentcategory->id;
+                        $catalogsub_id = $cat_info->parentcategory->id;
+                        $catalogsubsub_id = $cat_info->id;
+                    }else{
+                        $catalog_id = $cat_info->parentcategory->id;
+                        $catalogsub_id = $cat_info->id;
+                        $catalogsubsub_id = 0;
+                    }
                 }else{
                     $catalog_id = $cat_info->id;
                     $catalogsub_id = 0;
+                    $catalogsubsub_id = 0;
                 }
             }else{
                 $catalog_id = 0;
                 $catalogsub_id = 0;
+                $catalogsubsub_id = 0;
             }
 
 
@@ -219,19 +231,20 @@ class NewsController extends BaseController
                 $objToDoOption = new PostOption;
             }
 
-            $objToDo->title = $title;
-            $objToDo->slug = !empty($slug)?$slug:Str::slug($title);
-            $objToDo->summary = $summary;
-            $objToDo->content = $content;
-            $objToDo->thumbnail = $thumbnail;
-            $objToDo->seo = json_encode($arrSeo);
-            $objToDo->public_date = FCommon::conver_date($public_date);
-            $objToDo->catalog_id = $catalog_id;
-            $objToDo->catalogsub_id = $catalogsub_id;
-            $objToDo->status = $status;
-            $objToDo->special = $special;
-            $objToDo->group = $this->group;
-            $objToDo->user_id = $request->session()->get('user_id');
+            $objToDo->title                 = $title;
+            $objToDo->slug                  = !empty($slug)?$slug:Str::slug($title);
+            $objToDo->summary               = $summary;
+            $objToDo->content               = $content;
+            $objToDo->thumbnail             = $thumbnail;
+            $objToDo->seo                   = json_encode($arrSeo);
+            $objToDo->public_date           = FCommon::conver_date($public_date);
+            $objToDo->catalog_id            = $catalog_id;
+            $objToDo->catalogsub_id         = $catalogsub_id;
+            $objToDo->catalogsubsub_id      = $catalogsubsub_id;
+            $objToDo->status                = $status;
+            $objToDo->special               = $special;
+            $objToDo->group                 = $this->group;
+            $objToDo->user_id               = $request->session()->get('user_id');
 
             if($objToDo->save()){
 

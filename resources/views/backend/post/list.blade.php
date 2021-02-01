@@ -43,7 +43,7 @@
                         <td>{{ $item->id }};mk_post</td>
                         <td>{{ Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                         <td>{{ Carbon::parse($item->public_date)->format('d-m-Y') }}</td>
-                        <td title="{{ $item->title }}"><a target="_blank" href="{{ route("frontend.post.detailfull", [($item->parentcategory)?$item->parentcategory->slug:'danh-muc', $item->slug]) }}">{{ Str::limit($item->title, 100, '...') }}</a></td>
+                        <td title="{{ $item->title }}"><a target="_blank" href="{{ route("frontend.product.detail", $item->slug) }}">{{ Str::limit($item->title, 100, '...') }}</a></td>
                         <td>@if ($item->special == 1)Active @else inActive @endif</td>
                         <td>@if ($item->status == 1)Active @else inActive @endif</td>
                         <td class="text-center">
@@ -90,16 +90,7 @@
 @section('footerjs')
 <script>
     $(document).ready(function() {
-        $("#btn-export-form").on('click', function(){
-            var data = $("#frm_filter_data").serialize();
-            $("#btn-submit-export").click();
-        });
         fnc_editTable('{{ route("admin.updatedata") }}', 5, 4);
     });
-    $( "#btn-show-modal-filter" ).on('click', function(e){
-        e.preventDefault();
-        $('#programmatically-dropdown').dropdown('hide');
-    });
-    
 </script>
 @endsection

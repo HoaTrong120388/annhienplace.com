@@ -24,4 +24,4 @@
 <body>
     <div class="page-loader"></div>
     <div class="wrapper">
-        <?php echo $__env->make('frontend.partials.header.header-nav', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <?php echo $__env->make('frontend.partials.header.mega-nav', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

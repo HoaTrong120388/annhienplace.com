@@ -53,7 +53,7 @@ class PostController extends BaseController
         }
         $data = array(
             'page_title'        => 'Post',
-            'titlePage'         => 'Quản lý dịch vụ',
+            'titlePage'         => 'Quản lý Sản Phẩm',
 
             'nav_main'          => 'post',
             'nav_sub'           => 'post-index',
@@ -69,7 +69,7 @@ class PostController extends BaseController
     {
         $data = array(
             'page_title'        => 'Post',
-            'titlePage'         => 'Thêm/Sửa dịch vụ',
+            'titlePage'         => 'Thêm/Sửa Sản Phẩm',
 
             'nav_main'          => 'post',
             'nav_sub'           => 'post-index',
@@ -82,11 +82,14 @@ class PostController extends BaseController
             $arrResult = Post::findOrfail($id);
             if($arrResult){
                 $arrResult->parent = $arrResult->catalog_id;
-                if($arrResult->catalogsub_id > 0)
+                if($arrResult->catalogsubsub_id > 0)
+                    $arrResult->parent = $arrResult->catalogsubsub_id;
+                elseif($arrResult->catalogsub_id > 0)
                     $arrResult->parent = $arrResult->catalogsub_id;
 
                 $arrResult->seo = json_decode($arrResult->seo);
                 $arrResult->more_info = json_decode($arrResult->option->more_info);
+                $arrResult->album = json_decode($arrResult->album);
                 $arrResult->template = json_decode($arrResult->option->more_info)->template;
                 $arrResult->public_date = Carbon::parse($arrResult->public_date)->format('d-m-Y');
                 $data['arrResult'] = $arrResult;
@@ -131,9 +134,16 @@ class PostController extends BaseController
             $special                = isset($request->special)                  ?$request->special:0;
             $parent                 = isset($request->parent)                   ?$request->parent:1;
             $template               = isset($request->template)                 ?$request->template:1;
-
+            $in_stocks              = isset($request->in_stocks)                ?$request->in_stocks:0;
+            $album                  = isset($request->album)                    ?$request->album:array();
+            $price_out              = isset($request->price_out)                ?$request->price_out:'';
+            $price_old              = isset($request->price_old)                ?$request->price_old:'';
+            $brand                  = isset($request->brand)                    ?$request->brand:'';
+            $source                 = isset($request->source)                   ?$request->source:'';
+            // dd($in_stocks);
             settype($parent, 'int');
             settype($template, 'int');
+
 
             $title                  = FCommon::ClearStr($title);
             $thumbnail              = FCommon::ClearStr($thumbnail);
@@ -147,21 +157,37 @@ class PostController extends BaseController
             $public_date            = FCommon::ClearStr($public_date);
             $status                 = FCommon::ClearStr($status);
             $special                = FCommon::ClearStr($special);
+            $in_stocks              = FCommon::ClearStr($in_stocks);
+            $price_out              = FCommon::ClearStr($price_out);
+            $price_old              = FCommon::ClearStr($price_old);
+            $brand                  = FCommon::ClearStr($brand);
+            $source                 = FCommon::ClearStr($source);
             if($status == 'on') $status = 1;
             if($special == 'on') $special = 1;
+            if($in_stocks == 'on') $in_stocks = 1;
 
             if($parent > 0){
                 $cat_info = Catalog::findOrfail($parent);
                 if($cat_info->parentcategory){
-                    $catalog_id = $cat_info->parentcategory->id;
-                    $catalogsub_id = $cat_info->id;
+                    $tem_cat = $cat_info->parentcategory;
+                    if($tem_cat->parentcategory){
+                        $catalog_id = $tem_cat->parentcategory->id;
+                        $catalogsub_id = $cat_info->parentcategory->id;
+                        $catalogsubsub_id = $cat_info->id;
+                    }else{
+                        $catalog_id = $cat_info->parentcategory->id;
+                        $catalogsub_id = $cat_info->id;
+                        $catalogsubsub_id = 0;
+                    }
                 }else{
                     $catalog_id = $cat_info->id;
                     $catalogsub_id = 0;
+                    $catalogsubsub_id = 0;
                 }
             }else{
                 $catalog_id = 0;
                 $catalogsub_id = 0;
+                $catalogsubsub_id = 0;
             }
 
 
@@ -172,10 +198,8 @@ class PostController extends BaseController
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_thumbnail = $request->file('file_thumbnail');
                     $thumbnail = FCommon::upload_file_crop($file_file_thumbnail, '200x200');
-                    // dd($thumbnail);
                 }
             }
-            // dd($thumbnail);
             if ($request->hasFile('file_seo_image')) {
                 $ext = $request->file_seo_image->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
@@ -204,6 +228,18 @@ class PostController extends BaseController
                     $banner_form_register = FCommon::upload_file_crop_size($file_file_banner_form_register);
                 }
             }
+            
+            if ($request->hasFile('file_album')) {
+
+                $files = $request->file('file_album');
+                foreach($files as $file){
+                    $ext = $file->getClientOriginalExtension();
+                    if(FCommon::check_file_upload($ext, 'image')){
+                        $link_file = FCommon::upload_file_crop_size($file);
+                        $album[] = $link_file;
+                    }
+                }
+            }
 
             $arrSeo = array(
                 'title'         => !empty($seo_title)?$seo_title:$title,
@@ -215,8 +251,11 @@ class PostController extends BaseController
                 'header_banner_pc'  => $header_banner_pc,
                 'header_banner_mobile'  => $header_banner_mobile,
                 'banner_form_register'  => $banner_form_register,
-                'template'  => $template
+                'template'  => $template,
+                'brand'  => $brand,
+                'source'  => $source,
             );
+            // dd($arrInfo);
 
             $id = isset($request->id)?$request->id:0;
             settype($id, 'int');
@@ -228,18 +267,23 @@ class PostController extends BaseController
                 $objToDoOption = new PostOption;
             }
 
-            $objToDo->title = $title;
-            $objToDo->slug = !empty($slug)?$slug:Str::slug($title);
-            $objToDo->summary = $summary;
-            $objToDo->content = $content;
-            $objToDo->thumbnail = $thumbnail;
-            $objToDo->seo = json_encode($arrSeo);
-            $objToDo->public_date = FCommon::conver_date($public_date);
-            $objToDo->catalog_id = $catalog_id;
-            $objToDo->catalogsub_id = $catalogsub_id;
-            $objToDo->status = $status;
-            $objToDo->special = $special;
-            $objToDo->user_id = $request->session()->get('user_id');
+            $objToDo->title                 = $title;
+            $objToDo->slug                  = !empty($slug)?$slug:Str::slug($title);
+            $objToDo->summary               = $summary;
+            $objToDo->content               = $content;
+            $objToDo->thumbnail             = $thumbnail;
+            $objToDo->album                 = json_encode($album);
+            $objToDo->seo                   = json_encode($arrSeo);
+            $objToDo->public_date           = FCommon::conver_date($public_date);
+            $objToDo->catalog_id            = $catalog_id;
+            $objToDo->catalogsub_id         = $catalogsub_id;
+            $objToDo->catalogsubsub_id      = $catalogsubsub_id;
+            $objToDo->status                = $status;
+            $objToDo->special               = $special;
+            $objToDo->price_out             = $price_out;
+            $objToDo->price_old             = $price_old;
+            $objToDo->in_stocks             = $in_stocks;
+            $objToDo->user_id               = $request->session()->get('user_id');
 
             if($objToDo->save()){
 

@@ -22,9 +22,9 @@
 
         <script>
             var path_public             = "{{ asset('public') }}";
-            var website_domain          = "{{ $setting_result['website_domain'] or '' }}";
-            var website_domain_admin    = "{{ $setting_result['website_domain_admin'] or '' }}";
-            var website_domain_api      = "{{ $setting_result['website_domain_api'] or '' }}";
+            var website_domain          = "{{ $setting_result['website_domain'] ?? '' }}";
+            var website_domain_admin    = "{{ $setting_result['website_domain_admin'] ?? '' }}";
+            var website_domain_api      = "{{ $setting_result['website_domain_api'] ?? '' }}";
         </script>
         {!! FCommon::minifycss('backend_theme') !!}
         @yield('headerstyle')

@@ -74,6 +74,7 @@ function fnc_editTable(url, colstatus, colhot) {
         url: url,
         eventType: 'dblclick',
         editButton: false,
+        deleteButton: false,
         hideIdentifier: true,
         columns: {
             identifier: [0, 'data'],
@@ -87,6 +88,31 @@ function fnc_editTable(url, colstatus, colhot) {
             }
         }
     });
+}
+function update_order(){
+    $(".update_order").on('change', function(){
+            var num = $(this).val();
+            var table = $(this).data('table');
+            var id = $(this).data('id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: website_domain_admin+"update-order",
+                data: 'table='+table+'&id='+id+'&order='+num,
+                dataType: "Json",
+                success: function (response) {
+                    if(response.status == 1){
+                        show_noti('Cập nhật thành công', 'success');
+                    }else{
+                        show_noti('Vui lòng thử lại sau', 'danger');
+                    }
+                }
+            });
+        });
 }
 $(document).ready(function () {
     $(".file_choose").on('change', function(){
@@ -130,4 +156,5 @@ $(document).ready(function () {
         if (element.element.id != '')
             $("#source_" + element.element.id).val('');
     });
+    update_order();
 });

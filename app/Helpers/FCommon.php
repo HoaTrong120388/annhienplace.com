@@ -41,13 +41,13 @@ class FCommon
     public static function map_file_css(){
         return array(
             'backend_theme'     => 'backend/dist/css/common.css',
-            'frontend_theme'    => 'frontend/css/common.css',
+            'frontend_theme'    => 'frontend/css/style.min.css',
         );
     }
     public static function map_file_js(){
         return array(
             'backend_theme' => 'backend/dist/js/common.js',
-            'frontend_theme' => 'frontend/js/common.js',
+            'frontend_theme' => 'frontend/js/theme.min.js',
         );
     }
     public static function minifycss($str_file = '', $flag = 1){
@@ -334,61 +334,27 @@ class FCommon
         settype($arrValue[2], 'int');
         return $arrValue[2].'-'.$arrValue[1].'-'.$arrValue[0];
     }
-    public static function showNameNetwork($value)
-    {
-        $arrNetWork = array(
-            "VTT" => "Viettel",
-            "VMS" => "Mobifone",
-            "VNP" => "Vinaphone",
-            "VNM" => "Vietnam Mobile",
-        );
-        if(isset($arrNetWork[$value]) && !empty($arrNetWork[$value])) return $arrNetWork[$value];
-        return 'Không xác định';
-    }
-    public static function arrayNetwork()
-    {
-        $arrNetWork = array(
-            "VTT" => "Viettel",
-            "VMS" => "Mobifone",
-            "VNP" => "Vinaphone",
-            "VNM" => "Vietnam Mobile",
-        );
-        return $arrNetWork;
-    }
-    public static function SendCardKemeno($Network, $CardCode,$CardSeri,$CardValue,$TrxID, $urlcallback, $apikey)
-    {
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://tinhdoncoi.tinhyeumaunang.com/API/NapThe?Network=$Network&CardCode=$CardCode&CardSeri=$CardSeri&CardValue=$CardValue&TrxID=$TrxID&APIKey=$apikey&URLCallback=$urlcallback",
-
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-        ));
-
-        //execute
-        $output = curl_exec($curl);
-
-        if ($output === FALSE) {
-            echo "cURL Error: " . curl_error($curl);
-            return false;
-        } else {
-            return $output;
-        }
-
-        //free up the curl handle
-        curl_close($curl);
-    }
-     public static function format_data_to_group ($data, $name_group)
+    public static function format_data_to_group ($data, $name_group)
     {
         if(empty($data) || empty($name_group)) return null;
         $grouped = $data->groupBy($name_group);
         $grouped->toArray();
         return $grouped;
+    }
+    public static function sendMess ($msg = 'Test thông báo', $group = '-1001252155381', $bot = '1683748574:AAEpS6f8Oc-cSd3irHKay9XXOWZAp2gsmlw')
+    {
+        $client = new \GuzzleHttp\Client(['headers' => [ 'Content-Type' => 'application/json' ]]);
+        $res = $client->post('https://api.telegram.org/bot'.$bot.'/sendMessage',
+            [
+                'body' => json_encode
+                (
+                    [
+                        'chat_id' => $group,
+                        'text' => $msg
+                    ]
+                ),
+                'verify' => false
+            ]);
+        $response = json_decode($res->getBody());
     }
 }

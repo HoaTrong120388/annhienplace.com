@@ -81,7 +81,7 @@
                             <tr class="intro-x">
                                 <td>{{ Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                                 <td>{{ Carbon::parse($item->public_date)->format('d-m-Y') }}</td>
-                                <td title="{{ $item->title }}"><a href="{{ route("frontend.post.detailfull", [($item->parentcategory)?$item->parentcategory->slug:'danh-muc', $item->slug]) }}">{{ Str::limit($item->title, 100, '...') }}</a></td>
+                                <td title="{{ $item->title }}"><a href="{{ route("frontend.post.detail", $item->slug) }}">{{ Str::limit($item->title, 100, '...') }}</a></td>
                                 <td>{{$item->authr->fullname ?? ''}}</td>
                             </tr>
                             @endforeach

@@ -104,28 +104,35 @@ Route::group(['prefix' => 'wlm-admin'], function () {
                 Route::post('/todo', 'Backend\NewsController@todosubmit')->name('admin.news.todo');
                 Route::get('/delete', 'Backend\NewsController@delete')->name('admin.news.delete');
             });
+            Route::group(['prefix' => 'catalogservice'], function () {
+                Route::get('/', 'Backend\CatalogServiceController@index')->name('admin.catalogservice.index');
+                Route::get('/todo', 'Backend\CatalogServiceController@todo')->name('admin.catalogservice.todo');
+                Route::post('/todo', 'Backend\CatalogServiceController@todosubmit')->name('admin.catalogservice.todo');
+                Route::get('/delete', 'Backend\CatalogServiceController@delete')->name('admin.catalogservice.delete');
+            });
+            Route::group(['prefix' => 'service'], function () {
+                Route::get('/', 'Backend\ServiceController@index')->name('admin.service.index');
+                Route::get('/todo', 'Backend\ServiceController@todo')->name('admin.service.todo');
+                Route::post('/todo', 'Backend\ServiceController@todosubmit')->name('admin.service.todo');
+                Route::get('/delete', 'Backend\ServiceController@delete')->name('admin.service.delete');
+            });
+            Route::group(['prefix' => 'catalogfolder'], function () {
+                Route::get('/', 'Backend\CatalogFolderController@index')->name('admin.catalogfolder.index');
+                Route::get('/todo', 'Backend\CatalogFolderController@todo')->name('admin.catalogfolder.todo');
+                Route::post('/todo', 'Backend\CatalogFolderController@todosubmit')->name('admin.catalogfolder.todo');
+                Route::get('/delete', 'Backend\CatalogFolderController@delete')->name('admin.catalogfolder.delete');
+            });
+            Route::group(['prefix' => 'folder'], function () {
+                Route::get('/', 'Backend\FolderController@index')->name('admin.folder.index');
+                Route::get('/todo', 'Backend\FolderController@todo')->name('admin.folder.todo');
+                Route::post('/todo', 'Backend\FolderController@todosubmit')->name('admin.folder.todo');
+                Route::get('/delete', 'Backend\FolderController@delete')->name('admin.folder.delete');
+            });
             Route::group(['prefix' => 'page'], function () {
                 Route::get('/', 'Backend\PageController@index')->name('admin.page.index');
                 Route::get('/todo', 'Backend\PageController@todo')->name('admin.page.todo');
                 Route::post('/todo', 'Backend\PageController@todosubmit')->name('admin.page.todo');
                 Route::get('/delete', 'Backend\PageController@delete')->name('admin.page.delete');
-            });
-            Route::group(['prefix' => 'libary'], function () {
-                Route::get('/', 'Backend\ImageController@index')->name('admin.image1.index');
-                Route::get('/image', 'Backend\ImageController@index')->name('admin.image.index');
-                Route::get('/image/todo', 'Backend\ImageController@todo')->name('admin.image.todo');
-                Route::post('/image/todo', 'Backend\ImageController@todosubmit')->name('admin.image.todo');
-                Route::get('/image/delete', 'Backend\ImageController@delete')->name('admin.image.delete');
-                Route::get('/video', 'Backend\VideoController@index')->name('admin.video.index');
-                Route::get('/video/todo', 'Backend\VideoController@todo')->name('admin.video.todo');
-                Route::post('/video/todo', 'Backend\VideoController@todosubmit')->name('admin.video.todo');
-                Route::get('/video/delete', 'Backend\VideoController@delete')->name('admin.video.delete');
-            });
-            Route::group(['prefix' => 'customer'], function () {
-                Route::get('/', 'Backend\CustomerController@index')->name('admin.customer.index');
-                Route::get('/todo', 'Backend\CustomerController@todo')->name('admin.customer.todo');
-                Route::post('/todo', 'Backend\CustomerController@todosubmit')->name('admin.customer.todo');
-                Route::get('/delete', 'Backend\CustomerController@delete')->name('admin.customer.delete');
             });
             Route::group(['prefix' => 'media'], function () {
                 Route::get('/', 'Backend\MediaController@index')->name('admin.media.index');

@@ -14,18 +14,12 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // view()->composer(['backend/partials/nav'], 'App\Http\ViewComposers\CountContactNew');
-        view()->composer(['frontend/partials/header/header-nav'], 'App\Http\ViewComposers\FrontendCatalog');
-        view()->composer(['frontend/common/sidebar'], 'App\Http\ViewComposers\FrontendPost');
-        view()->composer(['frontend/common/sidebar'], 'App\Http\ViewComposers\FrontendNews');
-        view()->composer(['frontend/common/sidebar'], 'App\Http\ViewComposers\FrontendImage');
+        view()->composer(['frontend/partials/header/mega-nav'], 'App\Http\ViewComposers\FrontendCatalog');
+        // view()->composer(['frontend/common/sidebar'], 'App\Http\ViewComposers\FrontendPost');
+        // view()->composer(['frontend/common/sidebar'], 'App\Http\ViewComposers\FrontendNews');
+        // view()->composer(['frontend/common/sidebar'], 'App\Http\ViewComposers\FrontendImage');
     }
 
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
     public function register()
     {
         //

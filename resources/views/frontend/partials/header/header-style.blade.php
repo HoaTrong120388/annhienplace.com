@@ -1,11 +1,16 @@
-<link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/bootstrap.min.css') }}" />
+<link rel="stylesheet" media="all" href="{{ asset('public/all/plugin/bootstrap/css/bootstrap.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/animate.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/font-awesome.min.css') }}" />
 
+<!-- WLC Stylesheet Files -->
+<link rel="stylesheet" href="public/all/plugin/mega-menu/css/menu.min.css">
+<link rel="stylesheet" href="public/all/plugin/mega-menu/css/menu-skin.min.css">
+<link rel="stylesheet" href="public/all/plugin/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+<!-- WLC Skin Stylesheet Files -->
+		
+
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/furniture-icons.css') }}" />
-<link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/linear-icons.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/linear-icons.min.css') }}" />
-<link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/magnific-popup.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/owl.carousel.min.css') }}" />
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/theme.css') }}" />
 

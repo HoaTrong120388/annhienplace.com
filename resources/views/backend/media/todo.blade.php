@@ -33,6 +33,11 @@
                             <label>Link</label>
                             <input type="text" class="input w-full border mt-2" name="link" value="{{ $arrResult->link ?? '' }}">
                         </div>
+                        <div class="mt-2">
+                            <label>Content</label>
+                            <textarea name="" id="" cols="30" rows="10"></textarea>
+                            <input type="text" class="input w-full border mt-2" name="link" value="{{ $arrResult->link ?? '' }}">
+                        </div>
                     </div>
                 </div>
             </div>

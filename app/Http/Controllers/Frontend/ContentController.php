@@ -58,7 +58,6 @@ class ContentController extends BaseController
                 }
 
                 Post::_update_data($arrResult->id, array('view' => $arrResult->view+1));
-
                 // if
                 {
                     $breadcrumb = array(
@@ -315,5 +314,14 @@ class ContentController extends BaseController
             'imagePage_Seo'             => '',
         );
         return view('frontend/content/list/shops')->with($data);
+    }
+    public function productdetail(Request $request)
+    {
+        $data = array(
+            'titlePage_Seo'             => '',
+            'descriptionPage_Seo'       => '',
+            'imagePage_Seo'             => '',
+        );
+        return view('frontend/content/detail/product')->with($data);
     }
 }

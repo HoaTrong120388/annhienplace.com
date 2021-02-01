@@ -18,6 +18,7 @@
                 <div class="post__tabs nav-tabs flex flex-col sm:flex-row bg-gray-200 dark:bg-dark-2 text-gray-600">
                     <a title="Fill in the article content" data-toggle="tab" data-target="#content" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center active"> <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Content </a>
                     <a title="Adjust the meta title" data-toggle="tab" data-target="#meta-seo" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center"> <i data-feather="code" class="w-4 h-4 mr-2"></i> Seo </a>
+                    <a title="Adjust the meta title" data-toggle="tab" data-target="#shop" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center"> <i data-feather="shopping-cart" class="w-4 h-4 mr-2"></i> Shop </a>
                     <a title="Adjust the meta title" data-toggle="tab" data-target="#layout" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center"> <i data-feather="trello" class="w-4 h-4 mr-2"></i> Layout </a>
                 </div>
                 <div class="post__content tab-content">
@@ -42,6 +43,37 @@
                                     <input type="hidden" id="source_thumbnail" name="thumbnail" value="{{ $arrResult->thumbnail ?? '' }}">
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div class="border border-gray-200 dark:border-dark-5 rounded-md p-5 mt-5">
+                            <div class="font-medium flex items-center border-b border-gray-200 dark:border-dark-5 pb-5"> <i data-feather="chevron-down" class="w-4 h-4 mr-2"></i> Album </div>
+                            <div class="mt-5 ">
+                                <div class="border-2 border-gray-200 border-dashed mt-2">
+                                    <input type="file" name="file_album[]" class="dropify"  multiple/>
+                                </div>
+                            </div>
+                            @if (isset($arrResult->album) && is_array($arrResult->album) && count($arrResult->album) > 0)
+                            <div class="mt-5">
+                                <div class="intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5">
+                                    @foreach ($arrResult->album as $album)
+                                        <div class="intro-y col-span-6 sm:col-span-4 md:col-span-3 xxl:col-span-2">
+                                            <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
+                                                <div class="absolute left-0 top-0 mt-3 ml-3">
+                                                    <input class="input border border-gray-500" name="album[]" value="{{ $album }}" type="checkbox" checked>
+                                                </div>
+                                                <a href="javascript:void(0);" class="w-3/5 file__icon file__icon--image mx-auto">
+                                                    <div class="file__icon--image__preview image-fit">
+                                                        <img src="{{ FCommon::cover_thumbnail($album) }}">
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:void(0);" class="block font-medium mt-4 text-center truncate">{{ $album }}</a> 
+                                                
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="tab-content__pane p-5" id="meta-seo">
@@ -94,6 +126,32 @@
                                         <input type="file" name="file_banner_form_register" class="dropify" id="banner_form_register" data-default-file="@if (isset($arrResult->more_info->banner_form_register)){{ FCommon::cover_thumbnail($arrResult->more_info->banner_form_register) }}@endif"  />
                                         <input type="hidden" id="source_banner_form_register" name="banner_form_register" value="{{ $arrResult->more_info->banner_form_register ?? '' }}">
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content__pane p-5" id="shop">
+                        <div class="p-5">
+                            <div>
+                                <label>Giá Bán</label>
+                                <input type="text" class="input w-full border mt-2" name="price_out" value="{{ $arrResult->price_out ?? '' }}">
+                            </div>
+                            <div class="mt-3">
+                                <label>Giá Gốc</label>
+                                <input type="text" class="input w-full border mt-2" name="price_old" value="{{ $arrResult->price_old ?? '' }}">
+                            </div>
+                            <div class="mt-3">
+                                <label>Hãng Sản Xuất</label>
+                                <input type="text" class="input w-full border mt-2" name="brand" value="{{ $arrResult->more_info->brand ?? '' }}">
+                            </div>
+                            <div class="mt-3">
+                                <label>Xuất Xứ</label>
+                                <input type="text" class="input w-full border mt-2" name="source" value="{{ $arrResult->more_info->source ?? '' }}">
+                            </div>
+                            <div class="mt-3">
+                                <label>Tình trạng (Còn hàng)</label>
+                                <div class="mt-2">
+                                    <input class="input input--switch border" type="checkbox" name="in_stocks" @if (isset($arrResult->in_stocks) && $arrResult->in_stocks == 1) checked @endif>
                                 </div>
                             </div>
                         </div>

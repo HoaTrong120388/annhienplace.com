@@ -13,11 +13,10 @@ class FrontendCatalog
     {
         $language = isset($_COOKIE['language'])?$_COOKIE['language']:'vi';
 
-        $lst_cat = Catalog::_list_all_limit(1, $language);
-        $lst_cat->map(function ($item, $key) use ($language) {
-            $item->lstPost = Post::_list_post_nav($item->id, 1, $language);
-            return $item;
-        });
-        $view->with('FrontendCatalog', $lst_cat);
+        $arrResult    = Catalog::where('status', 1)->where('parent', 0)->get();
+        $collection = collect($arrResult);
+        $grouped = $collection->groupBy('group');
+        $grouped->toArray();
+        $view->with('FrontendCatalog', $grouped);
     }
 }

@@ -19,6 +19,7 @@
                     <a title="Fill in the article content" data-toggle="tab" data-target="#content" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center active"> <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Trang Chủ </a>
                     <a title="Adjust the meta title" data-toggle="tab" data-target="#meta-seo" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center"> <i data-feather="code" class="w-4 h-4 mr-2"></i> Seo </a>
                     <a title="Adjust the meta title" data-toggle="tab" data-target="#layout" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center"> <i data-feather="trello" class="w-4 h-4 mr-2"></i> All Page </a>
+                    <a title="Adjust the meta title" data-toggle="tab" data-target="#other" href="javascript:;" class="tooltip w-full sm:w-40 py-4 text-center flex justify-center items-center"> <i data-feather="trello" class="w-4 h-4 mr-2"></i> Other </a>
                 </div>
                 <div class="post__content tab-content">
                     <div class="tab-content__pane p-5 active" id="content">
@@ -95,6 +96,12 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="tab-content__pane p-5" id="other">
+                        <div class="mt-5">
+                            <label>Liên hệ</label>
+                            <input type="text" class="input w-full border mt-2" name="id_page_contact" value="{{ $arrResult['id_page_contact'] ?? '' }}">
                         </div>
                     </div>
                 </div>

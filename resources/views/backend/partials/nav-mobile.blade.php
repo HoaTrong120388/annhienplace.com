@@ -13,34 +13,6 @@
                 <div class="menu__title"> Dashboard </div>
             </a>
         </li>
-        <li>
-            <a href="javascript:;" class="menu @if (isset($nav_main) && $nav_main == 'taikhoan') menu--active @endif">
-                <div class="menu__icon"> <i data-feather="trello"></i> </div>
-                <div class="menu__title"> Quản lý tài khoản <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="@if (isset($nav_main) && $nav_main == 'taikhoan') menu__sub-open @endif">
-                <li>
-                    <a href="{{ URL::route('admin.taikhoan.giaodich') }}" class="menu @if (isset($nav_sub) && $nav_sub == 'lichsugiaodich') menu--active @endif">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Lịch sử giao dịch </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="menu @if (isset($nav_main) && $nav_main == 'dichvu') menu--active @endif">
-                <div class="menu__icon"> <i data-feather="box"></i> </div>
-                <div class="menu__title"> Quản lý dịch vụ <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="@if (isset($nav_main) && $nav_main == 'dichvu') menu__sub-open @endif">
-                <li>
-                    <a href="{{ URL::route('admin.napthe.index') }}" class="menu @if (isset($nav_sub) && $nav_sub == 'napthe') menu--active @endif">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Nạp thẻ </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
         <li class="nav__devider my-6"></li>
         @if (FCommon::checkPermissions('admin.user.list'))
         <li>
