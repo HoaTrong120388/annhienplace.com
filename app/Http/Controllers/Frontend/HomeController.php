@@ -29,6 +29,11 @@ class HomeController extends BaseController
     {
         // return redirect()->route('frontend.landingpage.comingsoon');
         $home_slider = Libary::select('id', 'title', 'slug', 'thumbnail', 'thumbnail_mobile', 'link', 'summary')->where('status', 1)->where('parent', 1)->orderby('order', 'asc')->orderby('id', 'desc')->limit(5)->get();
+
+        $home_catalog = Catalog::select('id', 'title', 'slug', 'thumbnail', 'banner_home', 'icon')->where('status', 1)->where('group', 1)->orderby('order', 'asc')->orderby('id', 'desc')->limit(4)->get();
+        $home_product = Post::where('status', 1)->where('group', 1)->orderby('id', 'desc')->limit(6)->get();
+        $home_service = Post::where('status', 1)->where('group', 3)->orderby('id', 'desc')->limit(3)->get();
+        $home_news = Post::where('status', 1)->where('group', 2)->orderby('id', 'desc')->limit(3)->get();
         // dd($home_slider);
 
         $data = array(
@@ -36,8 +41,16 @@ class HomeController extends BaseController
             'descriptionPage_Seo'   => trans('common.main_seo_description'),
             'keywordPage_Seo'       => trans('common.main_seo_keyword'),
             
-            'home_slider'           => $home_slider
+            'home_slider'           => $home_slider,
+            'home_catalog'          => $home_catalog,
+            'home_product'          => $home_product,
+            'home_service'          => $home_service,
+            'home_news'             => $home_news,
         );
         return view('frontend/home/index')->with($data);
+    }
+    public function viewer(Request $request)
+    {
+        return view('plugin/viewer');
     }
 }

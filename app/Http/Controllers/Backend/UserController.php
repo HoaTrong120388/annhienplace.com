@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 
 //Helper
-use FCommon;
+use FCommon, Config;
 
 //Model
 use App\Model\User;

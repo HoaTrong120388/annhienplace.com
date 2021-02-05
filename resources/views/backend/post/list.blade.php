@@ -43,7 +43,7 @@
                         <td>{{ $item->id }};mk_post</td>
                         <td>{{ Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                         <td>{{ Carbon::parse($item->public_date)->format('d-m-Y') }}</td>
-                        <td title="{{ $item->title }}"><a target="_blank" href="{{ route("frontend.product.detail", $item->slug) }}">{{ Str::limit($item->title, 100, '...') }}</a></td>
+                        <td title="{{ $item->title }}"><a target="_blank" href="{{ route("frontend.post.detail", $item->slug) }}">{{ Str::limit($item->title, 100, '...') }}</a></td>
                         <td>@if ($item->special == 1)Active @else inActive @endif</td>
                         <td>@if ($item->status == 1)Active @else inActive @endif</td>
                         <td class="text-center">

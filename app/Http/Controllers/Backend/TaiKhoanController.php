@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 
 //Helper
-use FCommon, LogActivity;
+use FCommon, LogActivity, Config;
 
 //Model
 use App\Model\NapThe, App\Model\User, App\Model\LichSuGiaoDich;
@@ -79,7 +79,7 @@ class TaiKhoanController extends BaseController
 
         $url = route("admin.$this->controller_name.giaodich").'?'.http_build_query($arr_param);
         // dd( $arr_param);
-        
+
         if(isset($export) && $export == 1){
             $arrResult = NapThe::_list_search(0, 0, $count_row, $arr_param, $member_id);
             foreach($arrResult as $item){
@@ -91,7 +91,7 @@ class TaiKhoanController extends BaseController
 
                 $doitac = ($request->session()->get('user_group') == 1)?$item->fullname:'';
                 $doisoat = (isset($item->trandsid_api) && !empty($item->trandsid_api))?$item->trandsid_api:$item->trandid;
-                
+
                 $data[] = array(
                     $item->created_at,
                     $doisoat,
@@ -106,11 +106,11 @@ class TaiKhoanController extends BaseController
                     $doitac,
                 );
             }
-            
+
             $export = new NapTheExport($data);
             return Excel::download($export, ' tuanxuong.xlsx');
         }
-        
+
         $arrResult = LichSuGiaoDich::_list_search(($start * $limit), $limit, $count_row, $arr_param, $member_id);
         // dd($arrResult);
         if($count_row > $limit){

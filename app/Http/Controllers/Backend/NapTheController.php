@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 
 //Helper
-use FCommon, LogActivity;
+use FCommon, LogActivity, Config;
 
 //Model
 use App\Model\NapThe, App\Model\LogCallback, App\Model\User, App\Model\LichSuGiaoDich;
@@ -93,7 +93,7 @@ class NapTheController extends BaseController
         else
             $member_id = $request->session()->get('user_id');
 
-        
+
         if(!empty($cardcode)) $arr_param['cardcode'] = $cardcode;
         if(!empty($madoisoat)) $arr_param['madoisoat'] = $madoisoat;
         if(!empty($cardseri)) $arr_param['cardseri'] = $cardseri;
@@ -106,7 +106,7 @@ class NapTheController extends BaseController
             $arr_param['status'] = $status;
         }
         if($network != -1) $arr_param['network'] = $network;
-        
+
         if(isset($date_from) && !empty($date_from)){
             $arr_param['date_from'] = $date_from;
             $arr_param['date_to'] = isset($date_to)?$date_to:'';
@@ -119,7 +119,7 @@ class NapTheController extends BaseController
 
         $url = route("admin.$this->controller_name.index").'?'.http_build_query($arr_param);
         //var_dump( $arr_param);
-        
+
         if(isset($export) && $export == 1){
             $arrResult = NapThe::_list_search(0, 0, $count_row, $arr_param, $member_id, $_static);
             foreach($arrResult as $item){
@@ -131,7 +131,7 @@ class NapTheController extends BaseController
 
                 $doitac = ($request->session()->get('user_group') == 1)?$item->fullname:'';
                 $doisoat = (isset($item->trandsid_api) && !empty($item->trandsid_api))?$item->trandsid_api:$item->trandid;
-                
+
                 $data[] = array(
                     $item->created_at,
                     $doisoat,
@@ -146,11 +146,11 @@ class NapTheController extends BaseController
                     $doitac,
                 );
             }
-            
+
             $export = new NapTheExport($data);
             return Excel::download($export, ' tuanxuong.xlsx');
         }
-        
+
         $arrResult = NapThe::_list_search(($start * $limit), $limit, $count_row, $arr_param, $member_id, $_static);
         // dd($arrResult);
         if($count_row > $limit){
@@ -197,7 +197,7 @@ class NapTheController extends BaseController
             }
             return  back()->withErrors($validator)->withInput();
         }else{
-            
+
             $network             = isset($request->network)             ?$request->network:0;
             $cardvalue           = isset($request->cardvalue)           ?$request->cardvalue:0;
             $cardcode            = isset($request->cardcode)            ?$request->cardcode:'';
@@ -221,7 +221,7 @@ class NapTheController extends BaseController
             if($napthe->save()){
                 $trandsID = $napthe->id.time().uniqid();
                 $resSendCard = FCommon::SendCardKemeno($network, $cardcode, $cardseri, $cardvalue, $trandsID, $this->urlcallback, $this->apikey);
-                
+
                 if(!empty($resSendCard) && $resSendCard != null ){
                     $resultSendCard = json_decode($resSendCard);
                     if($resultSendCard != null){
@@ -268,12 +268,12 @@ class NapTheController extends BaseController
             $logcallback->id_napthe  = $napthe->id;
 
             LogActivity::addToLog('Callback thẻ cào', json_encode($logcallback));
-            
+
             if($logcallback->save()){
 
                 $napthe = NapThe::where('trandid', $TrxID)->firstOrFail();
                 $info_member = User::findOrfail($napthe->member_id);
-                
+
                 $napthe->callback_cardvalue     = $cardvalue;
                 $napthe->callback_status        = $code;
                 $napthe->callback_message       = $reason;
@@ -305,7 +305,7 @@ class NapTheController extends BaseController
                             LogActivity::addToLog('Callback cập nhật tiền', json_encode($info_member));
                         }
                     }
-                    
+
                 }
                 if($napthe->type == 2){
                     $urlcallback = $napthe->urlcallback;
@@ -334,8 +334,8 @@ class NapTheController extends BaseController
             }
         }
 
-        
-        
+
+
     }
 
 }

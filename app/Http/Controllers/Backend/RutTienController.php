@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 
 //Helper
-use FCommon;
+use FCommon, Config;
 
 //Model
 use App\Model\Contact;

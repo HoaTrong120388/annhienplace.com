@@ -1,15 +1,11 @@
-@include('backend.layouts.header')
-<!-- BEGIN: Error Page -->
-<div class="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
-    <div class="-intro-x lg:mr-20">
-        <img alt="Midone Tailwind HTML Admin Template" class="h-48 lg:h-auto" src="dist/images/error-illustration.svg">
+@extends('frontend.layouts.layout')
+@section('content')
+<section class="not-found">
+    <div class="container">
+        <h1 class="title" data-title="Page not found!">500</h1>
+        <div class="h4 subtitle">Sorry! Hệ thống đang lỗi.</div>
+        <p>Hệ thống đang quá tải vui lòng load lại page hoặc </p>
+        <p>Click <a href="#">here</a> quay về trang chủ </p>
     </div>
-    <div class="text-white mt-10 lg:mt-0">
-        <div class="intro-x text-6xl font-medium">500</div>
-        <div class="intro-x text-xl lg:text-3xl font-medium">Oops. Hệ thông đang quá tải.</div>
-        <div class="intro-x text-lg mt-3">Website đang quá tải hoặc đang nâng cấp. Ban vui lòng chờ giây lát.</div>
-        <a href="{{ route("frontend.home") }}" class="intro-x inline-block button border border-white dark:border-dark-5 dark:text-gray-300 mt-10">Hoặc quay về trang chủ</a>
-    </div>
-</div>
-<!-- END: Error Page -->
-@include('backend.layouts.footer')
+</section>
+@endsection

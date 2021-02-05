@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 
 //Helper
-use FCommon, LogActivity;
+use FCommon, LogActivity, Config;
 
 //Model
 use App\Model\Catalog, App\Model\User;
@@ -79,10 +79,10 @@ class CatalogServiceController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'title'                     => 'required',
-            'file_thumbnail'            => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
-            'file_seo_image'            => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
-            'file_header_banner_pc'     => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
-            'file_header_banner_mobile'      => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
+            'file_thumbnail'            => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
+            'file_seo_image'            => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
+            'file_header_banner_pc'     => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
+            'file_header_banner_mobile'      => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
         ]);
 
         if ($validator->fails()) {

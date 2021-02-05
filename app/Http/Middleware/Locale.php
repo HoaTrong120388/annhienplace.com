@@ -6,6 +6,7 @@ use Closure, Session, App, FCommon, Config, Cookie;
 class Locale {
     public function handle($request, Closure $next)
     {
+        
         // $minutes = 30;
         // response('Hello word')->withCookie(
         //     'name', 'value', $minutes

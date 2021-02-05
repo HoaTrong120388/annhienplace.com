@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 
 //Helper
-use FCommon, LogActivity;
+use FCommon, LogActivity, Config;
 
 //Model
 use App\Model\Catalog, App\Model\Post, App\Model\PostOption, App\Model\User;
@@ -228,7 +228,7 @@ class PostController extends BaseController
                     $banner_form_register = FCommon::upload_file_crop_size($file_file_banner_form_register);
                 }
             }
-            
+
             if ($request->hasFile('file_album')) {
 
                 $files = $request->file('file_album');

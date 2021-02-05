@@ -83,6 +83,20 @@
                                         <input type="hidden" id="source_header_banner_mobile" name="header_banner_mobile" value="{{ $arrResult->more_info->header_banner_mobile ?? '' }}">
                                     </div>
                                 </div>
+                                <div class="mt-3">
+                                    <label>Banner Home</label>
+                                    <div class="border-2 border-gray-200 border-dashed dz-clickable mt-2">
+                                        <input type="file" name="file_banner_home" class="dropify" id="banner_home" data-default-file="@if (isset($arrResult->more_info->banner_home)) {{ FCommon::cover_thumbnail($arrResult->more_info->banner_home) }}@endif"  />
+                                        <input type="hidden" id="source_banner_home" name="banner_home" value="{{ $arrResult->more_info->banner_home ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <label>Icon</label>
+                                    <div class="border-2 border-gray-200 border-dashed dz-clickable mt-2">
+                                        <input type="file" name="file_icon" class="dropify" id="icon" data-default-file="@if (isset($arrResult->more_info->icon)) {{ FCommon::cover_thumbnail($arrResult->more_info->icon) }}@endif"  />
+                                        <input type="hidden" id="source_icon" name="icon" value="{{ $arrResult->more_info->icon ?? '' }}">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

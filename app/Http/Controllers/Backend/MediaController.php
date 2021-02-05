@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 
 //Helper
-use FCommon, LogActivity;
+use FCommon, LogActivity, Config;
 
 //Model
 use App\Model\Libary, App\Model\User;
@@ -102,7 +102,7 @@ class MediaController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'title'                     => 'required',
-            'file_thumbnail'            => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
+            'file_thumbnail'            => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
         ]);
 
         if ($validator->fails()) {
@@ -116,6 +116,7 @@ class MediaController extends BaseController
             $thumbnail              = isset($request->thumbnail)                ?$request->thumbnail:'';
             $status                 = isset($request->status)                   ?$request->status:0;
             $parent                 = isset($request->parent)                   ?$request->parent:1;
+            $summary                = isset($request->summary)                   ?$request->summary:1;
 
             settype($parent, 'int');
 
@@ -123,6 +124,7 @@ class MediaController extends BaseController
             $thumbnail              = FCommon::ClearStr($thumbnail);
             $link                   = FCommon::ClearStr($link);
             $status                 = FCommon::ClearStr($status);
+            $summary                = FCommon::ClearStr($summary);
             if($status == 'on') $status = 1;
 
             if ($request->hasFile('file_thumbnail')) {
@@ -148,6 +150,8 @@ class MediaController extends BaseController
             $libary->thumbnail = $thumbnail;
             $libary->status = $status;
             $libary->parent = $parent;
+            $libary->summary = $summary;
+            // dd($libary);
 
             if($libary->save()){
                 LogActivity::addToLog('Thêm media mới - '.$libary->id, $libary, 4);

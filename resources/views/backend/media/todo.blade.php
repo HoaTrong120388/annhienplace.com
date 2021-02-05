@@ -35,8 +35,7 @@
                         </div>
                         <div class="mt-2">
                             <label>Content</label>
-                            <textarea name="" id="" cols="30" rows="10"></textarea>
-                            <input type="text" class="input w-full border mt-2" name="link" value="{{ $arrResult->link ?? '' }}">
+                            <textarea name="summary" id="summary" class="input w-full border mt-2" cols="20" rows="5">{{ $arrResult->summary ?? '' }}</textarea>
                         </div>
                     </div>
                 </div>

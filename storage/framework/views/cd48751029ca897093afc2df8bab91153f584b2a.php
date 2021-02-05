@@ -83,6 +83,20 @@
                                         <input type="hidden" id="source_header_banner_mobile" name="header_banner_mobile" value="<?php echo e($arrResult->more_info->header_banner_mobile ?? ''); ?>">
                                     </div>
                                 </div>
+                                <div class="mt-3">
+                                    <label>Banner Home</label>
+                                    <div class="border-2 border-gray-200 border-dashed dz-clickable mt-2">
+                                        <input type="file" name="file_banner_home" class="dropify" id="banner_home" data-default-file="<?php if(isset($arrResult->more_info->banner_home)): ?> <?php echo e(FCommon::cover_thumbnail($arrResult->more_info->banner_home)); ?><?php endif; ?>"  />
+                                        <input type="hidden" id="source_banner_home" name="banner_home" value="<?php echo e($arrResult->more_info->banner_home ?? ''); ?>">
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <label>Icon</label>
+                                    <div class="border-2 border-gray-200 border-dashed dz-clickable mt-2">
+                                        <input type="file" name="file_icon" class="dropify" id="icon" data-default-file="<?php if(isset($arrResult->more_info->icon)): ?> <?php echo e(FCommon::cover_thumbnail($arrResult->more_info->icon)); ?><?php endif; ?>"  />
+                                        <input type="hidden" id="source_icon" name="icon" value="<?php echo e($arrResult->more_info->icon ?? ''); ?>">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

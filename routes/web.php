@@ -13,8 +13,7 @@
 
 use Illuminate\Support\Facades\Artisan;
 
-Route::get('viewer.html', 'Frontend\ContentController@viewer')->name('frontend.viewer');
-
+Route::get('viewer.html', 'Frontend\HomeController@viewer')->name('frontend.viewer');
 
 //Clear config cache:
 Route::get('/clear-cache', function() {
@@ -45,13 +44,17 @@ Route::group(['middleware' => ['locale']], function () {
         Route::get('/search', 'ContentController@search')->name('frontend.search');
         /*** Url Search ***/
     
-        Route::get('/dich-vu', 'ContentController@service')->name('frontend.service.detail');
-        Route::get('/tin-tuc', 'ContentController@news')->name('frontend.blog.catalog');
-        Route::get('/san-pham', 'ContentController@product')->name('frontend.product.catalog');
-        Route::get('/san-pham-chi-tiet', 'ContentController@productdetail')->name('frontend.product.detail');
+        // Route::get('/dich-vu', 'ContentController@service')->name('frontend.service.detail');
+        // Route::get('/tin-tuc', 'ContentController@news')->name('frontend.blog.catalog');
+        // Route::get('/danh-muc-san-pham', 'ContentController@product')->name('frontend.product.catalog');
+
+        Route::get('/dich-vu', 'ContentController@serviceall')->name('frontend.service.all');
+        Route::get('/san-pham', 'ContentController@productall')->name('frontend.product.all');
+        Route::get('/tin-tuc', 'ContentController@newsall')->name('frontend.blog.catalog');
+        Route::get('/catalog', 'ContentController@folderall')->name('frontend.folder.catalog');
     
-        Route::get('/{slug}.html', 'ContentController@detailPost')->name('frontend.post.detail');
-        Route::get('/{slug}', 'ContentController@detailCatalog')->name('frontend.catalog.detail');
+        Route::get('/{slug}.html', 'ContentController@Postdetail')->name('frontend.post.detail');
+        Route::get('/{slug}', 'ContentController@Catalogdetail')->name('frontend.catalog.detail');
     });
 });
 

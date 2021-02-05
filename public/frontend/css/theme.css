@@ -134,7 +134,7 @@ label,
     margin-top: -20px;
     -webkit-animation: fa-spin 2s infinite linear;
     animation: fa-spin 2s infinite linear;
-    color: #898989;
+    color: #97c524;
     -moz-transition: all 0.3s;
     -o-transition: all 0.3s;
     -webkit-transition: all 0.3s;
@@ -4815,7 +4815,7 @@ header .text p:last-child {
 
 @media (min-width: 992px) {
     .owl-icons-wrapper.owl-icons-frontpage {
-        margin-top: -250px;
+        margin-top: -175px;
         background: transparent;
     }
     .owl-icons-wrapper .owl-icons figcaption {

@@ -3,9 +3,9 @@
 <link rel="stylesheet" media="all" href="{{ asset('public/frontend/css/font-awesome.min.css') }}" />
 
 <!-- WLC Stylesheet Files -->
-<link rel="stylesheet" href="public/all/plugin/mega-menu/css/menu.min.css">
-<link rel="stylesheet" href="public/all/plugin/mega-menu/css/menu-skin.min.css">
-<link rel="stylesheet" href="public/all/plugin/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+<link rel="stylesheet" href="{{ asset('public/all/plugin/mega-menu/css/menu.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/all/plugin/mega-menu/css/menu-skin.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/all/plugin/pe-icon-7-stroke/css/pe-icon-7-stroke.css') }}">
 <!-- WLC Skin Stylesheet Files -->
 		
 

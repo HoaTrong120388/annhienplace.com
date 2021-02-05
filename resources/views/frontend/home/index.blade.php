@@ -5,12 +5,12 @@
     <div class="owl-slider">
         @if ($home_slider->count())
             @foreach ($home_slider as $item)
-            <div class="item" style="background-image:url('{{ $item->thumbnail }}')">
+            <div class="item" style="background-image:url('{{ FCommon::cover_thumbnail($item->thumbnail) }}')">
                 <div class="box">
                     <div class="container">
                         <h2 class="title animated h1" data-animation="fadeInDown">{{ $item->title }}</h2>
                         <div class="animated" data-animation="fadeInUp">
-                            {{ $item->summary }}
+                            {!! $item->summary !!}
                         </div>
                         <div class="animated" data-animation="fadeInUp">
                             <a href="{{ $item->link }}" target="_blank" class="btn btn-main" ><i class="icon icon-cart"></i> {{ __("common.button_txt_slider") }}</a>
@@ -173,7 +173,7 @@
         <header>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h2 class="title">Sản Phẩm Nổi Bật</h2>
+                    <h2 class="title">Danh mục nổi bật</h2>
                     <div class="text">
                         <p>Sản phẩm nổi bật của shop</p>
                     </div>
@@ -181,183 +181,29 @@
             </div>
         </header>
         <div class="row">
-            <!-- === product-item === -->
+            @foreach ($home_product as $item)
             <div class="col-md-4 col-xs-6">
                 <article>
-                    <div class="info">
-                        <span class="add-favorite added">
-                            <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
-                        </span>
-                        <span>
-                            <a href="#productid1" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
-                        </span>
-                    </div>
-                    <div class="btn btn-add">
-                        <i class="icon icon-cart"></i>
-                    </div>
                     <div class="figure-grid">
                         <div class="image">
                             <a href="#productid1" class="mfp-open">
-                                <img src="{{ asset('public/frontend/assets/images/product-1.png') }}" alt="" width="360" />
+                                <img src="{{ FCommon::cover_thumbnail($item->thumbnail) }}" alt="{{ $item->title }}" width="360" />
                             </a>
                         </div>
                         <div class="text">
-                            <h2 class="title h4"><a href="product.html">Green corner</a></h2>
-                            <sub>$ 1499,-</sub>
-                            <sup>$ 1099,-</sup>
-                            <span class="description clearfix">Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam lorem ea duo labore diam sit et consetetur nulla</span>
+                            <h2 class="title h4"><a href="{{ route("frontend.post.detail", $item->slug) }}">{{ $item->title }}</a></h2>
+                            <sup>{{ Str::currency($item->price_old) }} -</sup>
+                            <sub>{{ Str::currency($item->price_out) }}-</sub>
+                            <span class="description clearfix">{{ $item->summary }}</span>
                         </div>
                     </div>
                 </article>
             </div>
-            <!-- === product-item === -->
-            <div class="col-md-4 col-xs-6">
-                <article>
-                    <div class="info">
-                        <span class="add-favorite">
-                            <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
-                        </span>
-                        <span>
-                            <a href="#productid1" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
-                        </span>
-                    </div>
-                    <div class="btn btn-add">
-                        <i class="icon icon-cart"></i>
-                    </div>
-                    <div class="figure-grid">
-                        <div class="image">
-                            <a href="#productid1" class="mfp-open">
-                                <img src="{{ asset('public/frontend/assets/images/product-2.png') }}" alt="" width="360" />
-                            </a>
-                        </div>
-                        <div class="text">
-                            <h2 class="title h4"><a href="product.html">Laura</a></h2>
-                            <sub>$ 3999,-</sub>
-                            <sup>$ 3499,-</sup>
-                            <span class="description clearfix">Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam lorem ea duo labore diam sit et consetetur nulla</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <!-- === product-item === -->
-            <div class="col-md-4 col-xs-6">
-                <article>
-                    <div class="info">
-                        <span class="add-favorite">
-                            <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
-                        </span>
-                        <span>
-                            <a href="#productid1" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
-                        </span>
-                    </div>
-                    <div class="btn btn-add">
-                        <i class="icon icon-cart"></i>
-                    </div>
-                    <div class="figure-grid">
-                        <span class="label label-warning">New</span>
-                        <div class="image">
-                            <a href="#productid1" class="mfp-open">
-                                <img src="{{ asset('public/frontend/assets/images/product-3.png') }}" alt="" width="360" />
-                            </a>
-                        </div>
-                        <div class="text">
-                            <h2 class="title h4"><a href="product.html">Nude</a></h2>
-                            <sup>$ 2999,-</sup>
-                            <span class="description clearfix">Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam lorem ea duo labore diam sit et consetetur nulla</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <!-- === product-item === -->
-            <div class="col-md-4 col-xs-6">
-                <article>
-                    <div class="info">
-                        <span class="add-favorite">
-                            <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
-                        </span>
-                        <span>
-                            <a href="#productid1" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
-                        </span>
-                    </div>
-                    <div class="btn btn-add">
-                        <i class="icon icon-cart"></i>
-                    </div>
-                    <div class="figure-grid">
-                        <div class="image">
-                            <a href="#productid1" class="mfp-open">
-                                <img src="{{ asset('public/frontend/assets/images/product-4.png') }}" alt="" width="360" />
-                            </a>
-                        </div>
-                        <div class="text">
-                            <h2 class="title h4"><a href="product.html">Aurora</a></h2>
-                            <sup>$ 299,-</sup>
-                            <span class="description clearfix">Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam lorem ea duo labore diam sit et consetetur nulla</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <!-- === product-item === -->
-            <div class="col-md-4 col-xs-6">
-                <article>
-                    <div class="info">
-                        <span class="add-favorite added">
-                            <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
-                        </span>
-                        <span>
-                            <a href="#productid1" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
-                        </span>
-                    </div>
-                    <div class="btn btn-add">
-                        <i class="icon icon-cart"></i>
-                    </div>
-                    <div class="figure-grid">
-                        <span class="label label-info">-50%</span>
-                        <div class="image">
-                            <a href="#productid1" class="mfp-open">
-                                <img src="{{ asset('public/frontend/assets/images/product-5.png') }}" alt="" width="360" />
-                            </a>
-                        </div>
-                        <div class="text">
-                            <h2 class="title h4"><a href="product.html">Dining set</a></h2>
-                            <sub>$ 1999,-</sub>
-                            <sup>$ 1499,-</sup>
-                            <span class="description clearfix">Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam lorem ea duo labore diam sit et consetetur nulla</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <!-- === product-item === -->
-            <div class="col-md-4 col-xs-6">
-                <article>
-                    <div class="info">
-                        <span class="add-favorite">
-                            <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
-                        </span>
-                        <span>
-                            <a href="#productid1" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
-                        </span>
-                    </div>
-                    <div class="btn btn-add">
-                        <i class="icon icon-cart"></i>
-                    </div>
-                    <div class="figure-grid">
-                        <div class="image">
-                            <a href="#productid1" class="mfp-open">
-                                <img src="{{ asset('public/frontend/assets/images/product-6.png') }}" alt="" width="360" />
-                            </a>
-                        </div>
-                        <div class="text">
-                            <h2 class="title h4"><a href="product.html">Seat chair</a></h2>
-                            <sup>$ 896,-</sup>
-                            <span class="description clearfix">Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam lorem ea duo labore diam sit et consetetur nulla</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div> <!--/row-->
-        <!-- === button more === -->
+            @endforeach
+        </div>
+
         <div class="wrapper-more">
-            <a href="products-grid.html" class="btn btn-main">View store</a>
+            <a href="{{ route('frontend.product.all') }}" class="btn btn-main">Xem thêm</a>
         </div>
     </div> <!--/container-->
 </section>
@@ -369,7 +215,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h1 class="h2 title">Popular categories</h1>
+                    <h1 class="h2 title">Danh mục nổi bật</h1>
                     <div class="text">
                         <p>
                             Whether you are changing your home, or moving into a new one, you will find a huge selection of quality living room furniture,
@@ -382,80 +228,26 @@
     </header>
     <!-- === stretcher === -->
     <ul class="stretcher">
-        <!-- === stretcher item === -->
-        <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-1.jpg') }});">
-            <!--logo-item-->
+        @foreach ($home_catalog as $item)
+        <li class="stretcher-item" style="background-image:url('{{ FCommon::cover_thumbnail($item->banner_home) }}');">
             <div class="stretcher-logo">
                 <div class="text">
                     <span class="f-icon f-icon-bedroom"></span>
-                    <span class="text-intro">Bedroom</span>
+                    <span class="text-intro">{{ $item->title }}</span>
                 </div>
             </div>
-            <!--main text-->
             <figure>
-                <h4>Modern furnishing projects</h4>
-                <figcaption>New furnishing ideas</figcaption>
+                <h4>{{ $item->title }}</h4>
+                <figcaption>{{ $item->summary }}</figcaption>
             </figure>
-            <!--anchor-->
-            <a href="#">Anchor link</a>
+            <a href="{{ route("frontend.catalog.detail", $item->slug) }}">Chi tiết</a>
         </li>
-        <!-- === stretcher item === -->
-        <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-2.jpg') }});">
-            <!--logo-item-->
-            <div class="stretcher-logo">
-                <div class="text">
-                    <span class="f-icon f-icon-sofa"></span>
-                    <span class="text-intro">Living room</span>
-                </div>
-            </div>
-            <!--main text-->
-            <figure>
-                <h4>Furnishing and complements</h4>
-                <figcaption>Discover the design table collection</figcaption>
-            </figure>
-            <!--anchor-->
-            <a href="#">Anchor link</a>
-        </li>
-        <!-- === stretcher item === -->
-        <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-3.jpg') }});">
-            <!--logo-item-->
-            <div class="stretcher-logo">
-                <div class="text">
-                    <span class="f-icon f-icon-office"></span>
-                    <span class="text-intro">Office</span>
-                </div>
-            </div>
-            <!--main text-->
-            <figure>
-                <h4>Which is Best for Your Home</h4>
-                <figcaption>Wardrobes vs Walk-In Closets</figcaption>
-            </figure>
-            <!--anchor-->
-            <a href="#">Anchor link</a>
-        </li>
-        <!-- === stretcher item === -->
-        <li class="stretcher-item" style="background-image:url({{ asset('public/frontend/assets/images/gallery-4.jpg') }});">
-            <!--logo-item-->
-            <div class="stretcher-logo">
-                <div class="text">
-                    <span class="f-icon f-icon-bathroom"></span>
-                    <span class="text-intro">Bathroom</span>
-                </div>
-            </div>
-            <!--main text-->
-            <figure>
-                <h4>Keeping Things Minimal</h4>
-                <figcaption>Creating Your Very Own Bathroom</figcaption>
-            </figure>
-            <!--anchor-->
-            <a href="#">Anchor link</a>
-        </li>
-        <!-- === stretcher item more=== -->
+        @endforeach
         <li class="stretcher-item more">
             <div class="more-icon">
                 <span data-title-show="Show more" data-title-hide="+"></span>
             </div>
-            <a href="#"></a>
+            <a href="{{ route('frontend.product.all') }}"></a>
         </li>
     </ul>
 </section>
@@ -474,88 +266,33 @@
             </div>
         </header>
         <div class="row">
-            <!-- === blog item === -->
+            @foreach ($home_service as $item)
             <div class="col-sm-4">
                 <article>
-                    <a href="article.html">
+                    <a href="{{ route("frontend.post.detail", $item->slug) }}">
                         <div class="image">
-                            <img src="{{ asset('public/frontend/assets/images/project-1.jpg') }}" alt="" />
+                            <img src="{{ FCommon::cover_thumbnail($item->thumbnail) }}" alt="{{ $item->title }}" />
                         </div>
                         <div class="entry entry-block">
-                            <div class="date">28 Mart 2017</div>
+                            <div class="date">{{ Carbon::parse($item->created_at)->format('Y-m-d') }}</div>
                             <div class="title">
-                                <h2 class="h3">Creating the Perfect Gallery Wall </h2>
+                                <h2 class="h3">{{ $item->title }}</h2>
                             </div>
                             <div class="description">
-                                <p>
-                                    You’ve finally reached this point in your life- you’ve bought your first home, moved
-                                    into your very own apartment, moved out of the dorm room or you’re finally downsizing
-                                    after all of your kids have left the nest.
-                                </p>
+                                {!! $item->summary !!}
                             </div>
                         </div>
                         <div class="show-more">
-                            <span class="btn btn-main btn-block">Xem tất cả</span>
+                            <span class="btn btn-main btn-block">Xem chi tiết</span>
                         </div>
                     </a>
                 </article>
             </div>
-            <!-- === blog item === -->
-            <div class="col-sm-4">
-                <article>
-                    <a href="article.html">
-                        <div class="image">
-                            <img src="{{ asset('public/frontend/assets/images/project-2.jpg') }}" alt="" />
-                        </div>
-                        <div class="entry entry-block">
-                            <div class="date">25 Mart 2017</div>
-                            <div class="title">
-                                <h2 class="h3">Making the Most Out of Your Kids Old Bedroom</h2>
-                            </div>
-                            <div class="description">
-                                <p>
-                                    You’ve finally reached this point in your life- you’ve bought your first home, moved
-                                    into your very own apartment, moved out of the dorm room or you’re finally downsizing
-                                    after all of your kids have left the nest.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="show-more">
-                            <span class="btn btn-main btn-block">Xem tất cả</span>
-                        </div>
-                    </a>
-                </article>
-            </div>
-            <!-- === blog item === -->
-            <div class="col-sm-4">
-                <article>
-                    <a href="article.html">
-                        <div class="image">
-                            <img src="{{ asset('public/frontend/assets/images/project-3.jpg') }}" alt="" />
-                        </div>
-                        <div class="entry entry-block">
-                            <div class="date">28 Mart 2017</div>
-                            <div class="title">
-                                <h2 class="h3">Have a look at our new projects!</h2>
-                            </div>
-                            <div class="description">
-                                <p>
-                                    You’ve finally reached this point in your life- you’ve bought your first home, moved
-                                    into your very own apartment, moved out of the dorm room or you’re finally downsizing
-                                    after all of your kids have left the nest.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="show-more">
-                            <span class="btn btn-main btn-block">Xem tất cả</span>
-                        </div>
-                    </a>
-                </article>
-            </div>
+            @endforeach
         </div> <!--/row-->
         <!-- === button more === -->
         <div class="wrapper-more">
-            <a href="ideas.html" class="btn btn-main">Xem tất cả</a>
+            <a href="{{ route("frontend.service.all") }}" class="btn btn-main">Xem tất cả</a>
         </div>
     </div> <!--/container-->
 </section>
@@ -589,81 +326,32 @@
             </div>
         </header>
         <div class="row">
-            <!-- === blog item === -->
+            @foreach ($home_news as $item)
             <div class="col-sm-4">
                 <article>
                     <a href="article.html">
-                        <div class="image" style="background-image:url({{ asset('public/frontend/assets/images/blog-1.jpg') }})">
-                            <img src="{{ asset('public/frontend/assets/images/blog-1.jpg') }}" alt="" />
+                        <div class="image" style="background-image:url('{{ FCommon::cover_thumbnail($item->thumbnail) }}')">
+                            <img src="{{ FCommon::cover_thumbnail($item->thumbnail) }}" alt="{{ $item->title }}" />
                         </div>
                         <div class="entry entry-table">
                             <div class="date-wrapper">
                                 <div class="date">
-                                    <span>MAR</span>
-                                    <strong>08</strong>
-                                    <span>2017</span>
+                                    <span>{{ Carbon::parse($item->created_at)->format('M') }}</span>
+                                    <strong>{{ Carbon::parse($item->created_at)->format('d') }}</strong>
+                                    <span>{{ Carbon::parse($item->created_at)->format('Y') }}</span>
                                 </div>
                             </div>
                             <div class="title">
-                                <h2 class="h5">The 3 Tricks that Quickly Became Rules</h2>
+                                <h2 class="h5">{{ $item->title }}</h2>
                             </div>
                         </div>
                         <div class="show-more">
-                            <span class="btn btn-main btn-block">Xem tất cả</span>
+                            <span class="btn btn-main btn-block">Xem chi tiết</span>
                         </div>
                     </a>
                 </article>
             </div>
-            <!-- === blog item === -->
-            <div class="col-sm-4">
-                <article>
-                    <a href="article.html">
-                        <div class="image" style="background-image:url({{ asset('public/frontend/assets/images/blog-2.jpg') }})">
-                            <img src="{{ asset('public/frontend/assets/images/blog-1.jpg') }}" alt="" />
-                        </div>
-                        <div class="entry entry-table">
-                            <div class="date-wrapper">
-                                <div class="date">
-                                    <span>MAR</span>
-                                    <strong>03</strong>
-                                    <span>2017</span>
-                                </div>
-                            </div>
-                            <div class="title">
-                                <h2 class="h5">Decorating When You're Starting Out or Starting Over</h2>
-                            </div>
-                        </div>
-                        <div class="show-more">
-                            <span class="btn btn-main btn-block">Xem tất cả</span>
-                        </div>
-                    </a>
-                </article>
-            </div>
-            <!-- === blog item === -->
-            <div class="col-sm-4">
-                <article>
-                    <a href="article.html">
-                        <div class="image" style="background-image:url({{ asset('public/frontend/assets/images/blog-8.jpg') }})">
-                            <img src="{{ asset('public/frontend/assets/images/blog-8.jpg') }}" alt="" />
-                        </div>
-                        <div class="entry entry-table">
-                            <div class="date-wrapper">
-                                <div class="date">
-                                    <span>MAR</span>
-                                    <strong>01</strong>
-                                    <span>2017</span>
-                                </div>
-                            </div>
-                            <div class="title">
-                                <h2 class="h5">What does your favorite dining chair say about you?</h2>
-                            </div>
-                        </div>
-                        <div class="show-more">
-                            <span class="btn btn-main btn-block">Xem tất cả</span>
-                        </div>
-                    </a>
-                </article>
-            </div>
+            @endforeach
         </div> <!--/row-->
         <!-- === button more === -->
         <div class="wrapper-more">

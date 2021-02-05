@@ -9,6 +9,8 @@ use App\Model\Setting;
 use Illuminate\Support\Facades\Lang;
 use Jenssegers\Agent\Agent;
 
+use Str;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -56,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
         $agent = new Agent();
         $is_mobile = ($agent->isPhone())?1:0;
         View::share('is_mobile', $is_mobile);
-
+        
     }
 
     /**
@@ -66,6 +68,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Str::macro('currency', function ($price)
+        {
+            return number_format($price, 2, ',', '.').' đ';
+        });
     }
 }

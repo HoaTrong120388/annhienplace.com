@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 //Helper
-use FCommon;
+use FCommon, Config;
 
 //Model
 use App\Model\Order;
@@ -77,7 +77,7 @@ class StaticController extends BaseController
         }else{
             $date_from = date('Y/m/d', strtotime('-7 days'));
             $date_to = date('Y/m/d');
-            
+
         }
         $arrResult = Order::_search_order_static($date_from, $date_to);
         $doanhthu = $arrResult->total_money;

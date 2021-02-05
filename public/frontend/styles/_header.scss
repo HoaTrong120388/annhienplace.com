@@ -4,3 +4,19 @@
         margin: 0;
     }
 }
+.breadcrumb{
+    background: none;
+    padding: .75rem 0rem;
+    .breadcrumb-item{
+        color: $main_color;
+        a{
+            color: $white;
+        }
+        &.active{
+            color: $main_color;
+            a{
+                color: $main_color;
+            }
+        }
+    }
+}

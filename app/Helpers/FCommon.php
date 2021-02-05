@@ -128,7 +128,7 @@ class FCommon
     }
     public static function ClearStr ($str)
     {
-        $str = htmlspecialchars(trim(strip_tags($str)));
+        $str = trim(strip_tags($str, '<p><a><br>'));
         return $str;
     }
     public static function breadcrumb($url = '', $totalRows , $pageNum = 1, $pageSize = 5, $offset = 5)
@@ -314,8 +314,19 @@ class FCommon
         $collection = collect($arrResult);
         $arrResult_Cover = $collection->map(function ($item, $key) use($arrKey){
             if(in_array($key, $arrKey))
-                return json_decode($item);
+                return json_decode($item, true);
             return $item;
+        });
+        return $arrResult_Cover->toArray();
+    }
+    public static function coverData($arrResult, $arrKey)
+    {
+        if(!isset($arrResult) || empty($arrResult)) exit;
+        if(!isset($arrKey) || empty($arrKey)) exit;
+
+        $collection = collect($arrResult);
+        $arrResult_Cover = $collection->map(function ($item, $key) use($arrKey){
+            return json_decode_object($item, $arrKey);
         });
         return $arrResult_Cover->toArray();
     }

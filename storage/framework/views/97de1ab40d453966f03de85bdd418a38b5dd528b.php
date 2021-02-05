@@ -44,7 +44,7 @@
                         <td><?php echo e($item->id); ?>;mk_post</td>
                         <td><?php echo e(Carbon::parse($item->created_at)->format('d-m-Y')); ?></td>
                         <td><?php echo e(Carbon::parse($item->public_date)->format('d-m-Y')); ?></td>
-                        <td title="<?php echo e($item->title); ?>"><a target="_blank" href="<?php echo e(route("frontend.product.detail", $item->slug)); ?>"><?php echo e(Str::limit($item->title, 100, '...')); ?></a></td>
+                        <td title="<?php echo e($item->title); ?>"><a target="_blank" href="<?php echo e(route("frontend.post.detail", $item->slug)); ?>"><?php echo e(Str::limit($item->title, 100, '...')); ?></a></td>
                         <td><?php if($item->special == 1): ?>Active <?php else: ?> inActive <?php endif; ?></td>
                         <td><?php if($item->status == 1): ?>Active <?php else: ?> inActive <?php endif; ?></td>
                         <td class="text-center">

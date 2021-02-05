@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 
 //Helper
-use FCommon, LogActivity;
+use FCommon, LogActivity, Config;
 
 //Model
 use App\Model\Catalog, App\Model\User;
@@ -28,6 +28,8 @@ class CatalogController extends BaseController
         $this->time_now = Carbon::now();
         $this->controller_name = 'catalog';
         $this->controller_group = 1;
+
+        // dd(Config::get('website.allowFileImage'));
     }
 
     public function index(Request $request)
@@ -78,11 +80,11 @@ class CatalogController extends BaseController
     public function todosubmit(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'                     => 'required',
-            'file_thumbnail'            => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
-            'file_seo_image'            => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
-            'file_header_banner_pc'     => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
-            'file_header_banner_mobile'      => 'nullable|mimes:jpeg,jpg,png,gif|max:10000',
+            'title'                         => 'required',
+            'file_thumbnail'                => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
+            'file_seo_image'                => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
+            'file_header_banner_pc'         => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
+            'file_header_banner_mobile'     => "nullable|mimes:".Config::get('website.allowFileImage')."|max:10000",
         ]);
 
         if ($validator->fails()) {
@@ -100,6 +102,8 @@ class CatalogController extends BaseController
             $seo_keyword            = isset($request->seo_keyword)              ?$request->seo_keyword:'';
             $header_banner_pc       = isset($request->header_banner_pc)         ?$request->header_banner_pc:'';
             $header_banner_mobile   = isset($request->header_banner_mobile)     ?$request->header_banner_mobile:'';
+            $banner_home            = isset($request->banner_home)              ?$request->banner_home:'';
+            $icon                   = isset($request->icon)                     ?$request->icon:'';
             $status                 = isset($request->status)                   ?$request->status:0;
             $parent                 = isset($request->parent)                   ?$request->parent:1;
             $template               = isset($request->template)                 ?$request->template:1;
@@ -116,6 +120,8 @@ class CatalogController extends BaseController
             $seo_keyword            = FCommon::ClearStr($seo_keyword);
             $header_banner_pc       = FCommon::ClearStr($header_banner_pc);
             $header_banner_mobile   = FCommon::ClearStr($header_banner_mobile);
+            $banner_home            = FCommon::ClearStr($banner_home);
+            $icon                   = FCommon::ClearStr($icon);
             $status                 = FCommon::ClearStr($status);
             $order                  = FCommon::ClearStr($order);
             if($status == 'on') $status = 1;
@@ -151,6 +157,20 @@ class CatalogController extends BaseController
                     $header_banner_mobile = FCommon::upload_file_crop_size($file_file_header_banner_mobile, '200x200');
                 }
             }
+            if ($request->hasFile('file_banner_home')) {
+                $ext = $request->file_banner_home->getClientOriginalExtension();
+                if(FCommon::check_file_upload($ext, 'image')){
+                    $file_file_banner_home = $request->file('file_banner_home');
+                    $banner_home = FCommon::upload_file_crop_size($file_file_banner_home);
+                }
+            }
+            if ($request->hasFile('file_icon')) {
+                $ext = $request->file_icon->getClientOriginalExtension();
+                if(FCommon::check_file_upload($ext, 'image')){
+                    $file_file_icon = $request->file('file_icon');
+                    $icon = FCommon::upload_file_crop_size($file_file_icon);
+                }
+            }
 
             $arrSeo = array(
                 'title'         => !empty($seo_title)?$seo_title:$title,
@@ -159,9 +179,9 @@ class CatalogController extends BaseController
                 'image'         => $seo_image,
             );
             $arrInfo = array(
-                'header_banner_pc'  => $header_banner_pc,
+                'header_banner_pc'      => $header_banner_pc,
                 'header_banner_mobile'  => $header_banner_mobile,
-                'template'  => $template
+                'template'              => $template,
             );
 
             $id = isset($request->id)?$request->id:0;
@@ -173,16 +193,18 @@ class CatalogController extends BaseController
                 $objToDo = new Catalog;
             }
 
-            $objToDo->title = $title;
-            $objToDo->slug = Str::slug($title);
-            $objToDo->summary = $summary;
-            $objToDo->thumbnail = $thumbnail;
-            $objToDo->seo = json_encode($arrSeo);
-            $objToDo->more_info = json_encode($arrInfo);
-            $objToDo->status = $status;
-            $objToDo->parent = $parent;
-            $objToDo->order = $order;
-            $objToDo->group = $this->controller_group;
+            $objToDo->title         = $title;
+            $objToDo->slug          = Str::slug($title);
+            $objToDo->summary       = $summary;
+            $objToDo->thumbnail     = $thumbnail;
+            $objToDo->seo           = json_encode($arrSeo);
+            $objToDo->more_info     = json_encode($arrInfo);
+            $objToDo->status        = $status;
+            $objToDo->parent        = $parent;
+            $objToDo->order         = $order;
+            $objToDo->banner_home   = $banner_home;
+            $objToDo->icon          = $icon;
+            $objToDo->group         = $this->controller_group;
 
             if($objToDo->save()){
                 LogActivity::addToLog('Thêm catalog mới - '.$objToDo->id, $objToDo, 2);

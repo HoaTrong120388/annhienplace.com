@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 
-use FCommon;
+use FCommon, Config;
 
 //Model
 use App\Model\User,
@@ -245,7 +245,7 @@ class HomeController extends BaseController
         $data  = isset($request->data)?$request->data:'';
         $status = isset($request->status)?$request->status:0;
 
-        
+
         $data = FCommon::ClearStr($data);
         $arr_data = explode(";", $data);
         $id = $arr_data[0];
@@ -280,7 +280,7 @@ class HomeController extends BaseController
         $status = isset($request->status)?$request->status:-1;
         $special = isset($request->special)?$request->special:-1;
 
-        
+
         $data = FCommon::ClearStr($data);
         $arr_data = explode(";", $data);
         $id = $arr_data[0];

@@ -71,3 +71,15 @@ img{max-width: 100%;}
         }
     }
 }
+.pagination-wrapper .pagination>li>a:hover,
+.pagination-wrapper .pagination>li>span:hover {
+    background-color: $main_color;
+}
+.pagination-wrapper .pagination .active>a,
+.pagination-wrapper .pagination .active>a:hover,
+.pagination-wrapper .pagination .active>a:focus,
+.pagination-wrapper .pagination .active>span,
+.pagination-wrapper .pagination .active>span:hover,
+.pagination-wrapper .pagination .active>span:focus{
+    background-color: $main_color;
+}
