@@ -1,1 +1,0 @@
-{!! $setting_result['footer_script_custom'] ?? '' !!}

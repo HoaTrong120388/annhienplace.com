@@ -140,6 +140,7 @@ class PostController extends BaseController
             $price_old              = isset($request->price_old)                ?$request->price_old:'';
             $brand                  = isset($request->brand)                    ?$request->brand:'';
             $source                 = isset($request->source)                   ?$request->source:'';
+            $materials              = isset($request->materials)                ?$request->materials:'';
             // dd($in_stocks);
             settype($parent, 'int');
             settype($template, 'int');
@@ -153,7 +154,6 @@ class PostController extends BaseController
             $seo_keyword            = FCommon::ClearStr($seo_keyword);
             $header_banner_pc       = FCommon::ClearStr($header_banner_pc);
             $header_banner_mobile   = FCommon::ClearStr($header_banner_mobile);
-            $banner_form_register   = FCommon::ClearStr($banner_form_register);
             $public_date            = FCommon::ClearStr($public_date);
             $status                 = FCommon::ClearStr($status);
             $special                = FCommon::ClearStr($special);
@@ -162,6 +162,7 @@ class PostController extends BaseController
             $price_old              = FCommon::ClearStr($price_old);
             $brand                  = FCommon::ClearStr($brand);
             $source                 = FCommon::ClearStr($source);
+            $materials              = FCommon::ClearStr($materials);
             if($status == 'on') $status = 1;
             if($special == 'on') $special = 1;
             if($in_stocks == 'on') $in_stocks = 1;
@@ -197,7 +198,7 @@ class PostController extends BaseController
                 $ext = $request->file_thumbnail->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_thumbnail = $request->file('file_thumbnail');
-                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail, '200x200');
+                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail);
                 }
             }
             if ($request->hasFile('file_seo_image')) {
@@ -221,13 +222,6 @@ class PostController extends BaseController
                     $header_banner_mobile = FCommon::upload_file_crop_size($file_file_header_banner_mobile);
                 }
             }
-            if ($request->hasFile('file_banner_form_register')) {
-                $ext = $request->file_banner_form_register->getClientOriginalExtension();
-                if(FCommon::check_file_upload($ext, 'image')){
-                    $file_file_banner_form_register = $request->file('file_banner_form_register');
-                    $banner_form_register = FCommon::upload_file_crop_size($file_file_banner_form_register);
-                }
-            }
 
             if ($request->hasFile('file_album')) {
 
@@ -248,12 +242,12 @@ class PostController extends BaseController
                 'image'         => $seo_image,
             );
             $arrInfo = array(
-                'header_banner_pc'  => $header_banner_pc,
+                'header_banner_pc'      => $header_banner_pc,
                 'header_banner_mobile'  => $header_banner_mobile,
-                'banner_form_register'  => $banner_form_register,
-                'template'  => $template,
-                'brand'  => $brand,
-                'source'  => $source,
+                'template'              => $template,
+                'brand'                 => $brand,
+                'source'                => $source,
+                'materials'             => $materials,
             );
             // dd($arrInfo);
 
@@ -289,7 +283,6 @@ class PostController extends BaseController
 
                 $objToDoOption->post_id = $objToDo->id;
                 $objToDoOption->more_info = json_encode($arrInfo);
-                // dd($objToDoOption);
                 $objToDoOption->save();
 
                 LogActivity::addToLog('Thêm Post mới - '.$objToDo->id, $objToDo);

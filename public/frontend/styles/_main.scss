@@ -22,6 +22,8 @@ img{max-width: 100%;}
     text-align: justify;
     margin-top: 20px;
     margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 10px;
     h1, h2, h3{
         font-weight: bold;
         margin-top: 30px;
@@ -82,4 +84,51 @@ img{max-width: 100%;}
 .pagination-wrapper .pagination .active>span:hover,
 .pagination-wrapper .pagination .active>span:focus{
     background-color: $main_color;
+}
+.social-share{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    li{
+        display: inline-flex;
+        padding: 0 5px;
+        a{
+            
+            svg{
+                height: 20px;
+                width: 20px;
+            }
+        }
+    }
+}
+.stretcher-wrapper{
+    .stretcher{
+        .stretcher-item{
+            .stretcher-logo{
+                .text{
+                    img{
+                        display: inline-block;
+                        position: inherit;
+                        left: 0;
+                        top: 0;
+                        transform: none;
+                    }
+                }
+            }
+        }
+    }
+} 
+.owl-carousel{
+    .owl-item{
+        img{
+            height: 100px;
+            width: auto;
+        }
+    }
+}
+.owl-icons-wrapper.owl-icons-frontpage{
+    a{
+        display: block;
+    }
 }

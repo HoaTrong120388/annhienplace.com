@@ -9,5 +9,8 @@ use Carbon\Carbon;
 class PostOption extends Model
 {
     protected $table = 'mk_post_option';
-
+    public function post()
+    {
+        return $this->hasOne(PostOption::class, 'id', 'post_id');
+    }
 }

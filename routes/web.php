@@ -52,7 +52,9 @@ Route::group(['middleware' => ['locale']], function () {
         Route::get('/san-pham', 'ContentController@productall')->name('frontend.product.all');
         Route::get('/tin-tuc', 'ContentController@newsall')->name('frontend.blog.catalog');
         Route::get('/catalog', 'ContentController@folderall')->name('frontend.folder.catalog');
+        Route::get('/book.html', 'ContentController@bookdetail')->name('frontend.folder.detail');
     
+        Route::get('page/{slug}.html', 'ContentController@Pagedetail')->name('frontend.page.detail');
         Route::get('/{slug}.html', 'ContentController@Postdetail')->name('frontend.post.detail');
         Route::get('/{slug}', 'ContentController@Catalogdetail')->name('frontend.catalog.detail');
     });

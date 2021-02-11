@@ -105,6 +105,7 @@ class CatalogController extends BaseController
             $banner_home            = isset($request->banner_home)              ?$request->banner_home:'';
             $icon                   = isset($request->icon)                     ?$request->icon:'';
             $status                 = isset($request->status)                   ?$request->status:0;
+            $home                   = isset($request->home)                     ?$request->home:0;
             $parent                 = isset($request->parent)                   ?$request->parent:1;
             $template               = isset($request->template)                 ?$request->template:1;
             $order                  = isset($request->order)                    ?$request->order:1;
@@ -123,15 +124,17 @@ class CatalogController extends BaseController
             $banner_home            = FCommon::ClearStr($banner_home);
             $icon                   = FCommon::ClearStr($icon);
             $status                 = FCommon::ClearStr($status);
+            $home                   = FCommon::ClearStr($home);
             $order                  = FCommon::ClearStr($order);
             if($status == 'on') $status = 1;
+            if($home == 'on') $home = 1;
             settype($order, 'int');
 
             if ($request->hasFile('file_thumbnail')) {
                 $ext = $request->file_thumbnail->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_thumbnail = $request->file('file_thumbnail');
-                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail, '200x200');
+                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail);
                     // dd($thumbnail);
                 }
             }
@@ -147,14 +150,14 @@ class CatalogController extends BaseController
                 $ext = $request->file_header_banner_pc->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_header_banner_pc = $request->file('file_header_banner_pc');
-                    $header_banner_pc = FCommon::upload_file_crop_size($file_file_header_banner_pc, '200x200');
+                    $header_banner_pc = FCommon::upload_file_crop_size($file_file_header_banner_pc);
                 }
             }
             if ($request->hasFile('file_header_banner_mobile')) {
                 $ext = $request->file_header_banner_mobile->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_header_banner_mobile = $request->file('file_header_banner_mobile');
-                    $header_banner_mobile = FCommon::upload_file_crop_size($file_file_header_banner_mobile, '200x200');
+                    $header_banner_mobile = FCommon::upload_file_crop_size($file_file_header_banner_mobile);
                 }
             }
             if ($request->hasFile('file_banner_home')) {
@@ -200,6 +203,7 @@ class CatalogController extends BaseController
             $objToDo->seo           = json_encode($arrSeo);
             $objToDo->more_info     = json_encode($arrInfo);
             $objToDo->status        = $status;
+            $objToDo->home          = $home;
             $objToDo->parent        = $parent;
             $objToDo->order         = $order;
             $objToDo->banner_home   = $banner_home;

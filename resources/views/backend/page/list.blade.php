@@ -42,7 +42,7 @@
                         <td>{{ $item->id }};mk_page</td>
                         <td>{{ Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                         <td>{{ Carbon::parse($item->public_date)->format('d-m-Y') }}</td>
-                        <td>{{ Str::limit($item->title, 100, '...') }}</td>
+                        <td><a target="_blank" href="{{ route('frontend.page.detail', $item->slug) }}">{{ Str::limit($item->title, 100, '...') }}</a></td>
                         <td>@if ($item->status == 1)Active @else inActive @endif</td>
                         <td class="text-center">
                             <div class="flex justify-center items-center">

@@ -68,9 +68,30 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Str::macro('currency', function ($price)
+        Str::macro('currency', function ($price, $unit = 1, $lang = 'vi')
         {
-            return number_format($price, 2, ',', '.').' đ';
+            $unit_vi = ' đ';
+            $unit_en = '$ ';
+            
+            if($unit == 2){
+                $unit_vi = ' VNĐ';
+                $unit_en = 'USD ';
+            }
+
+            if($lang == 'en')
+                return $unit_en.number_format($price, 2, '.', ',');
+            return number_format($price, 0, ',', '.').$unit_vi;
+        });
+        Str::macro('rank', function ($number)
+        {
+            $strRank = '';
+            for ($i=0; $i < 5; $i++) { 
+                if($i < $number)
+                    $strRank .= '<i class="fa fa-star active"></i>';
+                else
+                    $strRank .= '<i class="fa fa-star"></i>';
+            }
+            return $strRank;
         });
     }
 }

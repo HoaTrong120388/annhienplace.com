@@ -34,9 +34,9 @@ class CommonController extends BaseController
             'titlePage_Seo'             => trans('common._seo_contact_page_title'),
             'descriptionPage_Seo'       => trans('common._seo_contact_page_description'),
             'imagePage_Seo'             => trans('common._seo_contact_page_title'),
-
+            'header_title'              => trans('common._seo_contact_page_title'),
         );
-        return view('frontend/common/contact')->with($data);
+        return view('frontend/content/page/contact')->with($data);
     }
     public function contactsubmit(Request $request)
     {

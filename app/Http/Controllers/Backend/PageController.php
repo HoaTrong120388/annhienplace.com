@@ -141,7 +141,7 @@ class PageController extends BaseController
                 $ext = $request->file_thumbnail->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_thumbnail = $request->file('file_thumbnail');
-                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail, '200x200');
+                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail);
                     // dd($thumbnail);
                 }
             }
@@ -167,13 +167,6 @@ class PageController extends BaseController
                     $header_banner_mobile = FCommon::upload_file_crop_size($file_file_header_banner_mobile);
                 }
             }
-            if ($request->hasFile('file_banner_form_register')) {
-                $ext = $request->file_banner_form_register->getClientOriginalExtension();
-                if(FCommon::check_file_upload($ext, 'image')){
-                    $file_file_banner_form_register = $request->file('file_banner_form_register');
-                    $banner_form_register = FCommon::upload_file_crop_size($file_file_banner_form_register);
-                }
-            }
 
             $arrSeo = array(
                 'title'         => !empty($seo_title)?$seo_title:$title,
@@ -184,7 +177,6 @@ class PageController extends BaseController
             $arrInfo = array(
                 'header_banner_pc'  => $header_banner_pc,
                 'header_banner_mobile'  => $header_banner_mobile,
-                'banner_form_register'  => $banner_form_register,
                 'template'  => $template
             );
 

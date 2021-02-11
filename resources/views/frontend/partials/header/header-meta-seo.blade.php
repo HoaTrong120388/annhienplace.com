@@ -1,11 +1,11 @@
 <link href="{{ $setting_result['company_fav_icon'] ?? '' }}" rel="shortcut icon" type="image/x-icon" />
-<title>{{ $titlePage_Seo or $setting_result['company_name'] }}</title>
+<title>{{ $titlePage_Seo ?? '' }}</title>
 <meta name="description" content="{{ $keywordPage_Seo }}" />
 <meta name="keywords" content="{{ $descriptionPage_Seo }}">
 <meta name="author" content="{{ $setting_result['company_name'] ?? '' }}">
 
 @if (isset($imagePage_Seo) && !empty($imagePage_Seo))
-<meta property="og:image" content="@if (isset($arrResult['banner_form_register'])) {{ FCommon::cover_thumbnail($arrResult['banner_form_register']) }}@endif"/>
+<meta property="og:image" content="{{ FCommon::cover_thumbnail($imagePage_Seo) }}"/>
 <meta content=1200 property=og:image:width>
 <meta content=630 property=og:image:height>
 @endif

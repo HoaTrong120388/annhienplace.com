@@ -18,10 +18,12 @@
         var path_upload             = "{{ asset('upload') }}";
         var website_domain          = "{{ $setting_result['website_domain'] or '' }}";
     </script>
+    @include('frontend.common.custom-code', ['type_include' => 1])
 
 </head>
 
 <body>
+    @include('frontend.common.custom-code', ['type_include' => 2])
     <div class="page-loader"></div>
     <div class="wrapper">
         @include('frontend.partials.header.mega-nav')

@@ -276,9 +276,10 @@ class HomeController extends BaseController
     }
     public function updatedata(Request $request)
     {
-        $data  = isset($request->data)?$request->data:'';
-        $status = isset($request->status)?$request->status:-1;
-        $special = isset($request->special)?$request->special:-1;
+        $data       = isset($request->data)?$request->data:'';
+        $status     = isset($request->status)?$request->status:-1;
+        $special    = isset($request->special)?$request->special:-1;
+        $home       = isset($request->home)?$request->home:-1;
 
 
         $data = FCommon::ClearStr($data);
@@ -289,11 +290,14 @@ class HomeController extends BaseController
         settype($id, 'int');
         settype($status, 'int');
         settype($special, 'int');
+        settype($home, 'int');
         if($id > 0 && $table != ''){
             if($status != -1)
                 $result = DB::table($table)->where('id', $id)->update(['status' => $status]);
             elseif($special != -1)
                 $result = DB::table($table)->where('id', $id)->update(['special' => $special]);
+            elseif($home != -1)
+                $result = DB::table($table)->where('id', $id)->update(['home' => $home]);
 
             if($result){
                 $response = array(
@@ -303,8 +307,7 @@ class HomeController extends BaseController
             }else{
                 $response = array(
                     'status' => 2,
-                    'msg' => 'Có lỗi thử lại sau',
-                    'special' => $special
+                    'msg' => 'Có lỗi thử lại sau'
                 );
             }
         }else{

@@ -4,6 +4,9 @@
         <td><?php echo e($item->id); ?></td>
         <td title="<?php echo e($item->title); ?>"><?php for($i = 0; $i < $level; $i++): ?>| ------ <?php endfor; ?> <?php echo e(Str::limit($item->title, 100, '...')); ?></td>
         <td><input data-table="mk_catalog" data-id="<?php echo e($item->id); ?>" class="update_order" type="text" value="<?php echo e($item->order ?? ''); ?>"></td>
+        <?php if(isset($home) && $home == 1): ?>
+            <td><?php if($item->home == 1): ?>Active <?php else: ?> inActive <?php endif; ?></td>
+        <?php endif; ?>
         <td><?php if($item->status == 1): ?>Active <?php else: ?> inActive <?php endif; ?></td>
         <td class="text-center">
             <div class="flex justify-center items-center">

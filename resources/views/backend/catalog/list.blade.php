@@ -19,6 +19,7 @@
                     <th class="whitespace-no-wrap" width="50">#</th>
                     <th class="whitespace-no-wrap">Title</th>
                     <th class="whitespace-no-wrap" width="100">Order</th>
+                    <th class="whitespace-no-wrap" width="100">Home</th>
                     <th class="whitespace-no-wrap" width="100">Status</th>
                     <th class="text-center whitespace-no-wrap" width="250">Actions</th>
                 </tr>
@@ -31,6 +32,7 @@
                         <td>{{ $item->id }}</td>
                         <td title="{{ $item->title }}">{{ Str::limit($item->title, 100, '...') }}</td>
                         <td><input data-table="mk_catalog" data-id="{{ $item->id }}" class="update_order" type="text" value="{{ $item->order ?? '' }}"></td>
+                        <td>@if ($item->home == 1)Active @else inActive @endif</td>
                         <td>@if ($item->status == 1)Active @else inActive @endif</td>
                         <td class="text-center">
                             <div class="flex justify-center items-center">
@@ -40,7 +42,7 @@
                         </td>
                     </tr>
                     @if(count($item->subcategory))
-                        @include('common.item-table-catalog',['subcategories' => $item->subcategory, 'level' => 1])
+                        @include('common.item-table-catalog',['subcategories' => $item->subcategory, 'level' => 1, 'home' => 1])
                     @endif
                     @endforeach
                 @else
@@ -75,7 +77,7 @@
 @section('footerjs')
 <script>
     $(document).ready(function() {
-        fnc_editTable('{{ route("admin.updatedata") }}', 4);
+        fnc_editTable('{{ route("admin.updatedata") }}', 5, '', 4);
     });
 
 </script>

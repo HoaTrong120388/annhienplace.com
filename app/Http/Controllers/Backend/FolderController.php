@@ -183,7 +183,7 @@ class FolderController extends BaseController
                 $ext = $request->file_thumbnail->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_thumbnail = $request->file('file_thumbnail');
-                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail, '200x200');
+                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail);
                     // dd($thumbnail);
                 }
             }
@@ -199,14 +199,14 @@ class FolderController extends BaseController
                 $ext = $request->file_header_banner_pc->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_header_banner_pc = $request->file('file_header_banner_pc');
-                    $header_banner_pc = FCommon::upload_file_crop_size($file_file_header_banner_pc, '200x200');
+                    $header_banner_pc = FCommon::upload_file_crop_size($file_file_header_banner_pc);
                 }
             }
             if ($request->hasFile('file_header_banner_mobile')) {
                 $ext = $request->file_header_banner_mobile->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_header_banner_mobile = $request->file('file_header_banner_mobile');
-                    $header_banner_mobile = FCommon::upload_file_crop_size($file_file_header_banner_mobile, '200x200');
+                    $header_banner_mobile = FCommon::upload_file_crop_size($file_file_header_banner_mobile);
                 }
             }
             if ($request->hasFile('file_album')) {
@@ -263,7 +263,6 @@ class FolderController extends BaseController
 
                 $objToDoOption->post_id = $objToDo->id;
                 $objToDoOption->more_info = json_encode($arrInfo);
-                // dd($objToDoOption);
                 $objToDoOption->save();
 
                 LogActivity::addToLog('Thêm Post mới - '.$objToDo->id, $objToDo);

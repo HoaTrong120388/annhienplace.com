@@ -1,11 +1,11 @@
 <link href="<?php echo e($setting_result['company_fav_icon'] ?? ''); ?>" rel="shortcut icon" type="image/x-icon" />
-<title><?php echo e($titlePage_Seo or $setting_result['company_name']); ?></title>
+<title><?php echo e($titlePage_Seo ?? ''); ?></title>
 <meta name="description" content="<?php echo e($keywordPage_Seo); ?>" />
 <meta name="keywords" content="<?php echo e($descriptionPage_Seo); ?>">
 <meta name="author" content="<?php echo e($setting_result['company_name'] ?? ''); ?>">
 
 <?php if(isset($imagePage_Seo) && !empty($imagePage_Seo)): ?>
-<meta property="og:image" content="<?php if(isset($arrResult['banner_form_register'])): ?> <?php echo e(FCommon::cover_thumbnail($arrResult['banner_form_register'])); ?><?php endif; ?>"/>
+<meta property="og:image" content="<?php echo e(FCommon::cover_thumbnail($imagePage_Seo)); ?>"/>
 <meta content=1200 property=og:image:width>
 <meta content=630 property=og:image:height>
 <?php endif; ?>

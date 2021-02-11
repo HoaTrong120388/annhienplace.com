@@ -131,7 +131,7 @@ class MediaController extends BaseController
                 $ext = $request->file_thumbnail->getClientOriginalExtension();
                 if(FCommon::check_file_upload($ext, 'image')){
                     $file_file_thumbnail = $request->file('file_thumbnail');
-                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail, '200x200');
+                    $thumbnail = FCommon::upload_file_crop($file_file_thumbnail);
                     // dd($thumbnail);
                 }
             }

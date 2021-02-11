@@ -60,7 +60,7 @@ function filePreview(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-function fnc_editTable(url, colstatus, colhot) {
+function fnc_editTable(url, colstatus, colhot, colhome) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -69,6 +69,7 @@ function fnc_editTable(url, colstatus, colhot) {
     var col_edit = [];
     if(colstatus !== '' && colstatus !== 'undefined') col_edit.push([colstatus, 'status', 'select', '{"1": "Active", "0": "inActive"}']);
     if(colhot !== '' && colhot !== undefined) col_edit.push([colhot, 'special', 'select', '{"1": "Active", "0": "inActive"}']);
+    if(colhome !== '' && colhome !== undefined) col_edit.push([colhome, 'home', 'select', '{"1": "Active", "0": "inActive"}']);
 
     $('#data_table').Tabledit({
         url: url,

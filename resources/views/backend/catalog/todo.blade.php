@@ -86,15 +86,15 @@
                                 <div class="mt-3">
                                     <label>Banner Home</label>
                                     <div class="border-2 border-gray-200 border-dashed dz-clickable mt-2">
-                                        <input type="file" name="file_banner_home" class="dropify" id="banner_home" data-default-file="@if (isset($arrResult->more_info->banner_home)) {{ FCommon::cover_thumbnail($arrResult->more_info->banner_home) }}@endif"  />
-                                        <input type="hidden" id="source_banner_home" name="banner_home" value="{{ $arrResult->more_info->banner_home ?? '' }}">
+                                        <input type="file" name="file_banner_home" class="dropify" id="banner_home" data-default-file="@if (isset($arrResult->banner_home)) {{ FCommon::cover_thumbnail($arrResult->banner_home) }}@endif"  />
+                                        <input type="hidden" id="source_banner_home" name="banner_home" value="{{ $arrResult->banner_home ?? '' }}">
                                     </div>
                                 </div>
                                 <div class="mt-3">
                                     <label>Icon</label>
                                     <div class="border-2 border-gray-200 border-dashed dz-clickable mt-2">
-                                        <input type="file" name="file_icon" class="dropify" id="icon" data-default-file="@if (isset($arrResult->more_info->icon)) {{ FCommon::cover_thumbnail($arrResult->more_info->icon) }}@endif"  />
-                                        <input type="hidden" id="source_icon" name="icon" value="{{ $arrResult->more_info->icon ?? '' }}">
+                                        <input type="file" name="file_icon" class="dropify" id="icon" data-default-file="@if (isset($arrResult->icon)) {{ FCommon::cover_thumbnail($arrResult->icon) }}@endif"  />
+                                        <input type="hidden" id="source_icon" name="icon" value="{{ $arrResult->icon ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -129,6 +129,12 @@
                     <label>Published</label>
                     <div class="mt-2">
                         <input class="input input--switch border" type="checkbox" name="status" @if (isset($arrResult->status) && $arrResult->status == 1) checked @endif>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label>Home</label>
+                    <div class="mt-2">
+                        <input class="input input--switch border" type="checkbox" name="home" @if (isset($arrResult->home) && $arrResult->home == 1) checked @endif>
                     </div>
                 </div>
                 <div>

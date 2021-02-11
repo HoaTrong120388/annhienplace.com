@@ -250,7 +250,6 @@ class ServiceController extends BaseController
 
                 $objToDoOption->post_id = $objToDo->id;
                 $objToDoOption->more_info = json_encode($arrInfo);
-                // dd($objToDoOption);
                 $objToDoOption->save();
 
                 LogActivity::addToLog('Thêm Post mới - '.$objToDo->id, $objToDo);

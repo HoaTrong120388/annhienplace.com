@@ -149,6 +149,10 @@
                                 <input type="text" class="input w-full border mt-2" name="source" value="{{ $arrResult->more_info->source ?? '' }}">
                             </div>
                             <div class="mt-3">
+                                <label>Nguyên liệu</label>
+                                <input type="text" class="input w-full border mt-2" name="materials" value="{{ $arrResult->more_info->materials ?? '' }}">
+                            </div>
+                            <div class="mt-3">
                                 <label>Tình trạng (Còn hàng)</label>
                                 <div class="mt-2">
                                     <input class="input input--switch border" type="checkbox" name="in_stocks" @if (isset($arrResult->in_stocks) && $arrResult->in_stocks == 1) checked @endif>

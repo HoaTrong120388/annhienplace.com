@@ -18,6 +18,7 @@ App\Model\Tour,
 App\Model\LocationTour,
 App\Model\Page,
 App\Model\Post,
+App\Model\PostOption,
 App\Model\Catalog,
 App\Model\Translation
 ;
@@ -33,77 +34,123 @@ class ContentController extends BaseController
         $this->lang = isset($_COOKIE['language'])?$_COOKIE['language']:'vi';
         $this->lang_next = ($this->lang == 'en')?'vi':'en';
     }
-    public function Postdetail(Request $request)
+    public function Pagedetail(Request $request)
     {
         $slug = isset($request->slug)?$request->slug:'';
         $slug = FCommon::clearStr($slug);
-
+        // dd($slug);
 
         if(empty($slug)) return \abort(404);
 
         $isTemplate = 0;
         $redirect_lang = '';
-        $arrResult = Page::where('status', 1)->where('slug', $slug)->firstOrfail();
+        $arrResult = Page::where('status', 1)
+                        ->where('slug', $slug)->firstOrfail();
 
-        $breadcrumb = '';
-        if(!$arrResult){
-            $arrResult = Post::_detail_by_slug($slug, $this->lang);
-            // dd($arrResult);
-            if(!$arrResult){
-                return \abort(404);
-            }else{
-                if($arrResult->language != $this->lang){
-                    setcookie('language', $arrResult->language, time() + (86400 * 30), "/");
-                    return redirect()->route('frontend.post.detail', $slug);
+        $breadcrumb[] = array(
+                            'link'  => '',
+                            'title' => $arrResult->title
+                        );
+
+        $arrResult->view = $arrResult->view+1;
+        $arrResult->save();
+        $group = $arrResult->group;
+
+        $result = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
+
+        $data = array(
+            'titlePage_Seo'         => $result['seo']['title'],
+            'descriptionPage_Seo'   => $result['seo']['description'],
+            'keywordPage_Seo'       => $result['seo']['keyword'],
+
+            'rs'                    => $result,
+            'arrResult'             => $arrResult,
+            'breadcrumb'            => $breadcrumb,
+            'header_title'          => $arrResult['title']
+        );
+
+        if(!empty($arrResult['seo']['image'])) $data['imagePage_Seo'] = $arrResult['seo']['image'];
+
+        return view("frontend/content/page/detail")->with($data);
+
+    }
+    public function Postdetail(Request $request)
+    {
+        $slug = isset($request->slug)?$request->slug:'';
+        $slug = FCommon::clearStr($slug);
+        // dd($slug);
+
+        if(empty($slug)) return \abort(404);
+
+        $isTemplate = 0;
+        $redirect_lang = '';
+        $arrResult = Post::select('mk_post.*', 'mk_post_option.more_info')->join('mk_post_option', 'mk_post.id', '=', 'mk_post_option.post_id')
+                        ->where('mk_post.status', 1)
+                        ->where('mk_post.slug', $slug)->firstOrfail();
+
+        $breadcrumb = array();
+        if($arrResult->catalog_id > 0){
+            $breadcrumb[] = [
+                                'link'  => route("frontend.catalog.detail", $arrResult->parentcategory->slug),
+                                'title' => $arrResult->parentcategory->title
+                            ];
+            if($arrResult->catalogsub_id > 0){
+                $breadcrumb[] = [
+                                    'link'  => route("frontend.catalog.detail", $arrResult->subcategory->slug),
+                                    'title' => $arrResult->subcategory->title
+                                ];
+
+                if($arrResult->catalogsubsub_id > 0){
+                    $breadcrumb[] = [
+                                        'link'  => route("frontend.catalog.detail", $arrResult->subsubcategory->slug),
+                                        'title' => $arrResult->subsubcategory->title
+                                    ];
                 }
-
-                Post::_update_data($arrResult->id, array('view' => $arrResult->view+1));
-                // if
-                {
-                    $breadcrumb = array(
-                        array(
-                            'title' => trans('common.breadcrumb_home'),
-                            'link'  => route('frontend.home')
-                        ),
-                        array(
-                            'title' => urldecode($arrResult->title),
-                        ),
-                    );
-                }
-
-                $id_lang_other = Translation::_get_id($this->lang_next, $this->lang, $arrResult->id, 3);
-                $arrResult_other = Post::find($id_lang_other);
-
-                if($arrResult_other){
-                    $redirect_lang =  route("frontend.post.detail", $arrResult_other->slug);
-                }
-                $arrResult = FCommon::json_decode_object($arrResult, array('seo'));
-                $more_info = array('template' => $arrResult['template']);
-                $arrResult['more_info'] = (object)$more_info;
             }
-        }else{
-            $arrResult->view = $arrResult->view+1;
-            $arrResult->save();
-            $group = $arrResult->group;
-
-            $arrResult = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
 
         }
 
-        $data = array(
-            'titlePage_Seo'         => $arrResult['seo']->title,
-            'descriptionPage_Seo'   => $arrResult['seo']->description,
-            'keywordPage_Seo'       => $arrResult['seo']->keyword,
+        $breadcrumb[] = array(
+                            'link'  => '',
+                            'title' => $arrResult->title
+                        );
 
+        // dd($breadcrumb);
+
+
+        $arrResult->view = $arrResult->view+1;
+        $arrResult->save();
+        $group = $arrResult->group;
+
+        $result = FCommon::json_decode_object($arrResult, array('more_info', 'seo', 'album'));
+
+        $data = array(
+            'titlePage_Seo'         => $result['seo']['title'],
+            'descriptionPage_Seo'   => $result['seo']['description'],
+            'keywordPage_Seo'       => $result['seo']['keyword'],
+
+            'rs'                    => $result,
             'arrResult'             => $arrResult,
             'breadcrumb'            => $breadcrumb,
+            'header_title'          => $arrResult['title']
         );
 
-        if(!empty($arrResult['seo']->image)) $data['imagePage_Seo'] = $arrResult['seo']->image;
-        if(isset($arrResult_Related) && !$arrResult_Related->isEmpty()) $data['arrResult_Related'] = $arrResult_Related;
+        if(!empty($arrResult['seo']['image'])) $data['imagePage_Seo'] = $arrResult['seo']['image'];
 
-        // FCommon::debug($arrResult, true);
-        return view('frontend/content/detail/articles')->with($data);
+        switch ($group) {
+            case 1:
+                $folder = 'product';
+                break;
+            case 3:
+                $folder = 'service';
+                break;
+            case 4:
+                $folder = 'catalog';
+                break;
+            default:
+                $folder = 'news';
+        }
+        return view("frontend/content/$folder/detail")->with($data);
 
     }
     public function Catalogdetail(Request $request)
@@ -115,15 +162,19 @@ class ContentController extends BaseController
 
         $arrResult = Catalog::where('slug', $slug)->firstOrfail();
 
+        $breadcrumb = array();
+        $lstParent = $arrResult->getParentsNames();
+        if($lstParent){
+            foreach ($lstParent as $item_parent) {
+                $breadcrumb[] = array(
+                                'link'  => route("frontend.catalog.detail", $item_parent->slug),
+                                'title' => $item_parent->title
+                            );
+            }
+        }
+        $breadcrumb[] = ['title' => $arrResult->title];
 
-        $breadcrumb = '';
-        $breadcrumb = array(
-            array(
-                'title' => $arrResult->title,
-            )
-        );
-
-        if($arrResult->subcategory()->count() > 0){
+        if($arrResult->subcategory()->where('status', 1)->count() > 0){
             $lstResult = Catalog::where('parent', $arrResult->id)
                                     ->where('group', $arrResult->group)
                                     ->where('status', 1)
@@ -143,29 +194,39 @@ class ContentController extends BaseController
             $type = 'detail';
         }
 
-        $arrResult = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
+        $rs = FCommon::json_decode_object($arrResult, array('more_info', 'seo'));
         // dd($arrResult);
 
         $data = array(
-            'titlePage_Seo'             => $arrResult['seo']['title'],
-            'descriptionPage_Seo'       => $arrResult['seo']['description'],
-            'imagePage_Seo'             => $arrResult['seo']['image'],
+
+            'titlePage_Seo'             => $rs['seo']['title'],
+            'descriptionPage_Seo'       => $rs['seo']['description'],
+            'imagePage_Seo'             => $rs['seo']['image'],
 
             'arrResult'                 => $arrResult,
+            'rs'                        => $rs,
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
+            'header_title'              => $rs['title'],
+            'type_list'                 => $type
         );
 
-        if($arrResult['group'] == 1)
-            return view("frontend/content/product/$type")->with($data);
-        elseif($arrResult['group'] == 2)
-            return view("frontend/content/news/$type")->with($data);
-        elseif($arrResult['group'] == 3)
-            return view("frontend/content/service/$type")->with($data);
-        elseif($arrResult['group'] == 4)
-            return view("frontend/content/folder/$type")->with($data);
 
-        return view('frontend/content/list/list')->with($data);
+        $group = $arrResult['group'];
+        switch ($group) {
+            case 1:
+                $folder = 'product';
+                break;
+            case 3:
+                $folder = 'service';
+                break;
+            case 4:
+                $folder = 'catalog';
+                break;
+            default:
+                $folder = 'news';
+        }
+        return view("frontend/content/$folder/list")->with($data);
     }
 
     public function search(Request $request)
@@ -213,38 +274,90 @@ class ContentController extends BaseController
     }
     public function service(Request $request)
     {
+        $breadcrumb[] = ['title' => trans("common.title_service_page_all")];
+
+        $lstResult = Catalog::where('group', 2)
+                                ->where('parent', 0)
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->get();
+        $type = 'catalog';
+
         $data = array(
-            'titlePage_Seo'             => '',
-            'descriptionPage_Seo'       => '',
-            'imagePage_Seo'             => '',
+            'titlePage_Seo'             => trans("common.title_service_page_all"),
+            'descriptionPage_Seo'       => trans("common.title_service_page_all"),
+            'imagePage_Seo'             => trans("common.title_service_page_all"),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => trans("common.title_service_page_all"),
+            'type_list'                 => $type
         );
-        return view('frontend/content/list/service')->with($data);
+
+        return view("frontend/content/service/listall")->with($data);
     }
-    public function news(Request $request)
+    public function newsall(Request $request)
     {
+        $breadcrumb[] = ['title' => trans("common.title_news_page_all")];
+
+        $lstResult = Catalog::where('group', 2)
+                                ->where('parent', 0)
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->get();
+        $type = 'catalog';
+
         $data = array(
-            'titlePage_Seo'             => '',
-            'descriptionPage_Seo'       => '',
-            'imagePage_Seo'             => '',
+            'titlePage_Seo'             => trans("common.title_news_page_all"),
+            'descriptionPage_Seo'       => trans("common.title_news_page_all"),
+            'imagePage_Seo'             => trans("common.title_news_page_all"),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => trans("common.title_news_page_all"),
+            'type_list'                 => $type
         );
-        return view('frontend/content/list/news')->with($data);
+
+        return view("frontend/content/news/listall")->with($data);
     }
-    public function product(Request $request)
+    public function productall(Request $request)
     {
+        $breadcrumb[] = ['title' => trans("common.title_product_page_all")];
+
+        $lstResult = Catalog::where('group', 1)
+                                ->where('parent', 0)
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->get();
+        $type = 'catalog';
+
         $data = array(
-            'titlePage_Seo'             => '',
-            'descriptionPage_Seo'       => '',
-            'imagePage_Seo'             => '',
+            'titlePage_Seo'             => trans("common.title_product_page_all"),
+            'descriptionPage_Seo'       => trans("common.title_product_page_all"),
+            'imagePage_Seo'             => trans("common.title_product_page_all"),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => trans("common.title_product_page_all"),
+            'type_list'                 => $type
         );
-        return view('frontend/content/list/shops')->with($data);
+
+        return view("frontend/content/product/listall")->with($data);
     }
-    public function productdetail(Request $request)
+    public function bookdetail(Request $request)
     {
+
         $data = array(
-            'titlePage_Seo'             => '',
-            'descriptionPage_Seo'       => '',
-            'imagePage_Seo'             => '',
+            'titlePage_Seo'             => trans("common.title_product_page_all"),
+            'descriptionPage_Seo'       => trans("common.title_product_page_all"),
+            'imagePage_Seo'             => trans("common.title_product_page_all"),
+
+            // 'breadcrumb'                => $breadcrumb,
+            // 'lstResult'                 => $lstResult,
+            'header_title'              => trans("common.title_product_page_all"),
+            // 'type_list'                 => $type
         );
-        return view('frontend/content/detail/product')->with($data);
+
+        return view("frontend/content/catalog/detail")->with($data);
     }
 }

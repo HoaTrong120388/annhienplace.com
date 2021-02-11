@@ -56,7 +56,7 @@
                                 <input type="text" name="company_address" class="input w-full border mt-2"  value="{{ isset($arrResult['company_address'])?$arrResult['company_address']:'' }}">
                             </div>
                             <div class="mt-3">
-                                <label>Địa chỉ</label>
+                                <label>Email</label>
                                 <input type="text" name="company_email" class="input w-full border mt-2"  value="{{ isset($arrResult['company_email'])?$arrResult['company_email']:'' }}">
                             </div>
                             <div class="mt-3">
@@ -66,6 +66,10 @@
                             <div class="mt-3">
                                 <label>Work Time</label>
                                 <textarea type="text" name="company_work_time" class="input w-full border mt-2">{{ isset($arrResult['company_work_time'])?$arrResult['company_work_time']:'' }}</textarea>
+                            </div>
+                            <div class="mt-3">
+                                <label>Work Time Footer</label>
+                                <textarea type="text" name="company_work_time_footer" class="input w-full border mt-2">{{ isset($arrResult['company_work_time_footer'])?$arrResult['company_work_time_footer']:'' }}</textarea>
                             </div>
                         </div>
                     </div>

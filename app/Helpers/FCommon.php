@@ -262,19 +262,64 @@ class FCommon
     {
         return (isset($element)&&!empty($element))?urldecode($element):'';
     }
+    public static function resize_image ($url, $size = '')
+    {
+        $path_img_full = 'upload/full/'.$url;
+        $img = Image::make(base_path($path_img_full));
+        
+        if($size != ''){
+            $arr_size = explode('x', $size);
+            if(is_array($arr_size) && count($arr_size) == 2){
+                $width = $arr_size[0];
+                $height = $arr_size[1];
+            }else{
+                $width = $height = $arr_size[0];
+            }
+            $path_img_size = 'upload/'.$width.'x'.$height.'/'.$url;
+            $arr_tem_path = explode('/', $path_img_size);
+            array_pop($arr_tem_path);
+            $path_folder = implode('/', $arr_tem_path);
+            $dir_size = base_path($path_folder);
+            if(!File::isDirectory($dir_size)) File::makeDirectory($dir_size, 0755, true, true);
+
+            $img->fit($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($path_img_size);
+        }
+        return secure_asset($path_img_size);
+    }
     public static function cover_thumbnail ($url, $size = '')
     {
-        if(empty($url)) return secure_asset('public/all/images/default-image.jpg');
+        
+        $path_img_full = 'upload/full/'.$url;
+        $path_img_size = 'upload/'.$size.'/'.$url;
+        $path_img_blank = 'public/all/images/blank.png';
+
+        if(empty($url)) return secure_asset($path_img_blank);
+
         if($size != ''){
-            $path_img = 'upload/'.$size.'/'.$url;
-            if(!File::exists(public_path('../'.$path_img)))
-                $path_img = 'upload/full/'.$url;
+
+            $arr_size = explode('x', $size);
+            if(is_array($arr_size) && count($arr_size) == 2){
+                $width = $arr_size[0];
+                $height = $arr_size[1];
+            }else{
+                $width = $height = $arr_size[0];
+            }
+            $path_img_size = 'upload/'.$width.'x'.$height.'/'.$url;
+
+            if(!File::exists(public_path('../'.$path_img_size))){
+                if(File::exists(public_path('../'.$path_img_full))){
+                    return FCommon::resize_image($url, $size);
+                }
+                return secure_asset($path_img_blank);
+            }
+            return secure_asset($path_img_size);
         }else{
-            $path_img = 'upload/full/'.$url;
+            return secure_asset($path_img_full);
         }
-        if(File::exists(public_path('../'.$path_img)))
-            return secure_asset($path_img);
-        return secure_asset('public/all/images/default-image.jpg');
+
+        return secure_asset($path_img_blank);
     }
     public static function full_link_image ($path, $size = '')
     {

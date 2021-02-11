@@ -12,7 +12,7 @@
 <link rel="stylesheet" media="all" href="<?php echo e(asset('public/frontend/css/furniture-icons.css')); ?>" />
 <link rel="stylesheet" media="all" href="<?php echo e(asset('public/frontend/css/linear-icons.min.css')); ?>" />
 <link rel="stylesheet" media="all" href="<?php echo e(asset('public/frontend/css/owl.carousel.min.css')); ?>" />
-<link rel="stylesheet" media="all" href="<?php echo e(asset('public/frontend/css/theme.css')); ?>" />
+<link rel="stylesheet" media="all" href="<?php echo e(asset('public/frontend/css/theme.css')); ?>?v=0.1" />
 
 <!--Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600&amp;subset=latin-ext" rel="stylesheet">
@@ -24,6 +24,7 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<?php echo $__env->yieldContent('headerstyle'); ?>
 <?php echo FCommon::minifycss('frontend_theme'); ?>
 
 <?php echo $__env->yieldContent('custom_css'); ?>

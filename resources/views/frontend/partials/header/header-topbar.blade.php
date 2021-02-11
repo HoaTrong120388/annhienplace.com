@@ -15,7 +15,7 @@
     <!--  top sicon  -->
     <div class="top-sicon">
         <ul>
-            @include('frontend.common.social-icon-share')
+            @include('frontend.common.social-icon-page')
         </ul>
     </div>
     <!--  /top sicon  -->

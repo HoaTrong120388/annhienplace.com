@@ -19,5 +19,20 @@ class Catalog extends Model
     public function lstPost(){
         return $this->hasMany(Post::class);
     }
+    public function getParentsNames() {
 
+        $parents = collect([]);
+
+        if($this->parentcategory) {
+            $parent = $this->parentcategory;
+            while(!is_null($parent)) {
+                $parents->push($parent);
+                $parent = $parent->parentcategory;
+            }
+            return $parents;
+        } else {
+            return null;
+        }
+
+    }
 }
