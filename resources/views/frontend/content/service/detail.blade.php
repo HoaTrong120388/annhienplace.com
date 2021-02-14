@@ -1,0 +1,1 @@
+@include('frontend.content.news.detail')

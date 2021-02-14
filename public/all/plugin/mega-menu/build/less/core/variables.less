@@ -1,0 +1,78 @@
+// Variables
+//
+// Copy settings from this file into the provided `_custom.scss` to override
+
+// Borders
+@border-radius: 5px;
+
+// Colors
+
+@color-light: #FFFFFF;
+@color-light-inverse: #212529;
+
+@color-dark: #212529;
+@color-dark-inverse: #FFFFFF;
+
+@color-background: #f7f7f7;
+@color-background-dark: #212529;
+
+@color-primary: #0084B4;
+@color-primary-inverse: #FFFFFF;
+
+@color-secondary: #CF0EF0;
+@color-secondary-inverse: #FFFFFF;
+
+@color-tertiary: #2BBBAD;
+@color-tertiary-inverse: #FFFFFF;
+
+@color-quaternary: #383f48;
+@color-quaternary-inverse: #FFFFFF;
+
+// colors list
+@colors-list: 
+primary @color-primary @color-primary-inverse,
+secondary @color-secondary @color-secondary-inverse,
+tertiary @color-tertiary @color-tertiary-inverse,
+quaternary @color-quaternary @color-quaternary-inverse,
+light @color-light @color-light-inverse,
+dark @color-dark @color-dark-inverse;
+
+// colors list mobile (without dark & light)
+@colors-list-mobile:
+primary @color-primary @color-primary-inverse,
+secondary @color-secondary @color-secondary-inverse,
+tertiary @color-tertiary @color-tertiary-inverse,
+quaternary @color-quaternary @color-quaternary-inverse;
+
+// color primary scale list
+@colors-scale-list:
+1 darken(@color-primary, 10%),
+2 darken(@color-primary, 5%),
+3 @color-primary,
+4 lighten(@color-primary, 5%),
+5 lighten(@color-primary, 10%),
+6 lighten(@color-primary, 15%);
+
+// color default scale list
+@color-background-scale-light:
+1 @color-background,
+2 darken(@color-background, 6%),
+3 darken(@color-background, 9%),
+4 darken(@color-background, 12%),
+5 darken(@color-background, 15%),
+6 darken(@color-background, 18%),
+7 darken(@color-background, 21%),
+8 darken(@color-background, 24%),
+9 darken(@color-background, 27%);
+
+// color dark scale list
+@color-background-scale-dark:
+1 @color-background-dark,
+2 darken(@color-background-dark, 2%),
+3 darken(@color-background-dark, 4%),
+4 darken(@color-background-dark, 6%),
+5 darken(@color-background-dark, 8%),
+6 darken(@color-background-dark, 10%),
+7 darken(@color-background-dark, 12%),
+8 darken(@color-background-dark, 14%),
+9 darken(@color-background-dark, 16%);

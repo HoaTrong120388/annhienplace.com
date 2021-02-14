@@ -1,0 +1,50 @@
+/*!
+	Responsive Bootstrap 4 Mega Dropdown Menu (https://wlcunited.com) Copyright 2016 - 2020 WLC United. All Rights Reserved.
+	Licensed under Regular License (http://codecanyon.net/licenses/regular) or Extended License (http://codecanyon.net/licenses/extended)
+	We will take legal action against those who copy our HTML content, CSS style sheets and JavaScript functions without a license.
+*/
+
+// Directional
+$dir: ltr !default;
+
+
+// Core
+@import 'core/functions';
+@import 'core/settings';
+@import 'core/mixins';
+@import 'core/directional';
+@import 'core/variables';
+@import 'core/animations';
+@import 'core/fonts';
+@import 'core/helpers';
+
+
+// LAYOUTS
+@import 'layout/dark';
+@import 'layout/boxed';
+
+
+// Utilities
+@import 'utilities/backgrounds';
+@import 'utilities/colors';
+@import 'utilities/gradients';
+@import 'utilities/misc';
+@import 'utilities/scrollable';
+
+
+// Components
+@import 'components/header';
+@import 'components/buttons';
+@import 'components/flags';
+@import 'components/forms';
+@import 'components/images';
+@import 'components/navs';
+@import 'components/social-icons';
+
+
+// Demo
+// @import 'demo/base';
+
+
+// Custom
+// @import 'custom';
