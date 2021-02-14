@@ -1,1 +1,0 @@
-@include('frontend.content.news.item-catalog')
