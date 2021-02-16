@@ -75,7 +75,8 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="#">
-                                                Dịch vụ 
+                                                <?php echo e(__('common.nav_service')); ?>
+
                                             </a>
                                             <?php if(isset($FrontendCatalog[3])): ?>
                                             <ul class="dropdown-menu">
@@ -97,7 +98,8 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="#">
-                                                Catalog
+                                                <?php echo e(__('common.nav_catalog')); ?>
+
                                             </a>
                                             <?php if(isset($FrontendCatalog[4])): ?>
                                             <ul class="dropdown-menu">
@@ -119,7 +121,8 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="#">
-                                                Blog
+                                                <?php echo e(__('common.nav_blog')); ?>
+
                                             </a>
                                             <?php if(isset($FrontendCatalog[2])): ?>
                                             <ul class="dropdown-menu">
@@ -141,7 +144,8 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="<?php echo e(route("frontend.contact")); ?>">
-                                                Liên hệ
+                                                <?php echo e(__('common.nav_contact')); ?>
+
                                             </a>
                                         </li>
                                     </ul>

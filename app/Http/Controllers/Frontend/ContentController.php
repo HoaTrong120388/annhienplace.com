@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
 
+
 use FCommon, Str;
 use App\Model\User,
 App\Model\Tour,
@@ -80,6 +81,7 @@ class ContentController extends BaseController
         $slug = isset($request->slug)?$request->slug:'';
         $slug = FCommon::clearStr($slug);
         // dd($slug);
+
 
         if(empty($slug)) return \abort(404);
 
