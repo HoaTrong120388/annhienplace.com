@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
 use FCommon, LogActivity;
-use App\Model\Contact;
+use App\Model\Contact, App\Model\Comment;
 
 class CommonController extends BaseController
 {
@@ -42,7 +42,6 @@ class CommonController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'fullname'  => 'required|string|min:3|max:255',
-            'email'     => 'required|email',
             'phone'     => 'required|numeric',
             'message'   => 'required|string|min:10|max:200',
         ]);
@@ -60,24 +59,21 @@ class CommonController extends BaseController
             $phone      = isset($request->phone)        ?$request->phone:'';
             $message    = isset($request->message)      ?$request->message:'';
 
-            $fullname   = FCommon::XoaDinhDang($fullname);
-            $email      = FCommon::XoaDinhDang($email);
-            $phone      = FCommon::XoaDinhDang($phone);
-            $message    = FCommon::XoaDinhDang($message);
+            $fullname   = FCommon::ClearStr($fullname);
+            $email      = FCommon::ClearStr($email);
+            $phone      = FCommon::ClearStr($phone);
+            $message    = FCommon::ClearStr($message);
 
             $date_now = $this->time_now;
 
-            $data_insert = array(
-                'created_date'  => $date_now,
-                'modifine_date' => $date_now,
-                'fullname'      => $fullname,
-                'email'         => $email,
-                'phone'         => $phone,
-                'message'       => $message,
-                'group'         => 1,
-            );
-            $id = Contact::_add($data_insert);
-            if($id > 0){
+            $objToDo = new Contact;
+            $objToDo->fullname          = $fullname;
+            $objToDo->email             = $email;
+            $objToDo->phone             = $phone;
+            $objToDo->message           = $message;
+            $objToDo->group             = 1;
+
+            if($objToDo->save()){
                 $data = array(
                     'status'    => 1,
                     'msg'       => trans("common._noti_body_submit_success"),
@@ -153,12 +149,13 @@ class CommonController extends BaseController
         }
         return response()->json($data);
     }
-    public function landingpageregistersubmit(Request $request)
+    public function addcomment(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'fullname'  => 'required|string|min:3|max:255',
-            'email'     => 'required|email',
-            'phone'     => 'required|numeric',
+            'fullname'      => 'required|string|min:3|max:255',
+            'ranking'       => 'required|numeric',
+            'phone'         => 'required|numeric',
+            'message'       => 'required|min:10|max:1000',
         ]);
 
         if ($validator->fails()) {
@@ -172,26 +169,31 @@ class CommonController extends BaseController
             $fullname   = isset($request->fullname)     ?$request->fullname:'';
             $email      = isset($request->email)        ?$request->email:'';
             $phone      = isset($request->phone)        ?$request->phone:'';
-            $message    = isset($request->content)      ?$request->content:'';
+            $message    = isset($request->message)      ?$request->message:'';
+            $ranking    = isset($request->ranking)      ?$request->ranking:0;
+            $idPost     = isset($request->idPost)       ?$request->idPost:0;
+            $link       = isset($request->link)         ?$request->link:'';
 
-            $fullname   = FCommon::XoaDinhDang($fullname);
-            $email      = FCommon::XoaDinhDang($email);
-            $phone      = FCommon::XoaDinhDang($phone);
-            $message    = FCommon::XoaDinhDang($message);
+            $fullname   = FCommon::ClearStr($fullname);
+            $email      = FCommon::ClearStr($email);
+            $phone      = FCommon::ClearStr($phone);
+            $message    = FCommon::ClearStr($message);
+            $link       = FCommon::ClearStr($link);
+            settype($ranking, 'int');
+            settype($idPost, 'int');
 
-            $date_now = $this->time_now;
+            $objToDo = new Comment;
+            $objToDo->fullname          = $fullname;
+            $objToDo->email             = $email;
+            $objToDo->phone             = $phone;
+            $objToDo->message           = $message;
+            $objToDo->ranking           = $ranking;
+            $objToDo->post_id           = $idPost;
+            $objToDo->link              = $link;
+            $objToDo->group             = 1;
+            $objToDo->parent            = 0;
 
-            $data_insert = array(
-                'created_date'  => $date_now,
-                'modifine_date' => $date_now,
-                'fullname'      => $fullname,
-                'email'         => $email,
-                'phone'         => $phone,
-                'message'       => $message,
-                'group'         => 3,
-            );
-            $id = Contact::_add($data_insert);
-            if($id > 0){
+            if($objToDo->save()){
                 $data = array(
                     'status'    => 1,
                     'msg'       => trans("common._noti_body_submit_success"),
@@ -202,6 +204,7 @@ class CommonController extends BaseController
                     'list_error'    => trans("common._noti_body_submit_error"),
                 );
             }
+
         }
         return response()->json($data);
     }

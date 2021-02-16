@@ -1,5 +1,6 @@
 @extends('backend.layout')
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <h2 class="intro-y text-lg font-medium mt-10">
     {{$titlePage}}
 </h2>
@@ -20,31 +21,39 @@
     </div>
     <!-- BEGIN: Data List -->
     <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-        <table class="table table-report -mt-2">
+        <table class="table table-report -mt-2" id="data_table">
             <thead>
                 <tr>
+                    <th></th>
                     <th class="whitespace-no-wrap" width="150">Created</th>
                     <th class="whitespace-no-wrap">Fullname</th>
                     <th class="whitespace-no-wrap">Phone</th>
                     <th class="whitespace-no-wrap">Email</th>
                     <th class="whitespace-no-wrap">Content</th>
-                    <th class="text-center whitespace-no-wrap" width="250">Actions</th>
+                    <th class="text-center whitespace-no-wrap" width="150">Status</th>
                 </tr>
             </thead>
             <tbody>
                 @if (!empty($arrResult) && count((array)$arrResult) > 0)
                     @foreach ($arrResult as $item)
                     <tr class="intro-x">
+                        <td>{{ $item->id }};mk_contact</td>
                         <td>{{ Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                         <td>{{ $item->fullname }}</td>
                         <td>{{ $item->phone }}</td>
                         <td>{{ $item->email }}</td>
-                        <td><div class="flex items-center "><a href="javascript:void(0);" class="viewDetail"><i data-feather="maximize-2" class="w-4 h-4 mr-2"></i></a> {{ Str::limit($item->message, 50) }} </div></td>
-                        <td class="text-center">
-                            @if ($item->status == 1)<div class="flex items-center justify-center text-theme-9"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Đã xem </div>
-                            @else <div class="flex items-center justify-center text-theme-6"> <i data-feather="activity" class="w-4 h-4 mr-2"></i> Đang xử lý </div>
-                            @endif
+                        <td>
+                            <div class="flex items-center ">
+                                <a href="javascript:void(0);" onclick="show_full_mess({{ $item->id }})" class="viewDetail">
+                                    <i data-feather="maximize-2" class="w-4 h-4 mr-2"></i>
+                                </a>
+                                {{ Str::limit($item->message, 50) }}
+                            </div>
+                            <div id="content_{{ $item->id }}" class="hidden">
+                                {!! $item->message !!}
+                            </div>
                         </td>
+                        <td class="text-center">@if ($item->status == 1)Active @else inActive @endif</td>
                     </tr>
                     @endforeach
                 @else
@@ -58,59 +67,29 @@
     {{ $arrResult->links('pagination::admin') }}
     <!-- END: Pagination -->
 </div>
-<!-- BEGIN: Delete Confirmation Modal -->
-<div class="modal" id="delete-confirmation-modal">
-    <div class="modal__content">
-        <div class="p-5 text-center">
-            <div class="overflow-x-auto">
-                 <table class="table">
-                    <tr>
-                        <th>Fullname</th>
-                        <td>Hoa</td>
-                    </tr>
-                    <tr>
-                        <th>Fullname</th>
-                        <td>Hoa</td>
-                    </tr>
-                    <tr>
-                        <th>Fullname</th>
-                        <td>Hoa</td>
-                    </tr>
-                    <tr>
-                        <th>Fullname</th>
-                        <td>Hoa</td>
-                    </tr>
-                 </table>
-             </div>
-        </div>
-        <div class="px-5 pb-8 text-center">
-            <button type="button" data-dismiss="modal" class="button w-24 border text-gray-700 mr-1">Cancel</button>
-            <button type="button" class="button w-24 bg-theme-6 text-white">Delete</button>
-        </div>
-    </div>
-</div>
-<!-- END: Delete Confirmation Modal -->
-@endsection
-
-
-@section('headerstyle')
+<style>
+    .jconfirm.jconfirm-white .jconfirm-box,
+    .jconfirm.jconfirm-light .jconfirm-box {
+        max-width: 500px;
+    }
+</style>
 @endsection
 
 @section('footerjs')
 <script>
     $(document).ready(function() {
-        $("#btn-export-form").on('click', function(){
-            var data = $("#frm_filter_data").serialize();
-            $("#btn-submit-export").click();
-        });
-        $(".viewDetail").on('click', function(){
-            $("#delete-confirmation-modal").modal('show');
-        });
+        fnc_editTable('{{ route("admin.updatedata") }}', 6);
     });
-    $( "#btn-show-modal-filter" ).on('click', function(e){
-        e.preventDefault();
-        $('#programmatically-dropdown').dropdown('hide');
-    });
-
+    function show_full_mess(id) {
+        var cnt_mess = $("#content_"+id).html();
+        $.dialog({
+            'title': false,
+            'content': cnt_mess,
+            'type': 'blue',
+            'boxWidth': '90%',
+            'typeAnimated': true,
+            'useBootstrap': false,
+        });
+    }
 </script>
 @endsection

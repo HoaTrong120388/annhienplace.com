@@ -50,34 +50,40 @@
                             <div class="col-md-offset-1 col-md-10 text-center">
                                 {!! __('common.page_contact_content_form') !!}
                                 <div class="contact-form-wrapper">
-                                    <a class="btn btn-clean open-form" data-text-open="Contact us via form" data-text-close="Close form">Contact us via form</a>
+                                    <a class="btn btn-clean open-form" data-text-open="{{ __('common.open_form_contact') }}" data-text-close="{{ __('common.close_form_contact') }}">{{ __('common.open_form_contact') }}</a>
                                     <div class="contact-form clearfix">
-                                        <form id="sendmail" name="sendmail" action="" method="post">
+                                        <form id="frm_contact" name="frm_contact" action="" method="post">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input id="Name" name="Name" type="text" value="" class="form-control" placeholder="Your name" >
+                                                        <input name="fullname" type="text" value="" class="form-control" placeholder="Họ và tên" >
+                                                        <span class="frm_error error_fullname"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input id="Email" name="Email" type="email" value="" class="form-control" placeholder="Your email" >
+                                                        <input name="phone" type="text" value="" class="form-control" placeholder="Điện thoại" >
+                                                        <span class="frm_error error_phone"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <input id="Subject" name="Subject" type="text" value="" class="form-control" placeholder="Subject" >
+                                                        <input name="email" type="email" value="" class="form-control" placeholder="Email" >
+                                                        <span class="frm_error error_email"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea id="Comment" name="Comment" class="form-control" placeholder="Your message" rows="10"></textarea>
+                                                        <textarea name="message" class="form-control" placeholder="Nội dung liên hệ" rows="5"></textarea>
+                                                        <span class="frm_error error_message"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 text-center">
-                                                    <input type="submit" class="btn btn-clean" value="Send message" />
+                                                    <button type="submit" id="btn_submit_frm_contact" class="btn btn-clean">Gửi</button>
                                                 </div>
                                             </div>
+                                            @csrf
+                                            <div class="loading_savefie" id="loading_savefie"><div class="loading_savefie_cnt"><div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></div>
                                         </form>
                                     </div>
                                 </div>
@@ -94,47 +100,100 @@
 @section('footerjs')
     <script>
         $(document).ready(function() {
-            $("#btn-submit-contact").on('click', function(){
-                var obj = $(this);
-                obj.next('.filter-spinner-loading').show();
-                $.ajax({
-                    url: '{{ route('frontend.contact.submit') }}',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: $("#commentform").serialize(),
-                })
-                .done(function(response) {
-                    if(response.status == 1){
-                        $.confirm({
-                            title: '{{ __("common._noti_header_title_success") }}',
-                            content: response.msg,
-                            type: 'green',
-                            animation: 'zoom',
-                            closeAnimation: 'scale',
-                            buttons: {
-                                ok: function () {
-                                    location.reload();
+            $("#frm_contact").validate({
+                rules: {
+                    fullname: {
+                        required: true
+                    },
+                    message: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 5000
+                    },
+                    phone: {
+                        required: true,
+                        number: true,
+                        minlength: 9,
+                        maxlength: 11
+                    },
+                },
+                messages: {
+                    fullname: {
+                        required: 'Không được để trống'
+                    },
+                    message: {
+                        required: 'Không được để trống',
+                        minlength: 'Ít nhất 10 ký tự',
+                        maxlength: 'Tối đa 1.000 ký tự',
+                    },
+                    phone: {
+                        required: 'Không được để trống',
+                        number: 'Phải là số',
+                        minlength: 'Không đúng chuẩn',
+                        maxlength: 'Không đúng chuẩn',
+                    },
+                },
+                errorPlacement: function(error, element) {
+                    var name = element.attr("name");
+                    $(".error_"+name).text(error.html());
+                },
+                highlight: function(element) {
+                    $(element).addClass("is-invalid");
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass("is-invalid");
+                },
+                success: function(element) {
+                    $(element).closest('div.form-group').find('.frm_error').html('');
+                },
+                submitHandler: function (form) {
+                    $("#loading_savefie").show();
+                    var objForm = $("#frm_contact");
+                    var objBtn = $("#btn_submit_frm_contact");
+                    objBtn.prop('disabled', true);
+                    $.ajax({
+                        url: '{{ route("frontend.contact.submit") }}',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: objForm.serialize(),
+                    })
+                    .done(function(response) {
+                        if(response.status == 1){
+                            objForm.trigger('reset');
+                            $.confirm({
+                                title: '{{ __("common._noti_header_title_success") }}',
+                                content: response.msg,
+                                type: 'green',
+                                animation: 'zoom',
+                                closeAnimation: 'scale',
+                                useBootstrap: false,
+                                boxWidth: '90%',
+                                buttons: {
+                                    ok: function () {
+                                        
+                                    }
                                 }
-                            }
-                        });
-                    }else{
-                        $.confirm({
-                            title: '{{ __("common._noti_header_title_error") }}',
-                            content: response.list_error,
-                            type: 'red',
-                            animation: 'zoom',
-                            closeAnimation: 'scale',
-                            buttons: {
-                                ok: function () {
-                                    obj.next('.filter-spinner-loading').hide();
+                            });
+                        }else{
+                            $.confirm({
+                                title: '{{ __("common._noti_header_title_error") }}',
+                                content: response.list_error,
+                                type: 'red',
+                                animation: 'zoom',
+                                closeAnimation: 'scale',
+                                useBootstrap: false,
+                                boxWidth: '90%',
+                                buttons: {
+                                    ok: function () {
+                                        objBtn.prop('disabled', false);
+                                    }
                                 }
-                            }
-                        });
-                    }
-                })
-                .fail(function(error) {
-                    console.log("error");
-                });
+                            });
+                        }
+                        $("#loading_savefie").hide();
+                    });
+                    return false;
+                }
             });
         });
     </script>

@@ -82,7 +82,7 @@ class AppServiceProvider extends ServiceProvider
                 return $unit_en.number_format($price, 2, '.', ',');
             return number_format($price, 0, ',', '.').$unit_vi;
         });
-        Str::macro('rank', function ($number)
+        Str::macro('ranking', function ($number)
         {
             $strRank = '';
             for ($i=0; $i < 5; $i++) { 

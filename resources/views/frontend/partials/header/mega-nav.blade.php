@@ -72,7 +72,7 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="#">
-                                                Dịch vụ 
+                                                {{ __('common.nav_service') }}
                                             </a>
                                             @if (isset($FrontendCatalog[3]))
                                             <ul class="dropdown-menu">
@@ -94,7 +94,7 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="#">
-                                                Catalog
+                                                {{ __('common.nav_catalog') }}
                                             </a>
                                             @if (isset($FrontendCatalog[4]))
                                             <ul class="dropdown-menu">
@@ -116,7 +116,7 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="#">
-                                                Blog
+                                                {{ __('common.nav_blog') }}
                                             </a>
                                             @if (isset($FrontendCatalog[2]))
                                             <ul class="dropdown-menu">
@@ -138,7 +138,7 @@
                                         
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle " href="{{ route("frontend.contact") }}">
-                                                Liên hệ
+                                                {{ __('common.nav_contact') }}
                                             </a>
                                         </li>
                                     </ul>

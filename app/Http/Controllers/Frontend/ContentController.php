@@ -20,6 +20,7 @@ App\Model\Page,
 App\Model\Post,
 App\Model\PostOption,
 App\Model\Catalog,
+App\Model\Comment,
 App\Model\Translation
 ;
 
@@ -114,8 +115,14 @@ class ContentController extends BaseController
                             'link'  => '',
                             'title' => $arrResult->title
                         );
+                        
+        $arrRelated = Post::where('catalog_id', $arrResult->catalog_id)
+                        ->where('group', $arrResult->group)
+                        ->where('status', 1)
+                        ->orderByDesc('id', 'desc')
+                        ->paginate(6);
 
-        // dd($breadcrumb);
+        
 
 
         $arrResult->view = $arrResult->view+1;
@@ -132,10 +139,16 @@ class ContentController extends BaseController
             'rs'                    => $result,
             'arrResult'             => $arrResult,
             'breadcrumb'            => $breadcrumb,
+            'arrRelated'            => $arrRelated,
             'header_title'          => $arrResult['title']
         );
 
         if(!empty($arrResult['seo']['image'])) $data['imagePage_Seo'] = $arrResult['seo']['image'];
+
+        if($group == 1){
+            $arrComment = $arrResult->comment()->where('status', 1)->where('parent', 0)->orderBy('id', 'desc')->get();
+            $data['arrComment'] = $arrComment;
+        }
 
         switch ($group) {
             case 1:

@@ -34,11 +34,16 @@ Route::group(['middleware' => ['locale']], function () {
     
         Route::get('/change-language', 'CommonController@setLocale')->name('frontend.change.language');
         Route::get('/send-mail', 'TestController@sendmail')->name('tool.sendmail');
+        
     
         /********* Contact *************/
         Route::get('/lien-he.html', 'CommonController@contact')->name('frontend.contact');
         Route::post('/contactsubmit', 'CommonController@contactsubmit')->name('frontend.contact.submit');
         /********* Contact *************/
+
+        /********* Comment *************/
+        Route::post('/add-comment', 'CommonController@addcomment')->name('frontend.comment.add');
+        /********* Comment *************/
     
         /*** Url Search ***/
         Route::get('/search', 'ContentController@search')->name('frontend.search');

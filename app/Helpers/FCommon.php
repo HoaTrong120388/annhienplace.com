@@ -281,8 +281,8 @@ class FCommon
             $path_folder = implode('/', $arr_tem_path);
             $dir_size = base_path($path_folder);
             if(!File::isDirectory($dir_size)) File::makeDirectory($dir_size, 0755, true, true);
-
-            $img->fit($width, $height, function ($constraint) {
+            // dd($width);
+            $img->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path_img_size);
         }
@@ -412,5 +412,41 @@ class FCommon
                 'verify' => false
             ]);
         $response = json_decode($res->getBody());
+    }
+    public static function countRanking ($arrComment)
+    {
+        $rate_1 = 0;
+        $rate_2 = 0;
+        $rate_3 = 0;
+        $rate_4 = 0;
+        $rate_5 = 0;
+        foreach ($arrComment as $comment) {
+            $ranking = $comment->ranking;
+
+            switch ($ranking) {
+                case '1':
+                    $rate_1 += 1;
+                    break;
+                case '2':
+                    $rate_2 += 2;
+                    break;
+                case '3':
+                    $rate_3 += 3;
+                    break;
+                case '4':
+                    $rate_4 += 4;
+                    break;
+                case '5':
+                    $rate_5 += 5;
+                    break;
+            }
+        }
+        $sum_rate_point = $rate_1 + $rate_2 + $rate_3 + $rate_4 + $rate_5;
+
+        $rank_product = $sum_rate_point /  $arrComment->count();
+        $rank_product = round($rank_product);
+        settype($rank_product, 'int');
+        
+        return $rank_product;
     }
 }

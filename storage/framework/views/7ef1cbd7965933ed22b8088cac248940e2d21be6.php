@@ -4,6 +4,8 @@
 <script src="<?php echo e(asset('public/frontend/js/jquery.ion.rangeSlider.js')); ?>"></script>
 <script src="<?php echo e(asset('public/frontend/js/jquery.isotope.pkgd.js')); ?>"></script>
 
+<script src="<?php echo e(asset('public/all/plugin/validate/jquery.validate.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/all/plugin/jquery-confirm/jquery-confirm.min.js')); ?>"></script>
 <script src="<?php echo e(asset('public/all/plugin/mega-menu/jquery/jquery.appear.min.js')); ?>"></script>
 <script src="<?php echo e(asset('public/all/plugin/mega-menu/jquery/jquery.easing.min.js')); ?>"></script>
 <script src="<?php echo e(asset('public/all/plugin/mega-menu/jquery/jquery.cookie.min.js')); ?>"></script>

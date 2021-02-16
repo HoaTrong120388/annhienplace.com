@@ -53,7 +53,7 @@
                             <div class="owl-product-gallery open-popup-gallery">
                                 @foreach ($rs['album'] as $alb)
                                 <a href="{{ FCommon::cover_thumbnail($alb) }}">
-                                    <img src="{{ FCommon::cover_thumbnail($alb, '200x200') }}" alt="{{ $rs['title'] }}" height="500" />
+                                    <img src="{{ FCommon::cover_thumbnail($alb, 'nullx500') }}" alt="{{ $rs['title'] }}" height="500" />
                                 </a>
                                 @endforeach
                             </div>
@@ -112,19 +112,19 @@
                             <li role="nav-item" >
                                 <a href="#content" class="nav-link active" data-toggle="tab">
                                     <i class="icon icon-user"></i>
-                                    <span> Miêu tả</span>
-                                </a>
-                            </li>
-                            <li role="nav-item">
-                                <a href="#info" class="nav-link"  data-toggle="tab">
-                                    <i class="icon icon-sort-alpha-asc"></i>
-                                    <span> Thông số</span>
+                                    <span> Giới thiệu</span>
                                 </a>
                             </li>
                             <li role="nav-item">
                                 <a href="#rating" class="nav-link" data-toggle="tab">
                                     <i class="icon icon-thumbs-up"></i>
                                     <span> Đánh giá</span>
+                                </a>
+                            </li>
+                            <li role="nav-item">
+                                <a href="#info" class="nav-link"  data-toggle="tab">
+                                    <i class="icon icon-tag"></i>
+                                    <span> Xem thêm</span>
                                 </a>
                             </li>
                         </ul>
@@ -141,8 +141,17 @@
 
                             <!-- ============ tab #2 ============ -->
                             <div role="tabpanel" class="tab-pane" id="info">
-                                <div class="pg-detail">
-                                    Đang cập nhật
+                                <div class="content">
+                                    <h3>Sản phẩm cùng danh mục</h3>
+                                    @if ($arrRelated->count() > 0)
+                                    <div class="products">
+                                        <div class="row">
+                                            @foreach ($arrRelated as $item)
+                                                @include('frontend.content.product.item-product', ['item' =>  $item, 'type_gird' => 2])
+                                            @endforeach
+                                        </div> <!--/row-->
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
 
@@ -155,125 +164,16 @@
                                         <!-- === comments === -->
                                         <div class="col-md-12">
                                             <div class="comments">
-                                                <div class="rating clearfix">
-                                                    <div class="rate-box">
-                                                        <div class="rating">
-                                                            {!! Str::rank(1) !!}
-                                                            <span> 3</span>
-                                                        </div>
-                                                        <div class="rating">
-                                                            {!! Str::rank(2) !!}
-                                                            <span> 5</span>
-                                                        </div>
-                                                        <div class="rating">
-                                                            {!! Str::rank(3) !!}
-                                                            <span> 0</span>
-                                                        </div>
-                                                        <div class="rating">
-                                                            {!! Str::rank(4) !!}
-                                                            <span> 2</span>
-                                                        </div>
-                                                        <div class="rating">
-                                                            {!! Str::rank(5) !!}
-                                                            <span> 1</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <div class="rating clearfix"></div>
+                                                @if ($arrComment->count() > 0)
                                                 <div class="comment-wrapper">
-                                                    <div class="comment-block">
-                                                        <div class="comment-user">
-                                                            <div><img src="{{ asset('public/frontend/assets/images/user-2.jpg') }}" alt="Alternate Text" width="70" /></div>
-                                                            <div>
-                                                                <h5>
-                                                                    <span>John Doe</span>
-                                                                    <span class="pull-right">
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                    </span>
-                                                                    <small>03.05.2017</small>
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- comment description -->
-
-                                                        <div class="comment-desc">
-                                                            <p>
-                                                                In vestibulum tellus ut nunc accumsan eleifend. Donec mattis
-                                                                cursus ligula, id
-                                                                iaculis dui feugiat nec. Etiam ut ante sed neque lacinia
-                                                                volutpat. Maecenas
-                                                                ultricies tempus nibh, sit amet facilisis mauris vulputate
-                                                                in. Phasellus
-                                                                tempor justo et mollis facilisis. Donec placerat at nulla
-                                                                sed suscipit. Praesent
-                                                                accumsan, sem sit amet euismod ullamcorper, justo sapien
-                                                                cursus nisl, nec
-                                                                gravida
-                                                            </p>
-                                                        </div>
-
-                                                        <!-- comment reply -->
-
-                                                        <div class="comment-block">
-                                                            <div class="comment-user">
-                                                                <div><img src="{{ asset('public/frontend/assets/images/user-2.jpg') }}" alt="Alternate Text" width="70" /></div>
-                                                                <div>
-                                                                    <h5>Administrator<small>08.05.2017</small></h5>
-                                                                </div>
-                                                            </div>
-                                                            <div class="comment-desc">
-                                                                <p>
-                                                                    Curabitur sit amet elit quis tellus tincidunt efficitur.
-                                                                    Cras lobortis id
-                                                                    elit eu vehicula. Sed porttitor nulla vitae nisl varius
-                                                                    luctus. Quisque
-                                                                    a enim nisl. Maecenas facilisis, felis sed blandit
-                                                                    scelerisque, sapien
-                                                                    nisl egestas diam, nec blandit diam ipsum eget dolor.
-                                                                    Maecenas ultricies
-                                                                    tempus nibh, sit amet facilisis mauris vulputate in.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <!--/reply-->
-                                                    </div>
+                                                    @include('frontend.common.comment-list')
                                                 </div>
                                                 <div class="comment-header">
-                                                    <a href="#" class="btn btn-clean-dark">12 comments</a>
+                                                    <a href="#" class="btn btn-clean-dark">{{ $arrComment->count() }} comments</a>
                                                 </div>
-
-                                                <!-- === add comment === -->
-                                                <div class="comment-add">
-
-                                                    <div class="comment-reply-message">
-                                                        <div class="h3 title">Leave a Reply </div>
-                                                        <p>Your email address will not be published.</p>
-                                                    </div>
-
-                                                    <form action="#" method="post">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" name="name" value=""
-                                                                placeholder="Your Name" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" name="name" value=""
-                                                                placeholder="Your Email" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <textarea rows="10" class="form-control"
-                                                                placeholder="Your comment"></textarea>
-                                                        </div>
-                                                        <div class="clearfix text-center">
-                                                            <a href="#" class="btn btn-main">Add comment</a>
-                                                        </div>
-                                                    </form>
-
-                                                </div>
-                                                <!--/comment-add-->
+                                                @endif
+                                                @include('frontend.common.form-comment')
                                             </div>
                                         </div>
                                     </div>

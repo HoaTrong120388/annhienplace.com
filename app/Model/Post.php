@@ -26,6 +26,9 @@ class Post extends Model
     public function subsubcategory(){
         return $this->hasOne(Catalog::class, 'id', 'catalogsubsub_id');
     }
+    public function comment(){
+        return $this->hasMany(Comment::class);
+    }
 
     public static function _list_post_nav($cat_id, $group = 1, $language = 'vi'){
         $arrResult = DB::table('mk_post as p')
