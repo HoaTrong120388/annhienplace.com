@@ -49,15 +49,11 @@ Route::group(['middleware' => ['locale']], function () {
         Route::get('/search', 'ContentController@search')->name('frontend.search');
         /*** Url Search ***/
     
-        // Route::get('/dich-vu', 'ContentController@service')->name('frontend.service.detail');
-        // Route::get('/tin-tuc', 'ContentController@news')->name('frontend.blog.catalog');
-        // Route::get('/danh-muc-san-pham', 'ContentController@product')->name('frontend.product.catalog');
 
         Route::get('/dich-vu', 'ContentController@serviceall')->name('frontend.service.all');
         Route::get('/san-pham', 'ContentController@productall')->name('frontend.product.all');
         Route::get('/tin-tuc', 'ContentController@newsall')->name('frontend.blog.catalog');
         Route::get('/catalog', 'ContentController@folderall')->name('frontend.folder.catalog');
-        Route::get('/book.html', 'ContentController@bookdetail')->name('frontend.folder.detail');
     
         Route::get('page/{slug}.html', 'ContentController@Pagedetail')->name('frontend.page.detail');
         Route::get('/{slug}.html', 'ContentController@Postdetail')->name('frontend.post.detail');
