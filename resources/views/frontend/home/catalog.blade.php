@@ -36,7 +36,7 @@
             <div class="more-icon">
                 <span data-title-show="Show more" data-title-hide="+"></span>
             </div>
-            <a href="{{ route('frontend.product.all') }}"></a>
+            <a href="{{ route('frontend.catalog.all') }}"></a>
         </li>
     </ul>
 </section>

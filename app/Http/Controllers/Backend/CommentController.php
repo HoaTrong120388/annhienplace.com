@@ -120,6 +120,7 @@ class CommentController extends BaseController
             $raking_product = FCommon::countRanking($lstComment);
             $Post = Post::findOrfail($objToDo->post_id);
             $Post->ranking = $raking_product;
+            $Post->comemnt_count = $lstComment->count();
             $Post->save();
 
             if(!empty($message_reply)){

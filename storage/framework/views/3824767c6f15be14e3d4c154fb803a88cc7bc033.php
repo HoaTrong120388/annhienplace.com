@@ -37,7 +37,7 @@
             <div class="more-icon">
                 <span data-title-show="Show more" data-title-hide="+"></span>
             </div>
-            <a href="<?php echo e(route('frontend.product.all')); ?>"></a>
+            <a href="<?php echo e(route('frontend.catalog.all')); ?>"></a>
         </li>
     </ul>
 </section>

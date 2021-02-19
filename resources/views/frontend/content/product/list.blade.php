@@ -4,7 +4,13 @@
     <section class="products">
         <div class="container">
             <header class="">
-                <h3 class="h3 title">{{ $rs['title'] ?? '' }}</h3>
+                <h3 class="h3 title">
+                    {{ $rs['title'] ?? '' }}
+                    @if ($arrResult->parentcategory()->count())
+                        <br>
+                        <small class="text-capitalize">{{ $arrResult->parentcategory->title ?? '' }}</small>
+                    @endif
+                </h3>
             </header>
             <div class="row">
                 <!-- === product-items === -->

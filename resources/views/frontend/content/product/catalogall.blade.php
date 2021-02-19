@@ -11,16 +11,11 @@
                 <div class="col-md-12 col-xs-12">
                     <div class="row">
                         @foreach ($lstResult as $item)
-                            @include('frontend.content.product.item-product', ['item' =>  $item])
+                            @include('frontend.content.product.item-catalog', ['item' =>  $item])
                         @endforeach
                     </div>
                 </div>
-                
             </div>
-            <!-- BEGIN: Pagination -->
-            {{ $lstResult->links('pagination::frontend') }}
-            <!-- END: Pagination -->
-            
         </div>
     </section>
 @endsection

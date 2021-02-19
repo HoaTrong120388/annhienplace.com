@@ -206,12 +206,9 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <label>Layout</label>
+                    <label>Tags</label>
                     <div class="mt-2">
-                        <select data-placeholder="Select categories" class="tail-select w-full" name="template">
-                            <option value="1" @if (isset($arrResult->more_info->template) && $arrResult->more_info->template == 1) selected @endif>Default</option>
-                            <option value="2" @if (isset($arrResult->more_info->template) && $arrResult->more_info->template == 2) selected @endif>Full Page</option>
-                        </select>
+                        <input class="tagsinput" name="tags" value="{{ $arrResult->tags ?? '' }}">
                     </div>
                 </div>
             </div>
@@ -219,12 +216,4 @@
         <!-- END: Post Info -->
     </div>
 </form>
-@endsection
-
-
-@section('headerstyle')
-
-@endsection
-
-@section('footerjs')
 @endsection

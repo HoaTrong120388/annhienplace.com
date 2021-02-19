@@ -39,7 +39,7 @@ class ContentController extends BaseController
     public function Pagedetail(Request $request)
     {
         $slug = isset($request->slug)?$request->slug:'';
-        $slug = FCommon::clearStr($slug);
+        $slug = FCommon::ClearStrAll($slug);
         // dd($slug);
 
         if(empty($slug)) return \abort(404);
@@ -79,7 +79,7 @@ class ContentController extends BaseController
     public function Postdetail(Request $request)
     {
         $slug = isset($request->slug)?$request->slug:'';
-        $slug = FCommon::clearStr($slug);
+        $slug = FCommon::ClearStrAll($slug);
         // dd($slug);
 
 
@@ -127,11 +127,11 @@ class ContentController extends BaseController
         
 
 
-        $arrResult->view = $arrResult->view+1;
+        $arrResult->view_count = $arrResult->view_count+1;
         $arrResult->save();
         $group = $arrResult->group;
 
-        $result = FCommon::json_decode_object($arrResult, array('more_info', 'seo', 'album'));
+        $result = FCommon::json_decode_object($arrResult, array('more_info', 'seo', 'album', 'tags'));
 
         $data = array(
             'titlePage_Seo'         => $result['seo']['title'],
@@ -147,10 +147,8 @@ class ContentController extends BaseController
 
         if(!empty($arrResult['seo']['image'])) $data['imagePage_Seo'] = $arrResult['seo']['image'];
 
-        if($group == 1){
-            $arrComment = $arrResult->comment()->where('status', 1)->where('parent', 0)->orderBy('id', 'desc')->get();
-            $data['arrComment'] = $arrComment;
-        }
+        $arrComment = $arrResult->comment()->where('status', 1)->where('parent', 0)->orderBy('id', 'desc')->get();
+        $data['arrComment'] = $arrComment;
 
         switch ($group) {
             case 1:
@@ -171,7 +169,7 @@ class ContentController extends BaseController
     public function Catalogdetail(Request $request)
     {
         $slug = isset($request->slug)?$request->slug:'';
-        $slug = FCommon::clearStr($slug);
+        $slug = FCommon::ClearStrAll($slug);
 
         if(empty($slug)) return \abort(404);
 
@@ -243,84 +241,15 @@ class ContentController extends BaseController
         }
         return view("frontend/content/$folder/list")->with($data);
     }
-
-    public function search(Request $request)
-    {
-        $more_info = array('template' => 2);
-        $arrResult = array(
-            'title' => trans("common.title_search_page"),
-            'more_info' => (object)$more_info
-        );
-
-        $keyword = isset($request->keyword)     ?$request->keyword:'';
-        $keyword = FCommon::clearStr($keyword);
-
-        $where = array(
-            'title'     => str_replace(' ', '%', $keyword),
-            'date_from' => '',
-            'date_to'   => '',
-            'status'    => 1
-        );
-
-        // dd($where);
-        $lstNews = Post::_list_search(0, 20, $count, 0, $where);
-        $breadcrumb = array(
-            array(
-                'title' => trans('common.breadcrumb_home'),
-                'link'  => route('frontend.home')
-            ),
-            array(
-                'title' => $arrResult['title'],
-            )
-        );
-        $redirect_lang =  route("frontend.$this->lang_next.scholarship");
-
-        $data = array(
-            'titlePage_Seo'         => trans("common.seo_title_scholarship"),
-            'descriptionPage_Seo'   => trans("common.seo_description_scholarship"),
-
-            'arrResult'             => $arrResult,
-            'redirect_lang'         => $redirect_lang,
-            'breadcrumb'            => $breadcrumb,
-            'lstNews'               => $lstNews,
-            'route_news'            => 'frontend.post.detail'
-        );
-        return view('frontend/content/list/list')->with($data);
-    }
-    public function service(Request $request)
+    public function newsall(Request $request)
     {
         $breadcrumb[] = ['title' => trans("common.title_service_page_all")];
 
-        $lstResult = Catalog::where('group', 2)
-                                ->where('parent', 0)
+        $lstResult = Post::where('group', 2)
+                                ->where('special', 1)
                                 ->where('status', 1)
                                 ->orderByDesc('id', 'desc')
-                                ->get();
-        $type = 'catalog';
-
-        $data = array(
-            'titlePage_Seo'             => trans("common.title_service_page_all"),
-            'descriptionPage_Seo'       => trans("common.title_service_page_all"),
-            'imagePage_Seo'             => trans("common.title_service_page_all"),
-
-            'breadcrumb'                => $breadcrumb,
-            'lstResult'                 => $lstResult,
-            'header_title'              => trans("common.title_service_page_all"),
-            'type_list'                 => $type
-        );
-
-        return view("frontend/content/service/listall")->with($data);
-    }
-    public function newsall(Request $request)
-    {
-        $breadcrumb[] = ['title' => trans("common.title_news_page_all")];
-
-        $lstResult = Catalog::where('group', 2)
-                                ->where('parent', 0)
-                                ->where('status', 1)
-                                ->orderByDesc('id', 'desc')
-                                ->get();
-        $type = 'catalog';
+                                ->paginate(9);
 
         $data = array(
             'titlePage_Seo'             => trans("common.title_news_page_all"),
@@ -330,7 +259,34 @@ class ContentController extends BaseController
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
             'header_title'              => trans("common.title_news_page_all"),
-            'type_list'                 => $type
+        );
+
+        return view("frontend/content/news/listall")->with($data);
+    }
+    public function newstags(Request $request)
+    {
+        $keyword = isset($request->keyword)?$request->keyword:'';
+        $keyword = FCommon::ClearStr($keyword);
+        $keyword = urldecode($keyword);
+        // dd($keyword);
+
+        
+        $breadcrumb[] = ['title' => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all"))];
+
+        $lstResult = Post::where('group', 2)
+                                ->where('tags', 'like', '%"'.$keyword.'"%')
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->paginate(9);
+
+        $data = array(
+            'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all")),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all")),
         );
 
         return view("frontend/content/news/listall")->with($data);
@@ -339,12 +295,11 @@ class ContentController extends BaseController
     {
         $breadcrumb[] = ['title' => trans("common.title_product_page_all")];
 
-        $lstResult = Catalog::where('group', 1)
-                                ->where('parent', 0)
+        $lstResult = Post::where('group', 1)
+                                ->where('special', 1)
                                 ->where('status', 1)
                                 ->orderByDesc('id', 'desc')
-                                ->get();
-        $type = 'catalog';
+                                ->paginate(9);
 
         $data = array(
             'titlePage_Seo'             => trans("common.title_product_page_all"),
@@ -354,10 +309,136 @@ class ContentController extends BaseController
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
             'header_title'              => trans("common.title_product_page_all"),
-            'type_list'                 => $type
         );
 
         return view("frontend/content/product/listall")->with($data);
+    }
+    public function productsearch(Request $request)
+    {
+        $keyword = isset($request->keyword)?$request->keyword:'';
+        $keyword = FCommon::ClearStrAll($keyword);
+
+        
+        $breadcrumb[] = ['title' => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all"))];
+
+        $lstResult = Post::where('group', 1)
+                                ->where('title', 'like', "%$keyword%")
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->paginate(9);
+
+        $data = array(
+            'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all")),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all")),
+        );
+
+        return view("frontend/content/product/listall")->with($data);
+    }
+    public function producttags(Request $request)
+    {
+        $keyword = isset($request->keyword)?$request->keyword:'';
+        $keyword = FCommon::ClearStr($keyword);
+        $keyword = urldecode($keyword);
+        // dd($keyword);
+
+        
+        $breadcrumb[] = ['title' => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all"))];
+
+        $lstResult = Post::where('group', 1)
+                                ->where('tags', 'like', '%"'.$keyword.'"%')
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->paginate(9);
+
+        $data = array(
+            'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all")),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all")),
+        );
+
+        return view("frontend/content/product/listall")->with($data);
+    }
+    public function catalogall(Request $request)
+    {
+        $breadcrumb[] = ['title' => trans("common.title_catalog_page_all")];
+
+        $lstResult = Catalog::where('group', 1)
+                                ->where('home', 1)
+                                ->where('status', 1)
+                                ->orderByDesc('order', 'asc')
+                                ->orderByDesc('id', 'desc')
+                                ->get();
+
+        $data = array(
+            'titlePage_Seo'             => trans("common.title_catalog_page_all"),
+            'descriptionPage_Seo'       => trans("common.title_catalog_page_all"),
+            'imagePage_Seo'             => trans("common.title_catalog_page_all"),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => trans("common.title_catalog_page_all"),
+        );
+
+        return view("frontend/content/product/catalogall")->with($data);
+    }
+    public function serviceall(Request $request)
+    {
+        $breadcrumb[] = ['title' => trans("common.title_service_page_all")];
+
+        $lstResult = Post::where('group', 3)
+                                ->where('special', 1)
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->paginate(9);
+
+        $data = array(
+            'titlePage_Seo'             => trans("common.title_service_page_all"),
+            'descriptionPage_Seo'       => trans("common.title_service_page_all"),
+            'imagePage_Seo'             => trans("common.title_service_page_all"),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => trans("common.title_service_page_all"),
+        );
+
+        return view("frontend/content/service/listall")->with($data);
+    }
+    public function servicetags(Request $request)
+    {
+        $keyword = isset($request->keyword)?$request->keyword:'';
+        $keyword = FCommon::ClearStr($keyword);
+        $keyword = urldecode($keyword);
+        // dd($keyword);
+
+        
+        $breadcrumb[] = ['title' => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all"))];
+
+        $lstResult = Post::where('group', 3)
+                                ->where('tags', 'like', '%"'.$keyword.'"%')
+                                ->where('status', 1)
+                                ->orderByDesc('id', 'desc')
+                                ->paginate(9);
+
+        $data = array(
+            'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all")),
+
+            'breadcrumb'                => $breadcrumb,
+            'lstResult'                 => $lstResult,
+            'header_title'              => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all")),
+        );
+
+        return view("frontend/content/service/listall")->with($data);
     }
     public function bookdetail(Request $request)
     {

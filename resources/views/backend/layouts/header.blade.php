@@ -14,6 +14,7 @@
         <link href="{{ asset('public/backend/dist/plugins/toastr/toastr.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('public/all/plugin/jquery-confirm/jquery-confirm.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('public/backend/dist/plugins/fileuploads/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/backend/dist/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="dist/css/app.css" />
 
         <!-- END: CSS Assets-->

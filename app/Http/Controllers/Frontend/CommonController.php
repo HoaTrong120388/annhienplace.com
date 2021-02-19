@@ -74,6 +74,9 @@ class CommonController extends BaseController
             $objToDo->group             = 1;
 
             if($objToDo->save()){
+                $noti_msg = "< ------------------------------- >\nCó liên hệ mới\nHọ và tên: ".$fullname."\nĐiện thoại: ".$phone."\nEmail:".$email."\nNội dung: ".$message."\n< ------------------------------- >\n";
+                FCommon::sendMess($noti_msg);
+
                 $data = array(
                     'status'    => 1,
                     'msg'       => trans("common._noti_body_submit_success"),
@@ -194,6 +197,9 @@ class CommonController extends BaseController
             $objToDo->parent            = 0;
 
             if($objToDo->save()){
+                $noti_msg = "< ------------------------------- >\nCó bình luận mới\nHọ và tên: ".$fullname."\nĐiện thoại: ".$phone."\nEmail:".$email."\nĐánh giá: ".$ranking."\nLink: ".$link."\n< ------------------------------- >\n";
+                FCommon::sendMess($noti_msg);
+
                 $data = array(
                     'status'    => 1,
                     'msg'       => trans("common._noti_body_submit_success"),
@@ -208,6 +214,22 @@ class CommonController extends BaseController
         }
         return response()->json($data);
     }
+    public function aboutus(Request $request)
+    {
+        $breadcrumb[] = ['title' => trans("common.title_product_search_page_all")];
+
+        $data = array(
+            'titlePage_Seo'             => trans("common.title_product_search_page_all"),
+            'descriptionPage_Seo'       => trans("common.title_product_search_page_all"),
+            'imagePage_Seo'             => trans("common.title_product_search_page_all"),
+
+            'breadcrumb'                => $breadcrumb,
+            'header_title'              => trans("common.title_product_search_page_all"),
+        );
+
+        return view("frontend/content/page/about-us")->with($data);
+    }
+    
     public function setLocale(Request $request)
     {
         $lang = isset($request->lang)?$request->lang:'vi';

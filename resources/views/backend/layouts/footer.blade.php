@@ -5,6 +5,7 @@
         <script src="{{ asset('public/backend/dist/plugins/toastr/toastr.min.js') }}"></script>
         <script src="{{ asset('public/backend/dist/plugins/fileuploads/js/dropify.min.js') }}"></script>
         <script src="{{ asset('public/backend/dist/plugins/jquery-tabledit/jquery.tabledit.min.js') }}"></script>
+        <script src="{{ asset('public/backend/dist/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
         <!-- END: JS Assets-->
         {!! FCommon::minifyjs('backend_theme') !!}
         @yield('footerjs')

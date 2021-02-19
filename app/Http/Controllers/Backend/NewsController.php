@@ -91,6 +91,8 @@ class NewsController extends BaseController
                 $arrResult->seo = json_decode($arrResult->seo);
                 $arrResult->more_info = json_decode($arrResult->option->more_info);
                 $arrResult->template = json_decode($arrResult->option->more_info)->template;
+                $arrTags = json_decode($arrResult->tags);
+                $arrResult->tags = (is_array($arrTags) && count($arrTags) > 0)?implode(",", $arrTags):'';
                 $arrResult->public_date = Carbon::parse($arrResult->public_date)->format('d-m-Y');
                 $data['arrResult'] = $arrResult;
             }
@@ -133,6 +135,7 @@ class NewsController extends BaseController
             $special                 = isset($request->special)                  ?$request->special:0;
             $parent                 = isset($request->parent)                   ?$request->parent:1;
             $template               = isset($request->template)                 ?$request->template:1;
+            $tags                   = isset($request->tags)                     ?$request->tags:1;
 
             settype($parent, 'int');
             settype($template, 'int');
@@ -148,6 +151,8 @@ class NewsController extends BaseController
             $public_date            = FCommon::ClearStr($public_date);
             $status                 = FCommon::ClearStr($status);
             $special                 = FCommon::ClearStr($special);
+            $tags                   = FCommon::ClearStr($tags);
+            $arrTags = explode(",", $tags);
             if($status == 'on') $status = 1;
             if($special == 'on') $special = 1;
 
@@ -245,6 +250,7 @@ class NewsController extends BaseController
             $objToDo->special               = $special;
             $objToDo->group                 = $this->group;
             $objToDo->user_id               = $request->session()->get('user_id');
+            $objToDo->tags                   = json_encode($arrTags);
 
             if($objToDo->save()){
 

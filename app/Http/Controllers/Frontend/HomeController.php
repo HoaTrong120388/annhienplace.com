@@ -32,9 +32,9 @@ class HomeController extends BaseController
 
         $home_catalog = Catalog::select('id', 'title', 'slug', 'thumbnail', 'banner_home', 'icon')->where('home', 1)->where('status', 1)->where('group', 1)->orderby('order', 'asc')->orderby('id', 'desc')->limit(10)->get();
 
-        $home_product = Post::where('status', 1)->where('group', 1)->orderby('id', 'desc')->limit(6)->get();
-        $home_service = Post::where('status', 1)->where('group', 3)->orderby('id', 'desc')->limit(3)->get();
-        $home_news = Post::where('status', 1)->where('group', 2)->orderby('id', 'desc')->limit(3)->get();
+        $home_product = Post::where('status', 1)->where('group', 1)->where('special', 1)->orderby('id', 'desc')->limit(6)->get();
+        $home_service = Post::where('status', 1)->where('group', 3)->where('special', 1)->orderby('id', 'desc')->limit(3)->get();
+        $home_news = Post::where('status', 1)->where('group', 2)->where('special', 1)->orderby('id', 'desc')->limit(3)->get();
         // dd($home_slider);
 
         $data = array(

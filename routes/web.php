@@ -35,6 +35,7 @@ Route::group(['middleware' => ['locale']], function () {
         Route::get('/change-language', 'CommonController@setLocale')->name('frontend.change.language');
         Route::get('/send-mail', 'TestController@sendmail')->name('tool.sendmail');
         
+        Route::get('/ve-chung-toi.html', 'CommonController@aboutus')->name('frontend.aboutus');
     
         /********* Contact *************/
         Route::get('/lien-he.html', 'CommonController@contact')->name('frontend.contact');
@@ -51,9 +52,17 @@ Route::group(['middleware' => ['locale']], function () {
     
 
         Route::get('/dich-vu', 'ContentController@serviceall')->name('frontend.service.all');
+        Route::get('/tags-service/{keyword}', 'ContentController@servicetags')->name('frontend.service.tags');
+
+        Route::get('/tin-tuc', 'ContentController@newsall')->name('frontend.news.all');
+        Route::get('/tags-blog/{keyword}', 'ContentController@newstags')->name('frontend.news.tags');
+
         Route::get('/san-pham', 'ContentController@productall')->name('frontend.product.all');
-        Route::get('/tin-tuc', 'ContentController@newsall')->name('frontend.blog.catalog');
-        Route::get('/catalog', 'ContentController@folderall')->name('frontend.folder.catalog');
+        Route::get('/tim-kiem', 'ContentController@productsearch')->name('frontend.product.search');
+        Route::get('/tags-product/{keyword}', 'ContentController@producttags')->name('frontend.product.tags');
+
+
+        Route::get('/danh-muc-noi-bat', 'ContentController@catalogall')->name('frontend.catalog.all');
     
         Route::get('page/{slug}.html', 'ContentController@Pagedetail')->name('frontend.page.detail');
         Route::get('/{slug}.html', 'ContentController@Postdetail')->name('frontend.post.detail');

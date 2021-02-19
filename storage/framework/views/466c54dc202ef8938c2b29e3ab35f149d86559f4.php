@@ -163,6 +163,26 @@
                                 </span>
                             </button>
                         </div>
+
+                        <div class="header-nav-extended header-nav-extended-no-border header-nav-extended-lg-show-border order-1 order-lg-2">
+                            <div class="header-nav-extend header-nav-extended-popup d-inline-flex">
+                                <a href="#" class="header-nav-extended-toggle" data-focus="headerSearch">
+                                    <i class="pe-7s-search header-nav-top-icons" style="top: 3px;"></i>
+                                </a>
+                                <div class="header-nav-extended-dropdown" id="headerDropdownSearch">
+                                    <form role="search" action="<?php echo e(route("frontend.product.search")); ?>" method="get">
+                                        <div class="default-search input-group">
+                                            <input class="form-control" id="headerSearch" name="keyword" type="search" value="" placeholder="Search ...">
+                                            <span class="input-group-append">
+                                                <button class="btn" type="submit">
+                                                    <i class="pe-7s-search header-nav-top-icons" style="top: 2px;"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

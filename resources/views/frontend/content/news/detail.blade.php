@@ -30,7 +30,11 @@
                                     </div>
                                     <div class="entry">
                                         <i class="fa fa-comments"></i>
-                                        <span>{{ $rs['comment_count'] ?? 0 }} comments</span>
+                                        <span>{{ $rs['comemnt_count'] ?? 0 }} comments</span>
+                                    </div>
+                                    <div class="entry">
+                                        <i class="fa fa-eye"></i>
+                                        <span>{{ $rs['view'] ?? 0 }} views</span>
                                     </div>
                                 </div> <!--/blog-info-->
                             </div>
@@ -38,7 +42,27 @@
                             <div class="blog-post-text">
                                 {!! $rs['content'] !!}
                             </div>
-
+                            @if (!empty($rs['tags']) && count($rs['tags']) > 0 )
+                            <div class="blog-info blog-info-bottom">
+                                <ul>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <i class="fa fa-tag"></i> 
+                                        <span>
+                                            @foreach ($rs['tags'] as $tag)
+                                                @if ($rs['group'] == 3)
+                                                    <a class="item-tags" href="{{ route("frontend.service.tags", urlencode($tag)) }}">
+                                                @else
+                                                    <a class="item-tags" href="{{ route("frontend.news.tags", urlencode($tag)) }}">
+                                                @endif
+                                                    {{ $tag }}@if (!$loop->last),@endif
+                                                </a>
+                                            @endforeach
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            @endif
                         </div>
 
                         <!-- === blog comments === -->
@@ -49,6 +73,15 @@
                                     @include('frontend.common.social-icon-share')
                                 </ul>
                             </div>
+                            @if ($arrComment->count() > 0)
+                            <div class="comment-wrapper">
+                                @include('frontend.common.comment-list')
+                            </div>
+                            <div class="comment-header">
+                                <a href="#" class="btn btn-clean-dark">{{ $arrComment->count() }} comments</a>
+                            </div>
+                            @endif
+                            @include('frontend.common.form-comment')
                         </div>
                     </div><!--blog-post-->
                 </div><!--col-sm-8-->

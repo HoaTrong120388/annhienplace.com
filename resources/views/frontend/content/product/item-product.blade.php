@@ -12,8 +12,8 @@
             </div>
             <div class="text">
                 <h2 class="title h4"><a href="{{ route("frontend.post.detail", $item->slug) }}">{{ $item->title }}</a></h2>
-                <sup>{{ Str::currency($item->price_old) }} -</sup>
-                <sub>{{ Str::currency($item->price_out) }}-</sub>
+                <sup>{{ Str::currency($item->price_out) }} -</sup>
+                <sub>{{ Str::currency($item->price_old) }}</sub>
                 <span class="ranking_product clearfix">{!! Str::ranking($item->ranking) !!}</span>
                 <span class="description clearfix">{{ $item->summary }}</span>
             </div>

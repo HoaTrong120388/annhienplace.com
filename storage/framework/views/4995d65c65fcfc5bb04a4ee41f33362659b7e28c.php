@@ -40,7 +40,7 @@
         </div> <!--/row-->
         <!-- === button more === -->
         <div class="wrapper-more">
-            <a href="blog-grid.html" class="btn btn-main">Xem tất cả</a>
+            <a href="<?php echo e(route("frontend.news.all")); ?>" class="btn btn-main">Xem tất cả</a>
         </div>
     </div> <!--/container-->
 </section>

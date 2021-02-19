@@ -14,8 +14,8 @@
                         <div class="price">
                             <span class="h3">
                                 {{ Str::currency($rs['price_out'], 2) }}
-                                @if (!empty($rs['price_in']))
-                                <small>{{ Str::currency($rs['price_in'], 2) }}</small>
+                                @if (!empty($rs['price_old']))
+                                <small>{{ Str::currency($rs['price_old'], 2) }}</small>
                                 @endif
                             </span>
                         </div>
@@ -29,10 +29,6 @@
                             <span><strong>Nguồn gốc</strong></span>
                             <span>{{ $rs['more_info']['source'] ?? '' }}</span>
                         </div>
-                        <div class="info-box">
-                            <span><strong>Nguyên liệu</strong></span>
-                            <span>{{ $rs['more_info']['materials'] ?? '' }}</span>
-                        </div>
                         <!-- === info-box === -->
                         <div class="info-box">
                             <span><strong>Tình trạng</strong></span>
@@ -44,6 +40,19 @@
                         </div>
                         <hr />
                         <!--/product-info-wrapper-->
+                        @if (!empty($rs['tags']) && count($rs['tags']) > 0 )
+                        <div class="info-box">
+                            <span><strong>Tags</strong></span>
+                            <span>
+                                @foreach ($rs['tags'] as $tag)
+                                    <a class="item-tags" href="{{ route("frontend.product.tags", urlencode($tag)) }}">
+                                        {{ $tag }}@if (!$loop->last),@endif
+                                    </a>
+                                @endforeach
+                            </span>
+                        </div>
+                        @endif
+                        
                     </div>
                     <!--/col-md-4-->
 
@@ -112,7 +121,7 @@
                             <li role="nav-item" >
                                 <a href="#content" class="nav-link active" data-toggle="tab">
                                     <i class="icon icon-user"></i>
-                                    <span> Giới thiệu</span>
+                                    <span> Tổng quan</span>
                                 </a>
                             </li>
                             <li role="nav-item">

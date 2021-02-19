@@ -90,6 +90,8 @@ class PostController extends BaseController
                 $arrResult->seo = json_decode($arrResult->seo);
                 $arrResult->more_info = json_decode($arrResult->option->more_info);
                 $arrResult->album = json_decode($arrResult->album);
+                $arrTags = json_decode($arrResult->tags);
+                $arrResult->tags = (is_array($arrTags) && count($arrTags) > 0)?implode(",", $arrTags):'';
                 $arrResult->template = json_decode($arrResult->option->more_info)->template;
                 $arrResult->public_date = Carbon::parse($arrResult->public_date)->format('d-m-Y');
                 $data['arrResult'] = $arrResult;
@@ -141,11 +143,12 @@ class PostController extends BaseController
             $brand                  = isset($request->brand)                    ?$request->brand:'';
             $source                 = isset($request->source)                   ?$request->source:'';
             $materials              = isset($request->materials)                ?$request->materials:'';
+            $tags              = isset($request->tags)                ?$request->tags:'';
             // dd($in_stocks);
             settype($parent, 'int');
             settype($template, 'int');
 
-
+            
             $title                  = FCommon::ClearStr($title);
             $thumbnail              = FCommon::ClearStr($thumbnail);
             $seo_image              = FCommon::ClearStr($seo_image);
@@ -163,6 +166,9 @@ class PostController extends BaseController
             $brand                  = FCommon::ClearStr($brand);
             $source                 = FCommon::ClearStr($source);
             $materials              = FCommon::ClearStr($materials);
+            $tags                   = FCommon::ClearStr($tags);
+            $arrTags = explode(",", $tags);
+            
             if($status == 'on') $status = 1;
             if($special == 'on') $special = 1;
             if($in_stocks == 'on') $in_stocks = 1;
@@ -278,6 +284,7 @@ class PostController extends BaseController
             $objToDo->price_old             = $price_old;
             $objToDo->in_stocks             = $in_stocks;
             $objToDo->user_id               = $request->session()->get('user_id');
+            $objToDo->tags                   = json_encode($arrTags, JSON_UNESCAPED_UNICODE);
 
             if($objToDo->save()){
 

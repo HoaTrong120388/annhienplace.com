@@ -158,4 +158,9 @@ $(document).ready(function () {
             $("#source_" + element.element.id).val('');
     });
     update_order();
+    $('.tagsinput').tagsinput({
+        tagClass: 'item-tagsinput',
+        trimValue: true,
+        confirmKeys: [13, 44, 9, 188]
+    });
 });

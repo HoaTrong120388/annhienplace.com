@@ -131,6 +131,11 @@ class FCommon
         $str = trim(strip_tags($str, '<p><a><br>'));
         return $str;
     }
+    public static function ClearStrAll ($str)
+    {
+        $str = htmlentities(trim(strip_tags($str)));
+        return $str;
+    }
     public static function breadcrumb($url = '', $totalRows , $pageNum = 1, $pageSize = 5, $offset = 5)
     {
         if ($totalRows <= 0) return "";
@@ -397,7 +402,7 @@ class FCommon
         $grouped->toArray();
         return $grouped;
     }
-    public static function sendMess ($msg = 'Test thông báo', $group = '-1001252155381', $bot = '1683748574:AAEpS6f8Oc-cSd3irHKay9XXOWZAp2gsmlw')
+    public static function sendMess ($msg = 'Test thông báo', $group = '-526370746', $bot = '1511935022:AAHzO7gPP4HC2WMD1lIvHlrdD3bs4tLInYQ')
     {
         $client = new \GuzzleHttp\Client(['headers' => [ 'Content-Type' => 'application/json' ]]);
         $res = $client->post('https://api.telegram.org/bot'.$bot.'/sendMessage',
