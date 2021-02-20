@@ -27,8 +27,6 @@ class HomeController extends BaseController
     }
     public function home()
     {
-        $rs = Post::find(2147483648);
-        dd($rs);
         // return redirect()->route('frontend.landingpage.comingsoon');
         $home_slider = Libary::select('id', 'title', 'slug', 'thumbnail', 'thumbnail_mobile', 'link', 'summary')->where('status', 1)->where('parent', 1)->orderby('order', 'asc')->orderby('id', 'desc')->limit(5)->get();
 

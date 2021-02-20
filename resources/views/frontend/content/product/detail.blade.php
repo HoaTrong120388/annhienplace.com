@@ -52,7 +52,18 @@
                             </span>
                         </div>
                         @endif
-                        
+                        <div class="info-box">
+                            <span><strong>Lượt xem</strong></span>
+                            <span>{{ $rs['view_count'] ?? 0 }}</span>
+                        </div>
+                        <div class="info-box">
+                            <span><strong>Chia sẻ</strong></span>
+                            <span>
+                                <ul class="social-share" style="justify-content: flex-start">
+                                    @include('frontend.common.social-icon-share')
+                                </ul>
+                            </span>
+                        </div>
                     </div>
                     <!--/col-md-4-->
 
