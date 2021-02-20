@@ -120,13 +120,6 @@
                                         <input type="hidden" id="source_header_banner_mobile" name="header_banner_mobile" value="{{ $arrResult->more_info->header_banner_mobile ?? '' }}">
                                     </div>
                                 </div>
-                                <div class="mt-3">
-                                    <label>Banner Form Register</label>
-                                    <div class="border-2 border-gray-200 border-dashed dz-clickable mt-2">
-                                        <input type="file" name="file_banner_form_register" class="dropify" id="banner_form_register" data-default-file="@if (isset($arrResult->more_info->banner_form_register)){{ FCommon::cover_thumbnail($arrResult->more_info->banner_form_register) }}@endif"  />
-                                        <input type="hidden" id="source_banner_form_register" name="banner_form_register" value="{{ $arrResult->more_info->banner_form_register ?? '' }}">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

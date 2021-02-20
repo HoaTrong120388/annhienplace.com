@@ -33,7 +33,7 @@ class CommonController extends BaseController
         $data = array(
             'titlePage_Seo'             => trans('common._seo_contact_page_title'),
             'descriptionPage_Seo'       => trans('common._seo_contact_page_description'),
-            'imagePage_Seo'             => trans('common._seo_contact_page_title'),
+            'imagePage_Seo'             => trans('common._seo_contact_page_image'),
             'header_title'              => trans('common._seo_contact_page_title'),
         );
         return view('frontend/content/page/contact')->with($data);
@@ -216,15 +216,15 @@ class CommonController extends BaseController
     }
     public function aboutus(Request $request)
     {
-        $breadcrumb[] = ['title' => trans("common.title_product_search_page_all")];
+        $breadcrumb[] = ['title' => trans("common.title_about_us_page")];
 
         $data = array(
-            'titlePage_Seo'             => trans("common.title_product_search_page_all"),
-            'descriptionPage_Seo'       => trans("common.title_product_search_page_all"),
-            'imagePage_Seo'             => trans("common.title_product_search_page_all"),
+            'titlePage_Seo'             => trans("common.title_about_us_page"),
+            'descriptionPage_Seo'       => trans("common.description_about_us_page"),
+            'imagePage_Seo'             => trans("common.image_about_us_page"),
 
             'breadcrumb'                => $breadcrumb,
-            'header_title'              => trans("common.title_product_search_page_all"),
+            'header_title'              => trans("common.title_about_us_page"),
         );
 
         return view("frontend/content/page/about-us")->with($data);

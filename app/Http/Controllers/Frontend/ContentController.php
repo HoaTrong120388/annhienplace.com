@@ -243,7 +243,7 @@ class ContentController extends BaseController
     }
     public function newsall(Request $request)
     {
-        $breadcrumb[] = ['title' => trans("common.title_service_page_all")];
+        $breadcrumb[] = ['title' => trans("common.title_news_page_all")];
 
         $lstResult = Post::where('group', 2)
                                 ->where('special', 1)
@@ -253,8 +253,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => trans("common.title_news_page_all"),
-            'descriptionPage_Seo'       => trans("common.title_news_page_all"),
-            'imagePage_Seo'             => trans("common.title_news_page_all"),
+            'descriptionPage_Seo'       => trans("common.description_news_page_all"),
+            'imagePage_Seo'             => trans("common.image_news_page_all"),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -281,8 +281,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all")),
-            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all")),
-            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_news_tags_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.description_news_tags_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.image_news_tags_page_all")),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -303,8 +303,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => trans("common.title_product_page_all"),
-            'descriptionPage_Seo'       => trans("common.title_product_page_all"),
-            'imagePage_Seo'             => trans("common.title_product_page_all"),
+            'descriptionPage_Seo'       => trans("common.description_product_page_all"),
+            'imagePage_Seo'             => trans("common.image_product_page_all"),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -329,8 +329,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all")),
-            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all")),
-            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_search_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.description_product_search_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.image_product_search_page_all")),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -357,8 +357,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all")),
-            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all")),
-            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_product_tags_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.description_product_tags_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.image_product_tags_page_all")),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -380,8 +380,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => trans("common.title_catalog_page_all"),
-            'descriptionPage_Seo'       => trans("common.title_catalog_page_all"),
-            'imagePage_Seo'             => trans("common.title_catalog_page_all"),
+            'descriptionPage_Seo'       => trans("common.description_catalog_page_all"),
+            'imagePage_Seo'             => trans("common.image_catalog_page_all"),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -402,8 +402,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => trans("common.title_service_page_all"),
-            'descriptionPage_Seo'       => trans("common.title_service_page_all"),
-            'imagePage_Seo'             => trans("common.title_service_page_all"),
+            'descriptionPage_Seo'       => trans("common.description_service_page_all"),
+            'imagePage_Seo'             => trans("common.image_service_page_all"),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -430,8 +430,8 @@ class ContentController extends BaseController
 
         $data = array(
             'titlePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all")),
-            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all")),
-            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.title_service_tags_page_all")),
+            'descriptionPage_Seo'       => str_replace("[keyword]", $keyword, trans("common.description_service_tags_page_all")),
+            'imagePage_Seo'             => str_replace("[keyword]", $keyword, trans("common.image_service_tags_page_all")),
 
             'breadcrumb'                => $breadcrumb,
             'lstResult'                 => $lstResult,
@@ -439,21 +439,5 @@ class ContentController extends BaseController
         );
 
         return view("frontend/content/service/listall")->with($data);
-    }
-    public function bookdetail(Request $request)
-    {
-
-        $data = array(
-            'titlePage_Seo'             => trans("common.title_product_page_all"),
-            'descriptionPage_Seo'       => trans("common.title_product_page_all"),
-            'imagePage_Seo'             => trans("common.title_product_page_all"),
-
-            // 'breadcrumb'                => $breadcrumb,
-            // 'lstResult'                 => $lstResult,
-            'header_title'              => trans("common.title_product_page_all"),
-            // 'type_list'                 => $type
-        );
-
-        return view("frontend/content/catalog/detail")->with($data);
     }
 }

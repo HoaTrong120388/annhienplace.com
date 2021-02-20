@@ -251,7 +251,7 @@ class ServiceController extends BaseController
             $objToDo->special           = $special;
             $objToDo->group             = $this->group;
             $objToDo->user_id           = $request->session()->get('user_id');
-            $objToDo->tags               = json_encode($arrTags);
+            $objToDo->tags              = json_encode($arrTags, JSON_UNESCAPED_UNICODE);
 
             if($objToDo->save()){
 

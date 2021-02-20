@@ -2,6 +2,33 @@
 @section('headerstyle')
 @endsection
 @section('content')
+<div class="grid grid-cols-12 gap-6">
+    <!-- BEGIN: Profile Menu -->
+    <div class="col-span-12 lg:col-span-5 xxl:col-span-5 flex lg:block flex-col-reverse">
+        <div class="intro-y box lg:mt-5">
+            <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                <h2 class="font-medium text-base mr-auto">
+                    Up File Hình
+                </h2>
+            </div>
+            <form action="" method="post" id="frm_menu">
+                <div class="p-5">
+                    <div class="grid grid-cols-12 gap-5">
+                        <div class="col-span-12 xl:col-span-12">
+                            <div class="flex flex-col sm:flex-row items-center mt-2">
+                                <label class="w-full sm:w-20 sm:text-right sm:mr-5">Link</label>
+                                <div class="w-full relative border flex-1 rounded-md">
+                                    <input type="text" class="input w-full pr-10" placeholder="" name="thumbnail" id="thumbnail">
+                                    <a data-fancybox data-type="iframe" data-src="{{ asset('public/all/plugin/filemanager/dialog.php??type=1&field_id=thumbnail') }}" href="javascript:void(0)" class="absolute my-auto inset-y-0 mr-0 right-0 button text-white bg-theme-1 shadow-md">Chọn file</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <form action="{{ route('admin.setting.language') }}" method="post" enctype="multipart/form-data"data-single="true" action="/file-upload" >
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
         <h2 class="text-lg font-medium mr-auto">{{$titlePage}}</h2>

@@ -10,11 +10,7 @@
             </div>
             <div class="row">
                 @foreach ($lstResult as $item)
-                    @if ($type_list == 'catalog')
-                        @include('frontend.content.service.item-catalog', ['item' =>  $item])
-                    @else    
-                        @include('frontend.content.service.item-service', ['item' =>  $item])
-                    @endif
+                    @include('frontend.content.service.item-service', ['item' =>  $item])
                 @endforeach
             </div>
         </div>
