@@ -55,6 +55,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-span-12 mt-10">
+                                <div class="font-medium flex items-center border-b border-gray-200 dark:border-dark-5 pb-5"> <i data-feather="chevron-down" class="w-4 h-4 mr-2"></i> Header Script </div>
+                                <div class="mt-5">
+                                    <textarea class="input w-full border mt-2" rows="5" name="header_script">{{ $arrResult['header_script'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-span-12 mt-10">
+                                <div class="font-medium flex items-center border-b border-gray-200 dark:border-dark-5 pb-5"> <i data-feather="chevron-down" class="w-4 h-4 mr-2"></i> Body Script </div>
+                                <div class="mt-5">
+                                    <textarea class="input w-full border mt-2" rows="5" name="body_script">{{ $arrResult['body_script'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-span-12 mt-10">
+                                <div class="font-medium flex items-center border-b border-gray-200 dark:border-dark-5 pb-5"> <i data-feather="chevron-down" class="w-4 h-4 mr-2"></i> Footer Script </div>
+                                <div class="mt-5">
+                                    <textarea class="input w-full border mt-2" rows="5" name="footer_script">{{ $arrResult['footer_script'] ?? '' }}</textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-content__pane p-5" id="layout">

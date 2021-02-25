@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="entry">
                                         <i class="fa fa-eye"></i>
-                                        <span>{{ $rs['view'] ?? 0 }} views</span>
+                                        <span>{{ $rs['view_count'] ?? 0 }} views</span>
                                     </div>
                                 </div> <!--/blog-info-->
                             </div>

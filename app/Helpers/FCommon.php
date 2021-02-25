@@ -20,7 +20,7 @@ class FCommon
     }
     public static function file_upload_allow(){
         $arr_file_allow = array(
-            'image' => array('png', 'jpg', 'gif'),
+            'image' => array('png', 'jpg', 'gif', 'webp'),
             'video' => array('mp4'),
         );
         return $arr_file_allow;
@@ -287,9 +287,17 @@ class FCommon
             $dir_size = base_path($path_folder);
             if(!File::isDirectory($dir_size)) File::makeDirectory($dir_size, 0755, true, true);
             // dd($width);
-            $img->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($path_img_size);
+            if($width == 'null' || $height == 'null'){
+                $img->resize($width, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save($path_img_size);
+            }else{
+                $img->fit($width, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save($path_img_size);
+            }
         }
         return secure_asset($path_img_size);
     }

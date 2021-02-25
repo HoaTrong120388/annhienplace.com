@@ -6,9 +6,9 @@
 --}}
 
 @if ($type_include == 1)
-    {!! $setting_result['header_script_custom'] ?? '' !!}
+    {!! $setting_result['header_script'] ?? '' !!}
 @elseif($type_include == 2)    
-    {!! $setting_result['body_script_custom'] ?? '' !!}
+    {!! $setting_result['body_script'] ?? '' !!}
 @else
-    {!! $setting_result['footer_script_custom'] ?? '' !!}
+    {!! $setting_result['footer_script'] ?? '' !!}
 @endif
