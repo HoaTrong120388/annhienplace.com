@@ -24,6 +24,7 @@ img{max-width: 100%;}
     margin-bottom: 20px;
     background-color: #ffffff;
     padding: 10px;
+    font-size: 16px;
     h1, h2, h3{
         font-weight: 600;
         margin-top: 0px;
@@ -33,10 +34,10 @@ img{max-width: 100%;}
     h4, h5{
         font-weight: 400;
     }
-    h1{font-size: 2em;}
-    h2{font-size: 1.5em;}
+    h1{font-size: 2em;color: $main_color;}
+    h2{font-size: 1.5em;color: $main_color;}
     h3{font-size: 1.2em;}
-    h4{font-size: 1em;}
+    h4{font-size: 1em;font-style: italic;}
     h5{font-size: 0.9em;}
     p{margin-bottom: 10px !important;}
     a{text-decoration: none;}
@@ -63,9 +64,18 @@ img{max-width: 100%;}
         }
     }
     ul, ol{
-        padding-left: 20px;
+        padding-left: 10px;
         li {
             position: relative;
+            margin-bottom: 5px;
+            &::before{
+                content: "\f00c";
+                font-family: FontAwesome;
+                font-size: inherit;
+                text-rendering: auto;
+                margin-right: 5px;
+                color: $main_color;
+            }
         }
     }
 }
@@ -285,4 +295,57 @@ img{max-width: 100%;}
 .item-tags{
     display: inline-block;
     margin-right: 5px;
+}
+.blog{
+    .blog-post{
+        .blog-post-text{
+            img{
+                margin-bottom: 0;   
+            }
+        }
+    }
+    .blog-info{
+        ul{
+            li{
+                &>i.fa{
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}
+.detail-info-contact{
+    display: block;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    h3{
+        display: block;
+        font-size: 1em;
+        margin-bottom: 5px;
+        color: $main_color;
+    }
+    ul{
+        display: block;
+        width: 100%;
+        margin-bottom: 0;
+        li{
+            display: block;
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            span{
+                width: 25px;
+                display: inline-block;
+                margin-right: 5px;
+                i{
+                    color: $main_color;
+                }
+            }
+            a{
+                display: inline-block;
+                width: calc(100% - 30px);
+            }
+        }
+    }
 }

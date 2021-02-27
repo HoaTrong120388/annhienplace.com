@@ -71,7 +71,7 @@ class ContentController extends BaseController
             'header_title'          => $arrResult['title']
         );
 
-        if(!empty($arrResult['seo']['image'])) $data['imagePage_Seo'] = $arrResult['seo']['image'];
+        if(!empty($result['seo']['image'])) $data['imagePage_Seo'] = $result['seo']['image'];
 
         return view("frontend/content/page/detail")->with($data);
 
@@ -132,6 +132,8 @@ class ContentController extends BaseController
         $group = $arrResult->group;
 
         $result = FCommon::json_decode_object($arrResult, array('more_info', 'seo', 'album', 'tags'));
+        
+        
 
         $data = array(
             'titlePage_Seo'         => $result['seo']['title'],
@@ -145,7 +147,9 @@ class ContentController extends BaseController
             'header_title'          => $arrResult['title']
         );
 
-        if(!empty($arrResult['seo']['image'])) $data['imagePage_Seo'] = $arrResult['seo']['image'];
+        if(!empty($result['seo']['image'])) $data['imagePage_Seo'] = $result['seo']['image'];
+
+        // dd($data);
 
         $arrComment = $arrResult->comment()->where('status', 1)->where('parent', 0)->orderBy('id', 'desc')->get();
         $data['arrComment'] = $arrComment;

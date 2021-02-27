@@ -1,7 +1,7 @@
 <link href="<?php echo e(FCommon::cover_thumbnail($setting_result['company_fav_icon'])); ?>" rel="shortcut icon" type="image/x-icon" />
 <title><?php echo e($titlePage_Seo ?? ''); ?></title>
-<meta name="description" content="<?php echo e($keywordPage_Seo); ?>" />
-<meta name="keywords" content="<?php echo e($descriptionPage_Seo); ?>">
+<meta name="description" content="<?php echo e($descriptionPage_Seo); ?>" />
+<meta name="keywords" content="<?php echo e($keywordPage_Seo); ?>">
 <meta name="author" content="<?php echo e($setting_result['company_name'] ?? ''); ?>">
 
 <?php
@@ -21,9 +21,9 @@
 
 <meta property="article:publisher" content="<?php echo e($setting_result['social_fanpage'] ?? ''); ?>" />
 <meta property="article:author" content="<?php echo e($setting_result['social_fanpage'] ?? ''); ?>"/>
-<meta property="og:site_name" content="<?php echo e($descriptionPage_Seo); ?>" />
+<meta property="og:site_name" content="<?php echo e($titlePage_Seo); ?>" />
 <meta property="og:title" content="<?php echo e($titlePage_Seo); ?>" />
-<meta property="og:description" content="<?php echo e($keywordPage_Seo); ?>" />
+<meta property="og:description" content="<?php echo e($descriptionPage_Seo); ?>" />
 <meta property="og:updated_time" content="2019-10-01" />
 <meta property="og:type" content="article" />
 <meta property="og:og:locale" content="vi_vn" />

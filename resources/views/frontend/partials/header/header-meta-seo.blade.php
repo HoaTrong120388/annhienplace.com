@@ -1,7 +1,7 @@
 <link href="{{ FCommon::cover_thumbnail($setting_result['company_fav_icon']) }}" rel="shortcut icon" type="image/x-icon" />
 <title>{{ $titlePage_Seo ?? '' }}</title>
-<meta name="description" content="{{ $keywordPage_Seo }}" />
-<meta name="keywords" content="{{ $descriptionPage_Seo }}">
+<meta name="description" content="{{ $descriptionPage_Seo }}" />
+<meta name="keywords" content="{{ $keywordPage_Seo }}">
 <meta name="author" content="{{ $setting_result['company_name'] ?? '' }}">
 
 @php
@@ -21,9 +21,9 @@
 
 <meta property="article:publisher" content="{{ $setting_result['social_fanpage'] ?? '' }}" />
 <meta property="article:author" content="{{ $setting_result['social_fanpage'] ?? '' }}"/>
-<meta property="og:site_name" content="{{ $descriptionPage_Seo }}" />
+<meta property="og:site_name" content="{{ $titlePage_Seo }}" />
 <meta property="og:title" content="{{ $titlePage_Seo }}" />
-<meta property="og:description" content="{{ $keywordPage_Seo }}" />
+<meta property="og:description" content="{{ $descriptionPage_Seo }}" />
 <meta property="og:updated_time" content="2019-10-01" />
 <meta property="og:type" content="article" />
 <meta property="og:og:locale" content="vi_vn" />

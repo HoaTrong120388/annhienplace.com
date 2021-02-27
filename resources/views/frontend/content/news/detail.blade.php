@@ -39,9 +39,12 @@
                                 </div> <!--/blog-info-->
                             </div>
                             <!-- === blog post text === -->
-                            <div class="blog-post-text">
+                            <div class="blog-post-text pg-detail">
                                 {!! $rs['content'] !!}
                             </div>
+                            
+                            @include('frontend.common.info-contact')
+
                             @if (!empty($rs['tags']) && count($rs['tags']) > 0 )
                             <div class="blog-info blog-info-bottom">
                                 <ul>
