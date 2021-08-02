@@ -27,3 +27,5 @@
 <meta property="og:updated_time" content="2019-10-01" />
 <meta property="og:type" content="article" />
 <meta property="og:og:locale" content="vi_vn" />
+
+<link rel="canonical" href="{{ url()->current() }}"/>

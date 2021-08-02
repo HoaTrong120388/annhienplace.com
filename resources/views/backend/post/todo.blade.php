@@ -44,7 +44,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="border border-gray-200 dark:border-dark-5 rounded-md p-5 mt-5">
                             <div class="font-medium flex items-center border-b border-gray-200 dark:border-dark-5 pb-5"> <i data-feather="chevron-down" class="w-4 h-4 mr-2"></i> Album </div>
                             <div class="mt-5 ">
@@ -66,8 +65,7 @@
                                                         <img src="{{ FCommon::cover_thumbnail($album) }}">
                                                     </div>
                                                 </a>
-                                                <a href="javascript:void(0);" class="block font-medium mt-4 text-center truncate">{{ $album }}</a> 
-                                                
+                                                <a href="javascript:void(0);" class="block font-medium mt-4 text-center truncate">{{ $album }}</a>
                                             </div>
                                         </div>
                                     @endforeach
